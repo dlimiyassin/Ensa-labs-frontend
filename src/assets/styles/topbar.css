@@ -1,0 +1,32 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.topbar-ticker {
+    width: 100%;
+    background: #007FA4;
+    overflow: hidden;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.ticker-track {
+    display: flex;
+    gap: 4rem;
+    white-space: nowrap;
+    animation: ticker 48s linear infinite;
+}
+
+.ticker-track span {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+@keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
