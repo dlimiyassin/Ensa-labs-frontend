@@ -75,9 +75,7 @@ import { RouterModule } from '@angular/router';
       </div>
 
       <div class="layout-navbar-actions">
-        <button class="layout-navbar-action" title="Rechercher"></button>
-        <button class="layout-navbar-action" title="Notifications"></button>
-        <button class="layout-navbar-action" title="Profil"></button>
+        <button class="layout-navbar-action" title="login" routerLink="private-backdoor-7">Admin</button>
       </div>
 
     </nav>

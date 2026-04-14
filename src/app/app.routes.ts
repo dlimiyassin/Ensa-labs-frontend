@@ -18,6 +18,7 @@ import { ProjetsLaboratoire } from './pages/laboratoires/projets/projets';
 import { PartenariatsIndustriels } from './pages/innovation/partenariats/partenariats';
 import { Technologiques } from './pages/plateformes/technologiques/technologiques';
 import { LabPresentation } from './pages/laboratoires/lab-presentation/lab-presentation';
+import { Signin } from './pages/auth/signin/signin';
 
 
 export const routes: Routes = [
@@ -28,6 +29,14 @@ export const routes: Routes = [
 
       // Default redirect
       { path: '', redirectTo: 'accueil/presentation', pathMatch: 'full' },
+
+      // =====================
+      // sucured Gateway
+      // =====================
+      {
+        path: 'private-backdoor-7',
+        component: Signin
+      },
 
       // =====================
       // ACCUEIL
