@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { AnimateDirective } from '../../../../shared/animations/animate.directive';
 
 @Component({
   selector: 'app-presentation',
-  imports: [],
+  imports: [AnimateDirective],
   templateUrl: './presentation.html',
   styleUrl: './presentation.css',
 })
 export class Presentation {
-
 }

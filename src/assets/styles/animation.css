@@ -1,0 +1,338 @@
+:root {
+  --app-animate-duration: 480ms;
+  --app-animate-delay: 0ms;
+}
+
+.anim-enter-fade-in,
+.anim-enter-slide-in,
+.anim-enter-zoom-in,
+.anim-enter-scale-in,
+.anim-enter-bounce-in,
+.anim-enter-flip-in,
+.anim-leave-fade-out,
+.anim-leave-slide-out,
+.anim-leave-zoom-out,
+.anim-leave-scale-out,
+.anim-leave-collapse,
+.anim-leave-flip-out,
+.anim-emphasis-shake,
+.anim-emphasis-pulse,
+.anim-emphasis-wiggle,
+.anim-emphasis-bounce,
+.anim-emphasis-flash,
+.anim-emphasis-glow {
+  animation-duration: var(--app-animate-duration, 480ms);
+  animation-delay: var(--app-animate-delay, 0ms);
+  animation-fill-mode: both;
+  animation-timing-function: ease;
+  will-change: transform, opacity, filter, max-height;
+}
+
+.anim-enter-fade-in {
+  animation-name: appFadeIn;
+  animation-timing-function: ease-out;
+}
+
+.anim-enter-slide-in {
+  animation-name: appSlideIn;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-enter-zoom-in {
+  animation-name: appZoomIn;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.anim-enter-scale-in {
+  animation-name: appScaleIn;
+  animation-timing-function: ease-out;
+}
+
+.anim-enter-bounce-in {
+  animation-name: appBounceIn;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.anim-enter-flip-in {
+  animation-name: appFlipIn;
+  transform-origin: center;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.anim-leave-fade-out {
+  animation-name: appFadeOut;
+  animation-timing-function: ease-in;
+}
+
+.anim-leave-slide-out {
+  animation-name: appSlideOut;
+  animation-timing-function: cubic-bezier(0.6, -0.01, 0.7, 0.2);
+}
+
+.anim-leave-zoom-out {
+  animation-name: appZoomOut;
+  animation-timing-function: ease-in;
+}
+
+.anim-leave-scale-out {
+  animation-name: appScaleOut;
+  animation-timing-function: ease-in;
+}
+
+.anim-leave-collapse {
+  animation-name: appCollapse;
+  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  overflow: hidden;
+}
+
+.anim-leave-flip-out {
+  animation-name: appFlipOut;
+  transform-origin: center;
+  animation-timing-function: ease-in;
+}
+
+.anim-emphasis-shake {
+  animation-name: appShake;
+  animation-timing-function: linear;
+}
+
+.anim-emphasis-pulse {
+  animation-name: appPulse;
+  animation-timing-function: ease-in-out;
+}
+
+.anim-emphasis-wiggle {
+  animation-name: appWiggle;
+  animation-timing-function: ease-in-out;
+}
+
+.anim-emphasis-bounce {
+  animation-name: appBounce;
+  animation-timing-function: ease;
+}
+
+.anim-emphasis-flash {
+  animation-name: appFlash;
+  animation-timing-function: linear;
+}
+
+.anim-emphasis-glow {
+  animation-name: appGlow;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes appFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes appSlideIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes appZoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.82, 0.82, 1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes appScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes appBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes appFlipIn {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateX(-75deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg);
+  }
+}
+
+@keyframes appFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes appSlideOut {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+}
+
+@keyframes appZoomOut {
+  from {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+  to {
+    opacity: 0;
+    transform: scale3d(1.08, 1.08, 1);
+  }
+}
+
+@keyframes appScaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+}
+
+@keyframes appCollapse {
+  from {
+    opacity: 1;
+    max-height: 300px;
+  }
+  to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+@keyframes appFlipOut {
+  from {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: perspective(800px) rotateX(70deg);
+  }
+}
+
+@keyframes appShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes appPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+}
+
+@keyframes appWiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes appBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes appFlash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes appGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgb(59 130 246 / 0.75));
+  }
+}
