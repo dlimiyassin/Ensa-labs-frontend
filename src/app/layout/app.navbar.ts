@@ -9,84 +9,68 @@ import { RouterModule } from '@angular/router';
   template: `
     <nav class="layout-navbar">
 
-      <!-- Mobile toggle button -->
+      <!-- Mobile toggle -->
       <button class="mobile-toggle" (click)="toggleMenu()">
         <i class="pi pi-bars"></i>
       </button>
 
+      <!-- Logo -->
+      <a class="layout-navbar-logo-container" routerLink="/">
+        <img src="images/logo.png" alt="Logo" class="logo-img"/>
+      </a>
+
       <div class="nav-menu" [class.open]="isMobileOpen">
 
-        <!-- Logo -->
-        <a class="layout-navbar-logo-container" routerLink="/">
-          <img src="images/logo.png" alt="Logo" class="logo-img"/>
-        </a>
 
-        <!-- Accueil -->
-        <div class="nav-item">
-          <div class="nav-link">
-            Accueil <span class="chevron"><i class="pi pi-sort-down-fill text-xs!"></i></span>
-          </div>
-          <div class="dropdown">
-            <a routerLink="/accueil/presentation">Présentation générale</a>
-            <a routerLink="/accueil/chiffres">Chiffres clés</a>
-            <a routerLink="/accueil/actualites">Actualités récentes</a>
-          </div>
-        </div>
+        <!-- Dynamic menu -->
+        @for (item of navItems; track item.title) {
+          <div class="nav-item">
 
-        <!-- Laboratoires -->
-        <div class="nav-item">
-          <div class="nav-link">
-            Laboratoires <span class="chevron"><i class="pi pi-sort-down-fill text-xs!"></i></span>
-          </div>
-          <div class="dropdown">
-            <a routerLink="/laboratoires" style="font-weight: 500;">Liste des laboratoires</a>
-            <div class="dropdown-label">Détail d'un laboratoire</div>
-            <div class="dropdown-sub">
-              <a routerLink="/laboratoires/equipe">Équipe</a>
-              <a routerLink="/laboratoires/projets">Projets</a>
-              <a routerLink="/laboratoires/publications">Publications</a>
-              <a routerLink="/laboratoires/equipements">Équipements</a>
+            <div class="nav-link">
+              <p>{{ item.title }}</p>
+              <span class="chevron">
+                <i class="pi pi-sort-down-fill text-xs!"></i>
+              </span>
+            </div>
+
+            <div class="dropdown">
+
+              @for (section of item.sections; track section.label) {
+
+                <!-- Normal links -->
+                @if (section.links) {
+                  @for (link of section.links; track link.label) {
+                    <a
+                      [routerLink]="link.route"
+                      [style.fontWeight]="link.bold ? '500' : 'normal'"
+                    >
+                      {{ link.label }}
+                    </a>
+                  }
+                }
+
+                <!-- Sub section -->
+                @if (section.subLabel) {
+                  <div class="dropdown-label">
+                    {{ section.subLabel }}
+                  </div>
+                }
+
+                @if (section.subLinks) {
+                  <div class="dropdown-sub">
+                    @for (link of section.subLinks; track link.label) {
+                      <a [routerLink]="link.route">
+                        {{ link.label }}
+                      </a>
+                    }
+                  </div>
+                }
+
+              }
+
             </div>
           </div>
-        </div>
-
-        <!-- Recherche -->
-        <div class="nav-item">
-          <div class="nav-link">
-            Recherche <span class="chevron"><i class="pi pi-sort-down-fill text-xs!"></i></span>
-          </div>
-          <div class="dropdown">
-            <a routerLink="/recherche/axes">Axes de recherche</a>
-            <a routerLink="/recherche/structures">Structures de recherche</a>
-            <a routerLink="/recherche/projets">Projets de recherche</a>
-            <a routerLink="/recherche/partenariats">Partenariats</a>
-          </div>
-        </div>
-
-        <!-- Innovation -->
-        <div class="nav-item">
-          <div class="nav-link">
-            Innovation & Valorisation <span class="chevron"><i class="pi pi-sort-down-fill text-xs!"></i></span>
-          </div>
-          <div class="dropdown">
-            <a routerLink="/innovation/brevets">Brevets</a>
-            <a routerLink="/innovation/projets">Projets innovants</a>
-            <a routerLink="/innovation/transfert">Transfert de technologie</a>
-            <a routerLink="/innovation/partenariats">Partenariats industriels</a>
-          </div>
-        </div>
-
-        <!-- Plateformes -->
-        <div class="nav-item">
-          <div class="nav-link">
-            Plateformes & Équipements <span class="chevron"><i class="pi pi-sort-down-fill text-xs!"></i></span>
-          </div>
-          <div class="dropdown">
-            <a routerLink="/plateformes/technologiques">Plateformes technologiques</a>
-            <a routerLink="/plateformes/equipements">Équipements</a>
-            <a routerLink="/plateformes/services">Services proposés</a>
-          </div>
-        </div>
+        }
 
       </div>
 
@@ -100,9 +84,104 @@ import { RouterModule } from '@angular/router';
   `
 })
 export class AppNavbar {
+
   isMobileOpen = false;
 
   toggleMenu() {
     this.isMobileOpen = !this.isMobileOpen;
   }
+
+  navItems: NavItem[] = [
+    {
+      title: 'Accueil',
+      sections: [
+        {
+          label: 'main',
+          links: [
+            { label: 'Présentation générale', route: '/accueil/presentation' },
+            { label: 'Chiffres clés', route: '/accueil/chiffres' },
+            { label: 'Actualités récentes', route: '/accueil/actualites' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Laboratoires',
+      sections: [
+        {
+          label: 'LRSTA',
+          subLabel: "Technologies Avancées",
+          subLinks: [
+            { label: 'LRSTA', route: '/laboratoires/LRSTA' },
+          ]
+        },
+        {
+          label: 'LaRESI',
+          subLabel: "Ingénierie et Innovation",
+          subLinks: [
+            { label: 'LaRESI', route: '/laboratoires/LaRESI' },
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Recherche',
+      sections: [
+        {
+          label: 'main',
+          links: [
+            { label: 'Axes de recherche', route: '/recherche/axes' },
+            { label: 'Structures de recherche', route: '/recherche/structures' },
+            { label: 'Projets de recherche', route: '/recherche/projets' },
+            { label: 'Partenariats', route: '/recherche/partenariats' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Innovation',
+      sections: [
+        {
+          label: 'main',
+          links: [
+            { label: 'Brevets', route: '/innovation/brevets' },
+            { label: 'Projets innovants', route: '/innovation/projets' },
+            { label: 'Transfert de technologie', route: '/innovation/transfert' },
+            { label: 'Partenariats industriels', route: '/innovation/partenariats' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Plateformes',
+      sections: [
+        {
+          label: 'main',
+          links: [
+            { label: 'Plateformes technologiques', route: '/plateformes/technologiques' },
+            { label: 'Équipements', route: '/plateformes/equipements' },
+            { label: 'Services proposés', route: '/plateformes/services' }
+          ]
+        }
+      ]
+    }
+  ];
+}
+
+interface NavLink {
+  label?: string;
+  route?: string;
+  bold?: boolean;
+}
+
+interface NavSection {
+  label: string;
+  links?: NavLink[];
+  subLabel?: string;
+  subLinks?: NavLink[];
+}
+
+interface NavItem {
+  title: string;
+  sections: NavSection[];
 }

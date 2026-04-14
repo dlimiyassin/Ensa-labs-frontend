@@ -1,24 +1,25 @@
 .layout-navbar {
   position: fixed;
-  height: 4rem;
+  height: 5rem;
   z-index: 1000;
   top: 2rem;
   left: 0;
   width: 100%;
-  padding: 2.3rem 1rem 2.5rem 1rem;
+  padding: 3.3rem 1rem 3.5rem 1rem;
   background-color: #ffffff;
   border-bottom: 0.5px solid #e5e7eb;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 
   .layout-navbar-logo-container {
     width: 14rem;
-    height: 3rem;
+    height: 4rem;
     display: flex;
     align-items: center;
 
     .logo-img {
-      height: 3rem;
+      height: 4rem;
       width: auto;
     }
   }
@@ -28,7 +29,7 @@
     justify-content: center;
     align-items: center;
     width: 2.25rem;
-    height: 2.25rem;
+    height: 3rem;
     border-radius: 50%;
     cursor: pointer;
     color: #374151;
@@ -50,7 +51,7 @@
   .nav-menu {
     display: flex;
     align-items: center;
-    margin-inline-start: 1rem;
+    margin-inline-start: 5rem;
     flex: 1;
 
     .nav-item {
@@ -66,23 +67,51 @@
     }
 
     .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 0.5rem;
-      padding: 0 0.875rem;
-      height: 4rem;
-      font-size: 0.875rem;
-      color: #374151;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 0.5rem;
+        padding: 0 0.875rem;
+        height: 5rem;
+        font-size: 1rem;
+        font-weight: bolder;
+        color: #374151;
+        cursor: pointer;
+        white-space: nowrap;
 
-      .chevron {
-        font-size: 5px;
-        opacity: 0.5;
-        transition: transform 0.15s;
-      }
+        .chevron {
+            font-size: 5px;
+            opacity: 0.5;
+            transition: transform 0.15s;
+        }
+
+        p {
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+
+            &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 4px;
+            background-color: #F7941E;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+            }
+        }
+
+        /* trigger from parent hover */
+        &:hover p {
+            color: #0080A2;
+        }
+
+        &:hover p::after {
+            transform: scaleX(1);
+        }
     }
   }
 
@@ -96,22 +125,44 @@
     border-bottom-color: #007FA4;
     border-radius: 10px;
     padding: 6px;
-    width: fit-content;
+    width: 15rem;
     white-space: nowrap;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     z-index: 200;
 
     a {
-      display: block;
-      padding: 8px 12px;
-      font-size: 0.8125rem;
-      color: #374151;
-      border-radius: 6px;
-      text-decoration: none;
+        position: relative;
+        display: block;
+        padding: 8px 12px;
+        font-size: 0.8125rem;
+        color: #374151;
+        border-radius: 6px;
+        text-decoration: none;
+        overflow: hidden;
 
-      &:hover {
+        /* left border (hidden by default) */
+        &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background-color: #F7941E;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform 0.25s ease;
+        }
+
+        &:hover {
         background: #f3f4f6;
-      }
+        color: #0080A2;
+        }
+
+        /* animate on hover */
+        &:hover::before {
+        transform: scaleY(1);
+        }
     }
 
     .dropdown-label {
@@ -126,8 +177,8 @@
       padding-inline-start: 12px;
 
       a {
-        font-size: 0.75rem;
-        color: #6b7280;
+        font-size: 0.8rem;
+        font-weight: bold;
         padding: 6px 12px;
       }
     }

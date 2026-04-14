@@ -6,6 +6,11 @@
     "analytics": "88c80302-2af6-48e1-8b79-a6f18d8fca20"
   },
   "newProjectRoot": "projects",
+  "schematics": {
+    "@schematics/angular:component": {
+      "skipTests": true
+    }
+  },
   "projects": {
     "ensa-labs": {
       "projectType": "application",
