@@ -74,8 +74,8 @@ import { RouterModule } from '@angular/router';
 
       </div>
 
-      <div class="layout-navbar-actions">
-        <button class="layout-navbar-action" title="login" routerLink="private-backdoor-7">Admin</button>
+      <div class="flex flex-row items-center gap-2">
+        <button class="cursor-pointer rounded py-2 px-4 hover:bg-gray-200" title="login" routerLink="private-backdoor-7">Admin</button>
       </div>
 
     </nav>

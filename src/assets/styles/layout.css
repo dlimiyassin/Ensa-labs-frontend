@@ -1,4 +1,9 @@
-@import './core.css';
-@import './topbar.css';
-@import './navbar.css';
-@import './footer.css';
+@import './global.css';
+@import './utlils.css';
+
+@import './public/core.css';
+@import './public/topbar.css';
+@import './public/navbar.css';
+@import './public/footer.css';
+
+@import './private/dashboard.css';
