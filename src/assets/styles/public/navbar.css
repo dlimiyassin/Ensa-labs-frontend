@@ -10,19 +10,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: background-color 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 320ms ease,
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    backdrop-filter 320ms ease;
 
-  &.hero-merged {
-    background: transparent;
+  &.is-transparent {
     background-color: transparent;
     border-bottom-color: transparent;
     box-shadow: none;
+    backdrop-filter: blur(0);
+  }
 
+  &.is-solid {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  &.is-on-hero.is-transparent {
     .nav-link {
       color: #f8fafc;
     }
 
-    .nav-link:hover p {
+    .nav-link:hover p,
+    .nav-link.active p {
       color: #ffffff;
     }
 
@@ -30,13 +45,13 @@
       background-color: #ffffff;
     }
 
-    .nav-link.active p {
-      color: #ffffff;
-    }
-
     .mobile-toggle,
     .mobile-toggle i {
       color: #ffffff;
+    }
+
+    .layout-navbar-logo-container {
+      filter: drop-shadow(0 4px 12px rgba(15, 23, 42, 0.35));
     }
   }
 
@@ -82,6 +97,7 @@
       color: var(--text-color);
       cursor: pointer;
       white-space: nowrap;
+      transition: color 180ms ease;
 
       .chevron {
         font-size: 5px;
@@ -95,7 +111,7 @@
         display: inline-block;
 
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           left: 0;
           bottom: -2px;
@@ -108,27 +124,25 @@
         }
       }
 
-        /* trigger from parent hover */
-        &:hover p {
-            color: var(--blue-color);
-        }
+      &:hover p {
+        color: var(--blue-color);
+      }
 
-        &:hover p::after {
-            transform: scaleX(1);
-        }
+      &:hover p::after {
+        transform: scaleX(1);
+      }
 
-        
-        &.active p {
-            color: #0080A2;
-        }
+      &.active p {
+        color: #0080a2;
+      }
 
-        &.active p::after {
-            transform: scaleX(1);
-        }
+      &.active p::after {
+        transform: scaleX(1);
+      }
 
-        &.active .chevron {
-            opacity: 1;
-        }
+      &.active .chevron {
+        opacity: 1;
+      }
     }
   }
 
@@ -148,19 +162,18 @@
     z-index: 200;
 
     a {
-        position: relative;
-        display: block;
-        padding: 16px 12px;
-        font-size: 0.9rem;
-        font-weight: 500 !important;
-        color: var(--text-color);
-        border-radius: 6px;
-        text-decoration: none;
-        overflow: hidden;
+      position: relative;
+      display: block;
+      padding: 16px 12px;
+      font-size: 0.9rem;
+      font-weight: 500 !important;
+      color: var(--text-color);
+      border-radius: 6px;
+      text-decoration: none;
+      overflow: hidden;
 
-        /* left border (hidden by default) */
-        &::before {
-        content: "";
+      &::before {
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
@@ -170,17 +183,16 @@
         transform: scaleY(0);
         transform-origin: top;
         transition: transform 0.25s ease;
-        }
+      }
 
-        &:hover {
+      &:hover {
         background: var(--bg-color);
         color: var(--blue-color);
-        }
+      }
 
-        /* animate on hover */
-        &:hover::before {
+      &:hover::before {
         transform: scaleY(1);
-        }
+      }
     }
 
     .dropdown-label {
@@ -202,10 +214,6 @@
     }
   }
 
-  /* ========================= */
-  /* MOBILE RESPONSIVE PART    */
-  /* ========================= */
-
   .mobile-toggle {
     display: none;
     background: none;
@@ -213,10 +221,10 @@
     font-size: 1.5rem;
     margin-right: 1rem;
     cursor: pointer;
+    color: var(--text-color);
   }
 
   @media (max-width: 1024px) {
-
     .mobile-toggle {
       display: block;
     }
@@ -234,7 +242,7 @@
       border-top: 1px solid #e5e7eb;
     }
 
-    &.hero-merged .nav-menu {
+    &.is-on-hero.is-transparent .nav-menu {
       background: rgba(2, 6, 23, 0.9);
       border-top-color: rgba(255, 255, 255, 0.15);
     }
@@ -260,6 +268,5 @@
       border: none;
       padding-left: 1rem;
     }
-
   }
 }
