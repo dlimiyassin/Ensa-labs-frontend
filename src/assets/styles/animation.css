@@ -1,7 +1,3 @@
-:root {
-  --app-animate-duration: 480ms;
-  --app-animate-delay: 0ms;
-}
 
 .anim-enter-fade-in,
 .anim-enter-slide-up,
@@ -29,7 +25,11 @@
   animation-fill-mode: both;
   animation-timing-function: ease;
   will-change: transform, opacity, filter, max-height;
+  transition-duration: var(--app-animate-duration, 480ms);
 }
+
+
+
 
 .anim-enter-fade-in {
   animation-name: appFadeIn;
@@ -138,6 +138,17 @@
   animation-name: appGlow;
   animation-timing-function: ease-in-out;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 @keyframes appFadeIn {
   from {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AnimateDirective } from '../shared/animations/animate.directive';
 
 @Component({
@@ -12,8 +12,8 @@ import { AnimateDirective } from '../shared/animations/animate.directive';
 
       <!-- Mobile toggle -->
       <button
-          class="mobile-toggle" (
-          click)="toggleMenu()">
+          class="mobile-toggle" 
+          (click)="toggleMenu()">
         <i class="pi pi-bars"></i>
       </button>
 
@@ -36,6 +36,7 @@ import { AnimateDirective } from '../shared/animations/animate.directive';
 
             <div 
                 class="nav-link"
+                [class.active]="isItemActive(item)"
                 appAnimate="slideLeft" 
                 [appAnimateDuration]="2000" 
                 [appAnimateDelay]="200">
@@ -97,13 +98,32 @@ export class AppNavbar {
 
   isMobileOpen = false;
 
+  constructor(private router: Router) {}
+  
+  isItemActive(item: NavItem): boolean {
+    const routes = item.sections.flatMap(section => [
+      ...(section.links ?? []),
+      ...(section.subLinks ?? [])
+    ]);
+
+    return routes.some(link =>
+      !!link.route &&
+      this.router.isActive(link.route, {
+        paths: 'subset',
+        queryParams: 'ignored',
+        matrixParams: 'ignored',
+        fragment: 'ignored'
+      })
+    );
+  }
+
   toggleMenu() {
     this.isMobileOpen = !this.isMobileOpen;
   }
 
   navItems: NavItem[] = [
     {
-      title: 'Accueil',
+      title: 'ACCUEIL',
       sections: [
         {
           label: 'main',
@@ -116,7 +136,7 @@ export class AppNavbar {
       ]
     },
     {
-      title: 'Laboratoires',
+      title: 'LABORATOIRES',
       sections: [
         {
           label: 'LRSTA',
@@ -135,7 +155,7 @@ export class AppNavbar {
       ]
     },
     {
-      title: 'Recherche',
+      title: 'RECHERCHE',
       sections: [
         {
           label: 'main',
@@ -149,7 +169,7 @@ export class AppNavbar {
       ]
     },
     {
-      title: 'Innovation',
+      title: 'INNOVATION',
       sections: [
         {
           label: 'main',
@@ -163,7 +183,7 @@ export class AppNavbar {
       ]
     },
     {
-      title: 'Plateformes',
+      title: 'PLATEFORMES',
       sections: [
         {
           label: 'main',

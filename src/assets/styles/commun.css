@@ -1,0 +1,12 @@
+:root {
+
+  /* Animation variables */
+  --app-animate-duration: 480ms;
+  --app-animate-delay: 0ms;
+
+  /* App colors */
+  --blue-color: #0080A2;
+  --orange-color: #F7941E;
+  --text-color: #374151;
+  --bg-color: #f3f4f6;
+}

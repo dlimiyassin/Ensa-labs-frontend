@@ -51,7 +51,7 @@
         height: 5rem;
         font-size: 1rem;
         font-weight: bolder;
-        color: #374151;
+        color: var(--text-color);
         cursor: pointer;
         white-space: nowrap;
 
@@ -73,7 +73,7 @@
             bottom: -2px;
             width: 100%;
             height: 4px;
-            background-color: #F7941E;
+            background-color: var(--orange-color);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
@@ -82,11 +82,24 @@
 
         /* trigger from parent hover */
         &:hover p {
-            color: #0080A2;
+            color: var(--blue-color);
         }
 
         &:hover p::after {
             transform: scaleX(1);
+        }
+
+        
+        &.active p {
+            color: #0080A2;
+        }
+
+        &.active p::after {
+            transform: scaleX(1);
+        }
+
+        &.active .chevron {
+            opacity: 1;
         }
     }
   }
@@ -98,7 +111,7 @@
     inset-inline-start: 0;
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    border-bottom-color: #007FA4;
+    border-bottom-color: var(--blue-color);
     border-radius: 10px;
     padding: 6px;
     width: 15rem;
@@ -112,7 +125,7 @@
         padding: 16px 12px;
         font-size: 0.9rem;
         font-weight: 500 !important;
-        color: #374151;
+        color: var(--text-color);
         border-radius: 6px;
         text-decoration: none;
         overflow: hidden;
@@ -125,15 +138,15 @@
         left: 0;
         width: 3px;
         height: 100%;
-        background-color: #F7941E;
+        background-color: var(--orange-color);
         transform: scaleY(0);
         transform-origin: top;
         transition: transform 0.25s ease;
         }
 
         &:hover {
-        background: #f3f4f6;
-        color: #0080A2;
+        background: var(--bg-color);
+        color: var(--blue-color);
         }
 
         /* animate on hover */
