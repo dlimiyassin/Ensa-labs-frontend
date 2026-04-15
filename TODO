@@ -1,2 +1,6 @@
-look for good academic font with diferent sizes, config for ease use
-update size of navlinks
+
+
+animation of cards must apply till enter the view
+delay the animation of text above carosel
+animation of navbar dropdowns up and down
+create a hero imaage component to be used by other pages

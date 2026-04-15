@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AnimateDirective } from '../../../../shared/animations/animate.directive';
-import { HeroCarouselComponent } from './hero-carousel/hero-carousel';
+import { HeroCarouselComponent } from "./hero-carousel/hero-carousel";
 
 @Component({
   selector: 'app-presentation',
