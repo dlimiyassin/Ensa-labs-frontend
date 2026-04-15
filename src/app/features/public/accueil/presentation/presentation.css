@@ -1,5 +1,4 @@
 .presentation-page {
-  margin: -2rem;
   padding-bottom: 2rem;
   background: #f8fafc;
 }
@@ -26,10 +25,6 @@
 }
 
 @media (max-width: 768px) {
-  .presentation-page {
-    margin: -1rem;
-  }
-
   .presentation-page__content {
     margin: 1rem;
     padding: 1.5rem;

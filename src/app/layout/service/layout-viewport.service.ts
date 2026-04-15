@@ -1,11 +1,13 @@
-import { Injectable, computed, inject } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, startWith } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
-export class HeroLayoutModeService {
+export class LayoutViewportService {
   private readonly router = inject(Router);
+
+  private readonly scrollY = signal(0);
 
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
@@ -19,6 +21,16 @@ export class HeroLayoutModeService {
   readonly isHeroMergedRoute = computed(() =>
     this.normalizePath(this.currentUrl()) === '/accueil/presentation'
   );
+
+  readonly isAtPageTop = computed(() => this.scrollY() <= 0);
+
+  readonly isNavbarTransparent = computed(() => this.isAtPageTop());
+
+  readonly isNavbarSolid = computed(() => !this.isAtPageTop());
+
+  updateScrollPosition(scrollPosition: number): void {
+    this.scrollY.set(Math.max(0, scrollPosition));
+  }
 
   private normalizePath(path: string): string {
     const [pathname] = path.split(/[?#]/);
