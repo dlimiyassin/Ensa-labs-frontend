@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppFooter } from "./app.footer";
 import { AppNavbar } from "./app.navbar";
 import { AppTopbar } from "./app.topbar";
+import { HeroLayoutModeService } from './service/hero-layout-mode.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { AppTopbar } from "./app.topbar";
     standalone: true,
     imports: [RouterModule, AppFooter, AppNavbar, AppTopbar],
     template: `
-    <div class="layout-wrapper">
+    <div class="layout-wrapper" [class.hero-active]="isHeroActive()">
 
       <!-- topbar -->
       <app-topbar class="layout-topbar"/>
@@ -33,5 +34,9 @@ import { AppTopbar } from "./app.topbar";
 
 })
 export class LayoutPage {
+  
+  private readonly heroLayoutMode = inject(HeroLayoutModeService);
+
+  protected readonly isHeroActive = this.heroLayoutMode.isHeroMergedRoute;
 
 }

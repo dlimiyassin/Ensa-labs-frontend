@@ -20,3 +20,8 @@
     margin-top: 8rem;
     padding: 2rem;
 }
+
+.layout-wrapper.hero-active .layout-main {
+    margin-top: 2rem;
+    padding: 0 0 2rem;
+}

@@ -6,11 +6,39 @@
   left: 0;
   width: 100%;
   padding: 3.3rem 1rem 3.5rem 1rem;
-  background-color: #ffffff;
-  border-bottom: 0.5px solid #e5e7eb;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+
+  &.hero-merged {
+    background: transparent;
+    background-color: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
+
+    .nav-link {
+      color: #f8fafc;
+    }
+
+    .nav-link:hover p {
+      color: #ffffff;
+    }
+
+    .nav-link p::after {
+      background-color: #ffffff;
+    }
+
+    .nav-link.active p {
+      color: #ffffff;
+    }
+
+    .mobile-toggle,
+    .mobile-toggle i {
+      color: #ffffff;
+    }
+  }
 
   .layout-navbar-logo-container {
     width: 14rem;
@@ -43,42 +71,42 @@
     }
 
     .nav-link {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        margin-top: 0.5rem;
-        padding: 0 0.875rem;
-        height: 5rem;
-        font-size: 1rem;
-        font-weight: bolder;
-        color: var(--text-color);
-        cursor: pointer;
-        white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 0.5rem;
+      padding: 0 0.875rem;
+      height: 5rem;
+      font-size: 1rem;
+      font-weight: bolder;
+      color: var(--text-color);
+      cursor: pointer;
+      white-space: nowrap;
 
-        .chevron {
-            font-size: 5px;
-            opacity: 0.5;
-            transition: transform 0.15s;
+      .chevron {
+        font-size: 5px;
+        opacity: 0.5;
+        transition: transform 0.15s;
+      }
+
+      p {
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -2px;
+          width: 100%;
+          height: 4px;
+          background-color: var(--orange-color);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
         }
-
-        p {
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-
-            &::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            width: 100%;
-            height: 4px;
-            background-color: var(--orange-color);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-            }
-        }
+      }
 
         /* trigger from parent hover */
         &:hover p {
@@ -204,6 +232,11 @@
       padding: 1rem;
       display: none;
       border-top: 1px solid #e5e7eb;
+    }
+
+    &.hero-merged .nav-menu {
+      background: rgba(2, 6, 23, 0.9);
+      border-top-color: rgba(255, 255, 255, 0.15);
     }
 
     .nav-menu.open {

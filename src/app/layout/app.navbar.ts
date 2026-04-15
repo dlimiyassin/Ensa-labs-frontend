@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AnimateDirective } from '../shared/animations/animate.directive';
+import { HeroLayoutModeService } from './service/hero-layout-mode.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,7 @@ import { AnimateDirective } from '../shared/animations/animate.directive';
   imports: [RouterModule, AnimateDirective],
   styles: [],
   template: `
-    <nav class="layout-navbar">
+    <nav class="layout-navbar" [class.hero-merged]="isHeroMerged()">
 
       <!-- Mobile toggle -->
       <button
@@ -97,8 +98,11 @@ import { AnimateDirective } from '../shared/animations/animate.directive';
 export class AppNavbar {
 
   isMobileOpen = false;
+  
+  private readonly router = inject(Router);
+  private readonly heroLayoutMode = inject(HeroLayoutModeService);
 
-  constructor(private router: Router) {}
+  protected readonly isHeroMerged = this.heroLayoutMode.isHeroMergedRoute;
   
   isItemActive(item: NavItem): boolean {
     const routes = item.sections.flatMap(section => [
