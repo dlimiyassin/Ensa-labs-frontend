@@ -42,7 +42,7 @@ import { AnimateDirective } from '../shared/animations/animate.directive';
                 [appAnimateDelay]="200">
               <p>{{ item.title }}</p>
               <span class="chevron">
-                <i class="pi pi-sort-down-fill text-xs!"></i>
+                <i class="pi pi-chevron-down text-xs!"></i>
               </span>
             </div>
 

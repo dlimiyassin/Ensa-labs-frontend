@@ -21,7 +21,7 @@ import { AppTopbar } from "./app.topbar";
 
 
       <!-- main -->
-      <div class="layout-main">
+      <div class="layout-main font-content">
         <router-outlet></router-outlet>
       </div>
       

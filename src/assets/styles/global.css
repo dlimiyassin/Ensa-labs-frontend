@@ -1,0 +1,64 @@
+:root {
+  --font-ui: 'Inter', sans-serif;
+  --font-content: 'Merriweather', serif;
+}
+
+html,
+body {
+  font-family: var(--font-ui);
+}
+
+body {
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-ui);
+}
+
+p {
+  font-family: var(--font-content);
+}
+
+button,
+input,
+select,
+textarea,
+label,
+.font-ui {
+  font-family: var(--font-ui);
+}
+
+.font-content,
+.font-content p {
+  font-family: var(--font-content);
+}
+
+.font-content h1,
+.font-content h2,
+.font-content h3,
+.font-content h4,
+.font-content h5,
+.font-content h6 {
+  font-family: var(--font-content);
+}
+
+app-topbar,
+app-navbar,
+app-footer,
+.layout-navbar {
+  font-family: var(--font-ui);
+}
+
+.layout-navbar p {
+  font-family: var(--font-ui);
+}
