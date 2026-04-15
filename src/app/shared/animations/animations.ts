@@ -8,7 +8,10 @@ export interface GlobalAnimationConfig {
 
 export const ENTER_ANIMATIONS = {
   fadeIn: 'anim-enter-fade-in',
-  slideIn: 'anim-enter-slide-in',
+  slideUp: 'anim-enter-slide-up',
+  slideDown: 'anim-enter-slide-down',
+  slideLeft: 'anim-enter-slide-left',
+  slideRight: 'anim-enter-slide-right',
   zoomIn: 'anim-enter-zoom-in',
   scaleIn: 'anim-enter-scale-in',
   bounceIn: 'anim-enter-bounce-in',

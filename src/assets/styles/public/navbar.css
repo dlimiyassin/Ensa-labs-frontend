@@ -43,7 +43,7 @@
     }
 
     .nav-link {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         gap: 6px;
         margin-top: 0.5rem;
@@ -109,8 +109,9 @@
     a {
         position: relative;
         display: block;
-        padding: 8px 12px;
-        font-size: 0.8125rem;
+        padding: 16px 12px;
+        font-size: 0.9rem;
+        font-weight: 500 !important;
         color: #374151;
         border-radius: 6px;
         text-decoration: none;
@@ -143,7 +144,7 @@
 
     .dropdown-label {
       padding: 8px 12px 4px;
-      font-size: 0.6875rem;
+      font-size: 0.7rem;
       font-weight: 600;
       color: #9ca3af;
       text-transform: uppercase;
@@ -153,7 +154,7 @@
       padding-inline-start: 12px;
 
       a {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         font-weight: bold;
         padding: 6px 12px;
       }

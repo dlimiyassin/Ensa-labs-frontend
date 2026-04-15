@@ -1,21 +1,29 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AnimateDirective } from '../shared/animations/animate.directive';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, AnimateDirective],
   styles: [],
   template: `
     <nav class="layout-navbar">
 
       <!-- Mobile toggle -->
-      <button class="mobile-toggle" (click)="toggleMenu()">
+      <button
+          class="mobile-toggle" (
+          click)="toggleMenu()">
         <i class="pi pi-bars"></i>
       </button>
 
       <!-- Logo -->
-      <a class="layout-navbar-logo-container" routerLink="/">
+      <a 
+          class="layout-navbar-logo-container" 
+          routerLink="/"
+          appAnimate="zoomIn" 
+          [appAnimateDuration]="2000" 
+          [appAnimateDelay]="200">
         <img src="images/logo.png" alt="Logo" class="logo-img"/>
       </a>
 
@@ -26,7 +34,11 @@ import { RouterModule } from '@angular/router';
         @for (item of navItems; track item.title) {
           <div class="nav-item">
 
-            <div class="nav-link">
+            <div 
+                class="nav-link"
+                appAnimate="slideLeft" 
+                [appAnimateDuration]="2000" 
+                [appAnimateDelay]="200">
               <p>{{ item.title }}</p>
               <span class="chevron">
                 <i class="pi pi-sort-down-fill text-xs!"></i>
