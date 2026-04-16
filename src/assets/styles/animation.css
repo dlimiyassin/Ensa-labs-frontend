@@ -4,12 +4,16 @@
 .anim-enter-slide-down,
 .anim-enter-slide-left,
 .anim-enter-slide-right,
+.anim-enter-soft-slide-left,
+.anim-enter-soft-slide-right,
 .anim-enter-zoom-in,
 .anim-enter-scale-in,
 .anim-enter-bounce-in,
 .anim-enter-flip-in,
 .anim-leave-fade-out,
 .anim-leave-slide-out,
+.anim-leave-soft-slide-out-left,
+.anim-leave-soft-slide-out-right,
 .anim-leave-zoom-out,
 .anim-leave-scale-out,
 .anim-leave-collapse,
@@ -56,6 +60,16 @@
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.anim-enter-soft-slide-left {
+  animation-name: appSoftSlideLeft;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-enter-soft-slide-right {
+  animation-name: appSoftSlideRight;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .anim-enter-zoom-in {
   animation-name: appZoomIn;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -85,6 +99,16 @@
 .anim-leave-slide-out {
   animation-name: appSlideOut;
   animation-timing-function: cubic-bezier(0.6, -0.01, 0.7, 0.2);
+}
+
+.anim-leave-soft-slide-out-left {
+  animation-name: appSoftSlideOutLeft;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.anim-leave-soft-slide-out-right {
+  animation-name: appSoftSlideOutRight;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 .anim-leave-zoom-out {
@@ -216,6 +240,28 @@
   }
 }
 
+@keyframes appSoftSlideLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(36px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes appSoftSlideRight {
+  from {
+    opacity: 0;
+    transform: translate3d(-36px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes appScaleIn {
   0% {
     opacity: 0;
@@ -297,6 +343,28 @@
   to {
     opacity: 0;
     transform: scale(0.86);
+  }
+}
+
+@keyframes appSoftSlideOutLeft {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-30px, 0, 0);
+  }
+}
+
+@keyframes appSoftSlideOutRight {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(30px, 0, 0);
   }
 }
 

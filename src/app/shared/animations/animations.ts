@@ -12,6 +12,8 @@ export const ENTER_ANIMATIONS = {
   slideDown: 'anim-enter-slide-down',
   slideLeft: 'anim-enter-slide-left',
   slideRight: 'anim-enter-slide-right',
+  softSlideLeft: 'anim-enter-soft-slide-left',
+  softSlideRight: 'anim-enter-soft-slide-right',
   zoomIn: 'anim-enter-zoom-in',
   scaleIn: 'anim-enter-scale-in',
   bounceIn: 'anim-enter-bounce-in',
@@ -21,6 +23,8 @@ export const ENTER_ANIMATIONS = {
 export const LEAVE_ANIMATIONS = {
   fadeOut: 'anim-leave-fade-out',
   slideOut: 'anim-leave-slide-out',
+  softSlideOutLeft: 'anim-leave-soft-slide-out-left',
+  softSlideOutRight: 'anim-leave-soft-slide-out-right',
   zoomOut: 'anim-leave-zoom-out',
   scaleOut: 'anim-leave-scale-out',
   collapse: 'anim-leave-collapse',
