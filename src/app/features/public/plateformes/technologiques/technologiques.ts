@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
+import { PageHeroComponent } from '../../../../shared/components/page-hero/page-hero';
+
 @Component({
   selector: 'app-technologiques',
-  imports: [],
+  imports: [PageHeroComponent],
   templateUrl: './technologiques.html',
-  styleUrl: './technologiques.css',
+  styleUrl: './technologiques.css'
 })
-export class Technologiques {
-
-}
+export class Technologiques {}

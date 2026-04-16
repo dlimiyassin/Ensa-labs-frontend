@@ -1,24 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { PageHeroComponent } from '../../../../shared/components/page-hero/page-hero';
 
 @Component({
   selector: 'app-lab-presentation',
-  imports: [],
+  imports: [PageHeroComponent],
   templateUrl: './lab-presentation.html',
-  styleUrl: './lab-presentation.css',
+  styleUrl: './lab-presentation.css'
 })
-export class LabPresentation {
-  
-  labName = '';
+export class LabPresentation implements OnInit {
+  private readonly route = inject(ActivatedRoute);
 
-  constructor(private route: ActivatedRoute) {}
+  readonly labName = signal('Laboratoire');
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
       const code = params.get('code');
-      this.labName = code || '';
-      console.log(this.labName);
+      this.labName.set(code || 'Laboratoire');
     });
   }
-
 }

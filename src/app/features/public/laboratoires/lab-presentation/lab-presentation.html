@@ -1,1 +1,13 @@
-<p>lab-presentation works : {{ labName }}</p>
+<section class="internal-page">
+  <app-page-hero
+    [title]="labName()"
+    subtitle="Présentation du laboratoire, de ses équipes, de ses axes scientifiques et de ses opportunités de collaboration."
+    image="images/labs/lab1.jpg"
+  />
+
+  <div class="internal-page__content">
+    <p class="internal-page__lead">
+      Cette page sera enrichie avec les informations institutionnelles, les expertises clés, les projets et les publications du laboratoire.
+    </p>
+  </div>
+</section>

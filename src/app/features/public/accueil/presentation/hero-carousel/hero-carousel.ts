@@ -1,4 +1,6 @@
 import { Component, OnDestroy, computed, signal } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 import { AnimateDirective } from '../../../../../shared/animations/animate.directive';
 
 type NavigationDirection = 'forward' | 'backward';
@@ -8,12 +10,14 @@ interface HeroSlide {
   readonly alt: string;
   readonly title: string;
   readonly subtitle: string;
+  readonly ctaLabel: string;
+  readonly ctaRoute: string;
 }
 
 @Component({
   selector: 'app-hero-carousel',
   standalone: true,
-  imports: [AnimateDirective],
+  imports: [AnimateDirective, RouterModule],
   templateUrl: './hero-carousel.html',
   styleUrl: './hero-carousel.css'
 })
@@ -24,14 +28,18 @@ export class HeroCarouselComponent implements OnDestroy {
       alt: 'Laboratoire d’ingénierie ENSA',
       title: 'Recherche & ingénierie d’excellence',
       subtitle:
-        'Des laboratoires universitaires ouverts aux collaborations scientifiques, industrielles et sociétales.'
+        'Des laboratoires universitaires ouverts aux collaborations scientifiques, industrielles et sociétales.',
+      ctaLabel: 'Explorer les laboratoires',
+      ctaRoute: '/laboratoires/LRSTA'
     },
     {
       image: 'images/home/innovation.jpg',
       alt: 'Innovation scientifique ENSA',
       title: 'Innovation au service du territoire',
       subtitle:
-        'Une plateforme de recherche multidisciplinaire pour accélérer la valorisation et le transfert technologique.'
+        'Une plateforme de recherche multidisciplinaire pour accélérer la valorisation et le transfert technologique.',
+      ctaLabel: 'Découvrir l’innovation',
+      ctaRoute: '/innovation/projets'
     }
   ];
 

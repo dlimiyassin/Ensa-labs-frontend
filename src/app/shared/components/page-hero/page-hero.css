@@ -1,0 +1,49 @@
+.page-hero {
+  position: relative;
+  width: 100%;
+  min-height: clamp(16rem, 40vh, 24rem);
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center;
+  isolation: isolate;
+}
+
+.page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(6, 26, 51, 0.84),
+    rgba(6, 26, 51, 0.68) 40%,
+    rgba(6, 26, 51, 0.52)
+  );
+  z-index: -1;
+}
+
+.page-hero__inner {
+  width: min(76rem, 100%);
+  margin-inline: auto;
+  padding: clamp(6.5rem, 11vh, 9rem) 2rem clamp(2rem, 6vh, 3rem);
+  color: #ffffff;
+}
+
+.page-hero__inner h1 {
+  font-size: clamp(1.9rem, 4vw, 3.1rem);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.page-hero__inner p {
+  margin-top: 0.8rem;
+  max-width: 46rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1rem, 1.9vw, 1.15rem);
+}
+
+@media (max-width: 768px) {
+  .page-hero__inner {
+    padding-inline: 1.2rem;
+  }
+}
