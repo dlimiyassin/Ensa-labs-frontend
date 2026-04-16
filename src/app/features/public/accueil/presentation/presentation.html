@@ -1,20 +1,33 @@
 <section class="presentation-page">
   <app-hero-carousel />
 
-  <section
-    class="home-section"
-    appViewportAnimate="softSlideLeft"
-    [appViewportAnimateBidirectional]="true"
-    [appViewportAnimateDuration]="760"
-    [appViewportAnimateDelay]="80"
-  >
+  <section class="home-section labs-section">
     <div class="section-heading">
       <h2>Nos laboratoires</h2>
       <p>Deux structures complémentaires pour porter la recherche académique, technologique et partenariale.</p>
     </div>
-    <div class="labs-grid">
+
+    <div class="labs-editorial-list">
       @for (lab of labs; track lab.name) {
-        <app-lab-card [lab]="lab" />
+        <article
+          class="lab-editorial"
+          [appViewportAnimate]="lab.enterAnimation"
+          [appViewportAnimateLeave]="lab.leaveAnimation"
+          [appViewportAnimateBidirectional]="true"
+          [appViewportAnimateDuration]="760"
+          [appViewportAnimateDelay]="100"
+        >
+          <div class="lab-editorial__content">
+            <header class="lab-editorial__header">
+              <h3>{{ lab.name }}</h3>
+              <p>{{ lab.domain }}</p>
+            </header>
+            <p class="lab-editorial__description">{{ lab.description }}</p>
+          </div>
+          <figure class="lab-editorial__media">
+            <img [src]="lab.image" [alt]="'Laboratoire ' + lab.name" loading="lazy" />
+          </figure>
+        </article>
       }
     </div>
   </section>
