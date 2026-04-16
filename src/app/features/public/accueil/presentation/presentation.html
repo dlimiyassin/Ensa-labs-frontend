@@ -14,8 +14,8 @@
           [appViewportAnimate]="lab.enterAnimation"
           [appViewportAnimateLeave]="lab.leaveAnimation"
           [appViewportAnimateBidirectional]="true"
-          [appViewportAnimateDuration]="760"
-          [appViewportAnimateDelay]="100"
+          [appViewportAnimateDuration]="2000"
+          [appViewportAnimateDelay]="500"
         >
           <div class="lab-editorial__content">
             <header class="lab-editorial__header">
@@ -33,21 +33,23 @@
   </section>
 
   <section
-    #keyFiguresSection
-    class="home-section"
-    appViewportAnimate="softSlideRight"
-    [appViewportAnimateBidirectional]="true"
-    [appViewportAnimateDuration]="760"
-    [appViewportAnimateDelay]="120"
+  class="home-section"
+
   >
     <div class="section-heading">
       <h2>Chiffres clés</h2>
       <p>Un aperçu rapide de la dynamique scientifique et de l’ancrage institutionnel de la plateforme.</p>
     </div>
-    <div class="figures-grid">
+    <div
+    class="figures-grid"
+    #keyFiguresSection
+    appViewportAnimate="softSlideRight"
+    [appViewportAnimateBidirectional]="true"
+    [appViewportAnimateDuration]="2000"
+    [appViewportAnimateDelay]="500">
       @for (figure of keyFigures; track figure.label) {
         <article class="figure-card">
-          <strong>{{ getAnimatedFigureValue(figure) }}</strong>
+          <strong>{{ getAnimatedFigureValue(figure) }}+</strong>
           <span>{{ figure.label }}</span>
         </article>
       }
@@ -56,16 +58,17 @@
 
   <section
     class="home-section"
-    appViewportAnimate="softSlideLeft"
-    [appViewportAnimateBidirectional]="true"
-    [appViewportAnimateDuration]="760"
-    [appViewportAnimateDelay]="160"
   >
     <div class="section-heading">
       <h2>Axes de recherche</h2>
       <p>Des priorités scientifiques structurées autour de thématiques transversales et à fort impact.</p>
     </div>
-    <div class="axes-grid">
+    <div 
+      class="axes-grid"
+      appViewportAnimate="softSlideLeft"
+      [appViewportAnimateBidirectional]="true"
+      [appViewportAnimateDuration]="2000"
+      [appViewportAnimateDelay]="500">
       @for (axis of researchAxes; track axis.title) {
         <article class="axis-item">
           <h3>{{ axis.title }}</h3>
@@ -77,16 +80,17 @@
 
   <section
     class="home-section"
-    appViewportAnimate="softSlideRight"
-    [appViewportAnimateBidirectional]="true"
-    [appViewportAnimateDuration]="760"
-    [appViewportAnimateDelay]="200"
   >
     <div class="section-heading">
       <h2>Projets mis en avant</h2>
       <p>Des initiatives emblématiques conduites par les équipes LRSTA et LaRESI.</p>
     </div>
-    <div class="projects-grid">
+    <div 
+      class="projects-grid"
+      appViewportAnimate="softSlideRight"
+      [appViewportAnimateBidirectional]="true"
+      [appViewportAnimateDuration]="2000"
+      [appViewportAnimateDelay]="500">
       @for (project of featuredProjects; track project.title) {
         <app-project-card [project]="project" />
       }

@@ -1,5 +1,6 @@
 .project-card {
   border-radius: 1rem;
+  height: 100%; 
   background: #fff;
   border: 1px solid color-mix(in srgb, var(--blue-color) 14%, #ffffff);
   overflow: hidden;

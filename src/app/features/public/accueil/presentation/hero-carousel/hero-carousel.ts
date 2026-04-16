@@ -20,14 +20,14 @@ interface HeroSlide {
 export class HeroCarouselComponent implements OnDestroy {
   readonly slides: readonly HeroSlide[] = [
     {
-      image: 'images/labs/engineering.jpg',
+      image: 'images/home/engineering.jpg',
       alt: 'Laboratoire d’ingénierie ENSA',
       title: 'Recherche & ingénierie d’excellence',
       subtitle:
         'Des laboratoires universitaires ouverts aux collaborations scientifiques, industrielles et sociétales.'
     },
     {
-      image: 'images/labs/innovation.jpg',
+      image: 'images/home/innovation.jpg',
       alt: 'Innovation scientifique ENSA',
       title: 'Innovation au service du territoire',
       subtitle:

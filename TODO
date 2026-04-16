@@ -1,4 +1,6 @@
 
 delay the animation of text above carosel
 animation of navbar dropdowns up and down
-create a hero imaage component to be used by other pages
+create a dynamic commun hero imaage with title component to be used by other pages
+
+in topbar add 3 buttons, A+, A, A-: for zooming, like in sobronne university
