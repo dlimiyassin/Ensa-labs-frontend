@@ -9,11 +9,11 @@ import {
 
 import { ViewportAnimateDirective } from '../../../../shared/animations/viewport-animate.directive';
 import { HeroCarouselComponent } from './hero-carousel/hero-carousel';
-import { LabCardComponent, type LabCardModel } from './components/lab-card/lab-card';
 import {
   ProjectCardComponent,
   type ProjectCardModel
 } from './components/project-card/project-card';
+import { type GlobalAnimationName } from '../../../../shared/animations/animations';
 
 interface KeyFigureModel {
   readonly label: string;
@@ -25,12 +25,20 @@ interface ResearchAxisModel {
   readonly description: string;
 }
 
+interface LaboratorySectionModel {
+  readonly name: string;
+  readonly domain: string;
+  readonly description: string;
+  readonly image: string;
+  readonly enterAnimation: GlobalAnimationName;
+  readonly leaveAnimation: GlobalAnimationName;
+}
+
 @Component({
   selector: 'app-presentation',
   imports: [
     HeroCarouselComponent,
     ViewportAnimateDirective,
-    LabCardComponent,
     ProjectCardComponent
   ],
   templateUrl: './presentation.html',
@@ -45,20 +53,24 @@ export class Presentation implements AfterViewInit, OnDestroy {
   private counterFrameId: number | null = null;
   protected readonly animatedFigureValues = signal<Record<string, number>>({});
 
-  protected readonly labs: readonly LabCardModel[] = [
+  protected readonly labs: readonly LaboratorySectionModel[] = [
     {
       name: 'LRSTA',
+      domain: 'Technologies Avancées et Systèmes Intelligents',
       description:
-        'Laboratoire orienté vers les systèmes intelligents, l’analyse des données et les technologies appliquées aux enjeux sociétaux.',
-      ctaLabel: 'Voir le laboratoire',
-      image: 'images/labs/innovation.jpg'
+        'Le Laboratoire de Recherche en Sciences et Technologies Avancées (LRSTA) développe des travaux de fond sur l’intelligence artificielle, la modélisation des systèmes complexes et l’exploitation de données à grande échelle. Ses équipes articulent recherche fondamentale et expérimentations appliquées autour de problématiques liées à la santé, à l’industrie et à la transformation numérique des territoires. Le laboratoire valorise une production scientifique rigoureuse, soutenue par des collaborations doctorales, des publications indexées et des partenariats académiques internationaux structurants. Les projets conduits au sein du LRSTA contribuent à la diffusion de connaissances robustes, transférables vers les acteurs publics et socio-économiques.',
+      image: 'images/labs/innovation.jpg',
+      enterAnimation: 'softSlideRight',
+      leaveAnimation: 'softSlideOutRight'
     },
     {
       name: 'LaRESI',
+      domain: 'Ingénierie Durable et Innovation Interdisciplinaire',
       description:
-        'Laboratoire centré sur l’ingénierie des systèmes, l’innovation durable et la recherche interdisciplinaire à fort impact régional.',
-      ctaLabel: 'Voir le laboratoire',
-      image: 'images/labs/innovation.jpg'
+        'Le Laboratoire de Recherche en Énergies, Systèmes et Innovation (LaRESI) inscrit ses activités dans une perspective de transition durable, d’optimisation des infrastructures et d’ingénierie au service des besoins sociétaux. Les équipes développent des approches interdisciplinaires associant sciences de l’ingénieur, évaluation environnementale et dispositifs technologiques orientés vers l’impact territorial. La dynamique scientifique repose sur des protocoles méthodologiques exigeants, un ancrage institutionnel fort et une coopération régulière avec les partenaires industriels et institutionnels. À travers ses programmes de recherche, LaRESI consolide le lien entre production académique, innovation responsable et transfert de solutions vers l’écosystème régional.',
+      image: 'images/labs/innovation.jpg',
+      enterAnimation: 'softSlideLeft',
+      leaveAnimation: 'softSlideOutLeft'
     }
   ];
 

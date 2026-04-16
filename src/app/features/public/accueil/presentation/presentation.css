@@ -29,18 +29,78 @@
   font-size: 0.95rem;
 }
 
-.labs-grid,
+.labs-section {
+  margin-top: 3.5rem;
+}
+
+.labs-editorial-list {
+  display: grid;
+  gap: 2.1rem;
+}
+
+.lab-editorial {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 1fr);
+  gap: 1.75rem;
+  align-items: start;
+  padding: 1.6rem 0 2rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--blue-color) 18%, #ffffff);
+}
+
+.lab-editorial:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.lab-editorial__header h3 {
+  margin: 0;
+  display: inline-block;
+  color: var(--blue-color);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-size: 1.12rem;
+  line-height: 1.45;
+  border-bottom: 1px solid color-mix(in srgb, var(--blue-color) 55%, #ffffff);
+  padding-bottom: 0.3rem;
+}
+
+.lab-editorial__header p {
+  margin: 0.65rem 0 0;
+  color: color-mix(in srgb, var(--text-color) 82%, #ffffff);
+  font-size: 0.88rem;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+}
+
+.lab-editorial__description {
+  margin: 1rem 0 0;
+  color: color-mix(in srgb, var(--text-color) 90%, #ffffff);
+  font-size: 0.93rem;
+  line-height: 1.78;
+  text-align: justify;
+}
+
+.lab-editorial__media {
+  margin: 0;
+  align-self: center;
+}
+
+.lab-editorial__media img {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  display: block;
+}
+
 .projects-grid,
 .axes-grid {
   display: grid;
   gap: 1rem;
 }
 
-.labs-grid,
-.projects-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
+.projects-grid,
 .axes-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -114,7 +174,6 @@
     padding: 2.1rem 1.8rem;
   }
 
-  .labs-grid,
   .projects-grid,
   .axes-grid {
     gap: 1.15rem;
@@ -131,15 +190,36 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .labs-grid,
   .projects-grid,
   .axes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .labs-editorial-list {
+    gap: 1.6rem;
+  }
+
+  .lab-editorial {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.35rem 0 1.7rem;
+  }
+
+  .lab-editorial__media {
+    order: 2;
+  }
+
+  .lab-editorial__media img {
+    height: 12.5rem;
   }
 }
 
 @media (max-width: 576px) {
   .figures-grid {
     grid-template-columns: 1fr;
+  }
+
+  .lab-editorial__description {
+    text-align: left;
   }
 }
