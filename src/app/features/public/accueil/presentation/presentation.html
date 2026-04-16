@@ -15,7 +15,7 @@
           [appViewportAnimateLeave]="lab.leaveAnimation"
           [appViewportAnimateBidirectional]="true"
           [appViewportAnimateDuration]="2000"
-          [appViewportAnimateDelay]="500"
+          [appViewportAnimateDelay]="250"
         >
           <div class="lab-editorial__content">
             <header class="lab-editorial__header">
@@ -46,7 +46,7 @@
     appViewportAnimate="softSlideRight"
     [appViewportAnimateBidirectional]="true"
     [appViewportAnimateDuration]="2000"
-    [appViewportAnimateDelay]="500">
+    [appViewportAnimateDelay]="250">
       @for (figure of keyFigures; track figure.label) {
         <article class="figure-card">
           <strong>{{ getAnimatedFigureValue(figure) }}+</strong>
@@ -68,7 +68,7 @@
       appViewportAnimate="softSlideLeft"
       [appViewportAnimateBidirectional]="true"
       [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="500">
+      [appViewportAnimateDelay]="250">
       @for (axis of researchAxes; track axis.title) {
         <article class="axis-item">
           <h3>{{ axis.title }}</h3>
@@ -90,7 +90,7 @@
       appViewportAnimate="softSlideRight"
       [appViewportAnimateBidirectional]="true"
       [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="500">
+      [appViewportAnimateDelay]="250">
       @for (project of featuredProjects; track project.title) {
         <app-project-card [project]="project" />
       }
