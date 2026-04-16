@@ -1,0 +1,22 @@
+.internal-page {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.internal-page__content {
+  width: min(76rem, 100%);
+  margin-inline: auto;
+  padding: 2.5rem 2rem 4rem;
+}
+
+.internal-page__lead {
+  margin: 0;
+  max-width: 56rem;
+  color: var(--text-color);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .internal-page__content {
+    padding-inline: 1.2rem;
+  }
+}

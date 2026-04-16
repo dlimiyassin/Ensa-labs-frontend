@@ -7,5 +7,6 @@
 @import './public/topbar.css';
 @import './public/navbar.css';
 @import './public/footer.css';
+@import './public/internal-page.css';
 
 @import './private/dashboard.css';
