@@ -1,11 +1,11 @@
 .layout-navbar {
   position: fixed;
-  height: 4rem;
+  height: 5rem;
   z-index: 1000;
   top: 2rem;
   left: 0;
   width: 100%;
-  padding: 2.3rem 1rem 2.5rem 1rem;
+  padding: 3.3rem 1rem 3.5rem 1rem;
 
   display: flex;
   justify-content: space-between;
@@ -57,12 +57,12 @@
 
   .layout-navbar-logo-container {
     width: 14rem;
-    height: 3rem;
+    height: 4rem;
     display: flex;
     align-items: center;
 
     .logo-img {
-      height: 3rem;
+      height: 4rem;
       width: auto;
     }
   }
@@ -75,27 +75,12 @@
 
     .nav-item {
       position: relative;
-      padding-bottom: 0;
 
-      &::after {
-        content: '';
-        position: absolute;
-        inset-inline: 0;
-        top: 100%;
-        height: 0.85rem;
+      &:hover .dropdown {
+        display: block;
       }
 
-      &:hover .dropdown,
-      &:focus-within .dropdown {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        pointer-events: auto;
-        transition-delay: 0s, 0s, 0s;
-      }
-
-      &:hover .nav-link .chevron,
-      &:focus-within .nav-link .chevron {
+      &:hover .nav-link .chevron {
         transform: rotate(180deg);
       }
     }
@@ -106,7 +91,7 @@
       gap: 6px;
       margin-top: 0.5rem;
       padding: 0 0.875rem;
-      height: 4rem;
+      height: 5rem;
       font-size: 1rem;
       font-weight: bolder;
       color: var(--text-color);
@@ -162,10 +147,10 @@
   }
 
   .dropdown {
+    display: none;
     position: absolute;
-    top: 100%;
+    top: 4.5rem;
     inset-inline-start: 0;
-    margin-top: 0;
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-bottom-color: var(--blue-color);
@@ -175,15 +160,6 @@
     white-space: nowrap;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     z-index: 200;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transform-origin: top center;
-    pointer-events: none;
-    transition:
-      opacity 240ms ease,
-      transform 240ms ease,
-      visibility 0s linear 240ms;
 
     a {
       position: relative;
@@ -288,15 +264,9 @@
     .dropdown {
       position: relative;
       top: 0;
-      inset-inline-start: 0;
-      width: 100%;
       box-shadow: none;
       border: none;
       padding-left: 1rem;
-      opacity: 1;
-      visibility: visible;
-      transform: none;
-      pointer-events: auto;
     }
   }
 }
