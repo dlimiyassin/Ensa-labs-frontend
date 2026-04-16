@@ -3,9 +3,10 @@
 
   <section
     class="home-section"
-    appViewportAnimate="slideLeft"
-    [appViewportAnimateDuration]="2000"
-    [appViewportAnimateDelay]="300"
+    appViewportAnimate="softSlideLeft"
+    [appViewportAnimateBidirectional]="true"
+    [appViewportAnimateDuration]="760"
+    [appViewportAnimateDelay]="80"
   >
     <div class="section-heading">
       <h2>Nos laboratoires</h2>
@@ -19,10 +20,12 @@
   </section>
 
   <section
+    #keyFiguresSection
     class="home-section"
-    appViewportAnimate="slideRight"
-    [appViewportAnimateDuration]="2000"
-    [appViewportAnimateDelay]="300"
+    appViewportAnimate="softSlideRight"
+    [appViewportAnimateBidirectional]="true"
+    [appViewportAnimateDuration]="760"
+    [appViewportAnimateDelay]="120"
   >
     <div class="section-heading">
       <h2>Chiffres clés</h2>
@@ -31,7 +34,7 @@
     <div class="figures-grid">
       @for (figure of keyFigures; track figure.label) {
         <article class="figure-card">
-          <strong>{{ figure.value }}</strong>
+          <strong>{{ getAnimatedFigureValue(figure) }}</strong>
           <span>{{ figure.label }}</span>
         </article>
       }
@@ -40,9 +43,10 @@
 
   <section
     class="home-section"
-    appViewportAnimate="slideLeft"
-    [appViewportAnimateDuration]="2000"
-    [appViewportAnimateDelay]="300"
+    appViewportAnimate="softSlideLeft"
+    [appViewportAnimateBidirectional]="true"
+    [appViewportAnimateDuration]="760"
+    [appViewportAnimateDelay]="160"
   >
     <div class="section-heading">
       <h2>Axes de recherche</h2>
@@ -60,9 +64,10 @@
 
   <section
     class="home-section"
-    appViewportAnimate="slideRight"
-    [appViewportAnimateDuration]="2000"
-    [appViewportAnimateDelay]="300"
+    appViewportAnimate="softSlideRight"
+    [appViewportAnimateBidirectional]="true"
+    [appViewportAnimateDuration]="760"
+    [appViewportAnimateDelay]="200"
   >
     <div class="section-heading">
       <h2>Projets mis en avant</h2>
