@@ -75,7 +75,15 @@
 
     .nav-item {
       position: relative;
-      padding-bottom: 0.6rem;
+      padding-bottom: 0;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        top: 100%;
+        height: 0.85rem;
+      }
 
       &:hover .dropdown,
       &:focus-within .dropdown {
@@ -83,6 +91,7 @@
         visibility: visible;
         transform: translateY(0);
         pointer-events: auto;
+        transition-delay: 0s, 0s, 0s;
       }
 
       &:hover .nav-link .chevron,
@@ -154,8 +163,9 @@
 
   .dropdown {
     position: absolute;
-    top: calc(100% - 0.25rem);
+    top: 100%;
     inset-inline-start: 0;
+    margin-top: 0;
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-bottom-color: var(--blue-color);
@@ -168,11 +178,12 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
+    transform-origin: top center;
     pointer-events: none;
     transition:
       opacity 240ms ease,
       transform 240ms ease,
-      visibility 240ms ease;
+      visibility 0s linear 240ms;
 
     a {
       position: relative;
