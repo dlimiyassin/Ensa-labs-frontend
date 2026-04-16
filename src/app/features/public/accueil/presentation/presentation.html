@@ -1,21 +1,77 @@
 <section class="presentation-page">
   <app-hero-carousel />
 
-  <article
-    class="presentation-page__content"
-    appAnimate="fadeIn"
-    [appAnimateDuration]="1100"
-    [appAnimateDelay]="100"
+  <section
+    class="home-section"
+    appViewportAnimate="slideLeft"
+    [appViewportAnimateDuration]="700"
+    [appViewportAnimateDelay]="80"
   >
-    <strong>Recherche</strong>
-    <p>
-      La structuration de la recherche scientifique à l’Université Moulay Ismail représente un intérêt primordial.
-      En effet, l’important chantier de structuration qui a été ouvert en 2005 concernant la structuration de la
-      recherche au niveau de l’ensemble des établissements de l’Université a conduit à la mise en place d’un grand
-      nombre des équipes et un essai de rassemblement en laboratoire et centre. En effet, dans un souci de renforcer
-      la visibilité de la recherche et de favoriser l’émergence de masses critiques par grands thèmes, ainsi que la
-      constitution de réseaux susceptibles d’évoluer en centres de recherche, l’UMI a engagé une réflexion approfondie
-      sur la recomposition de ses structures de recherche.
-    </p>
-  </article>
+    <div class="section-heading">
+      <h2>Nos laboratoires</h2>
+      <p>Deux structures complémentaires pour porter la recherche académique, technologique et partenariale.</p>
+    </div>
+    <div class="labs-grid">
+      @for (lab of labs; track lab.name) {
+        <app-lab-card [lab]="lab" />
+      }
+    </div>
+  </section>
+
+  <section
+    class="home-section"
+    appViewportAnimate="slideRight"
+    [appViewportAnimateDuration]="700"
+    [appViewportAnimateDelay]="80"
+  >
+    <div class="section-heading">
+      <h2>Chiffres clés</h2>
+      <p>Un aperçu rapide de la dynamique scientifique et de l’ancrage institutionnel de la plateforme.</p>
+    </div>
+    <div class="figures-grid">
+      @for (figure of keyFigures; track figure.label) {
+        <article class="figure-card">
+          <strong>{{ figure.value }}</strong>
+          <span>{{ figure.label }}</span>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section
+    class="home-section"
+    appViewportAnimate="slideLeft"
+    [appViewportAnimateDuration]="700"
+    [appViewportAnimateDelay]="80"
+  >
+    <div class="section-heading">
+      <h2>Axes de recherche</h2>
+      <p>Des priorités scientifiques structurées autour de thématiques transversales et à fort impact.</p>
+    </div>
+    <div class="axes-grid">
+      @for (axis of researchAxes; track axis.title) {
+        <article class="axis-item">
+          <h3>{{ axis.title }}</h3>
+          <p>{{ axis.description }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section
+    class="home-section"
+    appViewportAnimate="slideRight"
+    [appViewportAnimateDuration]="700"
+    [appViewportAnimateDelay]="80"
+  >
+    <div class="section-heading">
+      <h2>Projets mis en avant</h2>
+      <p>Des initiatives emblématiques conduites par les équipes LRSTA et LaRESI.</p>
+    </div>
+    <div class="projects-grid">
+      @for (project of featuredProjects; track project.title) {
+        <app-project-card [project]="project" />
+      }
+    </div>
+  </section>
 </section>
