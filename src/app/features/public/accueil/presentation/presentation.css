@@ -1,32 +1,115 @@
 .presentation-page {
-  padding-bottom: 2rem;
-  background: #f8fafc;
+  background: var(--bg-color);
+  padding-bottom: 4.5rem;
 }
 
-.presentation-page__content {
-  max-width: 72rem;
-  margin: 2rem auto 0;
-  border-radius: 1rem;
+.home-section {
+  max-width: 75rem;
+  margin: 2.5rem auto 0;
   padding: 2rem;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border-radius: 1.2rem;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--blue-color) 12%, #ffffff);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
 }
 
-.presentation-page__content strong {
-  display: inline-block;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.section-heading {
+  margin-bottom: 1.4rem;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 2rem);
   color: var(--blue-color);
 }
 
-.presentation-page__content p {
-  color: #334155;
-  line-height: 1.7;
+.section-heading p {
+  margin: 0.65rem 0 0;
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
-@media (max-width: 768px) {
-  .presentation-page__content {
-    margin: 1rem;
+.labs-grid,
+.projects-grid,
+.axes-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.labs-grid,
+.projects-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.axes-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.figures-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.figure-card {
+  padding: 1rem;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--blue-color) 7%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--blue-color) 18%, #ffffff);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 6.2rem;
+}
+
+.figure-card strong {
+  color: var(--orange-color);
+  font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+}
+
+.figure-card span {
+  margin-top: 0.35rem;
+  color: var(--text-color);
+}
+
+.axis-item {
+  border-left: 4px solid var(--orange-color);
+  background: color-mix(in srgb, var(--orange-color) 5%, #ffffff);
+  border-radius: 0.75rem;
+  padding: 1rem 1rem 1rem 1.1rem;
+}
+
+.axis-item h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--blue-color);
+}
+
+.axis-item p {
+  margin: 0.55rem 0 0;
+  color: var(--text-color);
+  line-height: 1.55;
+}
+
+@media (max-width: 992px) {
+  .home-section {
+    margin: 1.8rem 1rem 0;
     padding: 1.5rem;
+  }
+
+  .figures-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .labs-grid,
+  .projects-grid,
+  .axes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .figures-grid {
+    grid-template-columns: 1fr;
   }
 }

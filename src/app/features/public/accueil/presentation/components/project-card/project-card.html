@@ -1,0 +1,12 @@
+<article class="project-card">
+  <img
+    [src]="project().image"
+    [alt]="'Illustration du projet ' + project().title"
+    class="project-card__image"
+  />
+  <div class="project-card__body">
+    <span class="project-card__lab">{{ project().laboratory }}</span>
+    <h3>{{ project().title }}</h3>
+    <p>{{ project().description }}</p>
+  </div>
+</article>

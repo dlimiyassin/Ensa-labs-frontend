@@ -1,0 +1,8 @@
+<article class="lab-card">
+  <img [src]="lab().image" [alt]="'Illustration du laboratoire ' + lab().name" class="lab-card__image" />
+  <div class="lab-card__body">
+    <h3>{{ lab().name }}</h3>
+    <p>{{ lab().description }}</p>
+    <button type="button" class="lab-card__cta">{{ lab().ctaLabel }}</button>
+  </div>
+</article>
