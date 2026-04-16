@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  booleanAttribute,
   Directive,
   ElementRef,
   HostBinding,
@@ -21,7 +22,7 @@ import {
   selector: '[appViewportAnimate]',
   standalone: true
 })
-export class ViewportAnimateDirective implements AfterViewInit {
+export class ViewportAnimateDirective implements AfterViewInit, OnDestroy {
   private readonly element = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
 
@@ -32,9 +33,14 @@ export class ViewportAnimateDirective implements AfterViewInit {
   readonly appViewportAnimateDelay = input(DEFAULT_ANIMATION_DELAY_MS, {
     transform: numberAttribute
   });
+  readonly appViewportAnimateLeave = input<GlobalAnimationName | null>(null);
+  readonly appViewportAnimateBidirectional = input(false, {
+    transform: booleanAttribute
+  });
 
   private revealed = false;
   private observer?: IntersectionObserver;
+  private activeAnimationClass: string | null = null;
 
   @HostBinding('style.--app-animate-duration')
   protected get cssDurationVar(): string {
@@ -54,25 +60,31 @@ export class ViewportAnimateDirective implements AfterViewInit {
   ngAfterViewInit(): void {
     if (typeof IntersectionObserver === 'undefined') {
       this.revealed = true;
-      this.applyAnimationClass();
+      this.applyAnimationClass(this.appViewportAnimate());
       return;
     }
 
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting || this.revealed) {
-            continue;
-          }
+    this.observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const shouldEnter = entry.isIntersecting && entry.intersectionRatio >= 0.28;
+        const shouldLeave =
+          this.appViewportAnimateBidirectional() &&
+          this.revealed &&
+          (!entry.isIntersecting || entry.intersectionRatio <= 0.12);
 
+        if (shouldEnter && !this.revealed) {
           this.revealed = true;
-          this.applyAnimationClass();
-          this.observer?.disconnect();
-          break;
+          this.applyAnimationClass(this.appViewportAnimate());
+
+          if (!this.appViewportAnimateBidirectional()) {
+            this.observer?.disconnect();
+          }
+        } else if (shouldLeave) {
+          this.revealed = false;
+          this.applyAnimationClass(this.resolveLeaveAnimation());
         }
-      },
-      { threshold: 0.2 }
-    );
+      }
+    }, { threshold: [0, 0.12, 0.28] });
 
     this.observer.observe(this.element.nativeElement);
   }
@@ -81,13 +93,37 @@ export class ViewportAnimateDirective implements AfterViewInit {
     this.observer?.disconnect();
   }
 
-  private applyAnimationClass(): void {
-    const animationClass = GLOBAL_ANIMATION_MAP.get(this.appViewportAnimate())?.cssClass;
+  private applyAnimationClass(animationName: GlobalAnimationName): void {
+    const animationClass = GLOBAL_ANIMATION_MAP.get(animationName)?.cssClass;
 
     if (!animationClass) {
       return;
     }
 
+    if (this.activeAnimationClass) {
+      this.renderer.removeClass(this.element.nativeElement, this.activeAnimationClass);
+    }
+
+    void this.element.nativeElement.offsetWidth;
     this.renderer.addClass(this.element.nativeElement, animationClass);
+    this.activeAnimationClass = animationClass;
+  }
+
+  private resolveLeaveAnimation(): GlobalAnimationName {
+    const explicitLeaveAnimation = this.appViewportAnimateLeave();
+    if (explicitLeaveAnimation) {
+      return explicitLeaveAnimation;
+    }
+
+    const enterAnimation = this.appViewportAnimate();
+    if (enterAnimation === 'softSlideLeft') {
+      return 'softSlideOutRight';
+    }
+
+    if (enterAnimation === 'softSlideRight') {
+      return 'softSlideOutLeft';
+    }
+
+    return 'fadeOut';
   }
 }
