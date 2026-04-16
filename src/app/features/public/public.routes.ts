@@ -12,6 +12,7 @@ import { LabPresentation } from './laboratoires/lab-presentation/lab-presentatio
 import { ProjetsLaboratoire } from './laboratoires/projets/projets';
 import { Publications } from './laboratoires/publications/publications';
 import { Services } from './plateformes/services/services';
+import { Equipements as PlateformesEquipements } from './plateformes/equipements/equipements';
 import { Technologiques } from './plateformes/technologiques/technologiques';
 import { Axes } from './recherche/axes/axes';
 import { Partenariats } from './recherche/partenariats/partenariats';
@@ -66,6 +67,7 @@ export const PUBLIC_ROUTES: Routes = [
     path: 'plateformes',
     children: [
       { path: 'technologiques', component: Technologiques },
+      { path: 'equipements', component: PlateformesEquipements },
       { path: 'services', component: Services }
     ]
   }
