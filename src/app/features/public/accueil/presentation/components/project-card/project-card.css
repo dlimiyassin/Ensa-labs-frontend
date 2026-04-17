@@ -1,5 +1,5 @@
 .project-card {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   height: 100%; 
   background: #fff;
   border: 1px solid color-mix(in srgb, var(--blue-color) 14%, #ffffff);

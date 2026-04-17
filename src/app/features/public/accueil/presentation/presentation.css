@@ -124,7 +124,7 @@
 
 .figure-card {
   padding: 0.95rem;
-  border-radius: 0.85rem;
+  border-radius: 0.5rem;
   background: color-mix(in srgb, var(--blue-color) 7%, #ffffff);
   border: 1px solid color-mix(in srgb, var(--blue-color) 18%, #ffffff);
   display: flex;

@@ -37,7 +37,7 @@ import { LayoutViewportService } from './service/layout-viewport.service';
               [class.active]="isItemActive(item)"
               appAnimate="slideLeft"
               [appAnimateDuration]="2000"
-              [appAnimateDelay]="200"
+              [appAnimateDelay]="1000"
             >
               <p>{{ item.title }}</p>
               <span class="chevron">
@@ -76,11 +76,11 @@ import { LayoutViewportService } from './service/layout-viewport.service';
         }
       </div>
 
-      <div class="flex flex-row items-center gap-2">
+      <!-- <div class="flex flex-row items-center gap-2">
         <button class="cursor-pointer rounded py-2 px-4 hover:bg-gray-200" title="login" routerLink="private-backdoor-7">
           Admin
         </button>
-      </div>
+      </div> -->
     </nav>
   `
 })
