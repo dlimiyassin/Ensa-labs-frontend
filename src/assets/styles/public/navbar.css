@@ -133,7 +133,7 @@
       }
 
       &.active p {
-        color: #0080a2;
+        color: var(--blue-color);
       }
 
       &.active p::after {
