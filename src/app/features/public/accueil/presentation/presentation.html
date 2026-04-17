@@ -1,96 +1,137 @@
 <section class="presentation-page">
   <app-hero-carousel />
 
+  <!-- LABS SECTION -->
   <section class="home-section labs-section">
-    <div class="section-heading">
+    <div
+      class="section-heading"
+      appViewportAnimate="fadeIn"
+      [appViewportAnimateBidirectional]="true"
+      [appViewportAnimateDuration]="900"
+      [appViewportAnimateDelay]="0"
+    >
+      <div class="section-label">Structures de recherche</div>
       <h2>Nos laboratoires</h2>
       <p>Deux structures complémentaires pour porter la recherche académique, technologique et partenariale.</p>
     </div>
 
     <div class="labs-editorial-list">
-      @for (lab of labs; track lab.name) {
+      @for (lab of labs; track lab.name; let i = $index) {
         <article
           class="lab-editorial"
+          [class.lab-editorial--reverse]="i % 2 === 1"
           [appViewportAnimate]="lab.enterAnimation"
           [appViewportAnimateLeave]="lab.leaveAnimation"
           [appViewportAnimateBidirectional]="true"
-          [appViewportAnimateDuration]="2000"
-          [appViewportAnimateDelay]="250"
+          [appViewportAnimateDuration]="1800"
+          [appViewportAnimateDelay]="150"
         >
           <div class="lab-editorial__content">
             <header class="lab-editorial__header">
+              <span class="lab-index">0{{ i + 1 }}</span>
               <h3>{{ lab.name }}</h3>
-              <p>{{ lab.domain }}</p>
+              <p class="lab-domain">{{ lab.domain }}</p>
             </header>
             <p class="lab-editorial__description">{{ lab.description }}</p>
+            <div class="lab-editorial__footer">
+              <span class="lab-tag">Recherche fondamentale</span>
+              <span class="lab-tag">Partenariats</span>
+            </div>
           </div>
           <figure class="lab-editorial__media">
-            <img [src]="lab.image" [alt]="'Laboratoire ' + lab.name" loading="lazy" />
+            <div class="lab-editorial__media-inner">
+              <img [src]="lab.image" [alt]="'Laboratoire ' + lab.name" loading="lazy" />
+              <div class="lab-editorial__media-overlay">
+                <span class="lab-name-overlay">{{ lab.name }}</span>
+              </div>
+            </div>
           </figure>
         </article>
       }
     </div>
   </section>
 
-  <section
-  class="home-section"
-
-  >
-    <div class="section-heading">
+  <!-- KEY FIGURES SECTION -->
+  <section class="home-section figures-section">
+    <div
+      class="section-heading"
+      appViewportAnimate="fadeIn"
+      [appViewportAnimateBidirectional]="true"
+      [appViewportAnimateDuration]="900"
+    >
+      <div class="section-label">Impact scientifique</div>
       <h2>Chiffres clés</h2>
-      <p>Un aperçu rapide de la dynamique scientifique et de l’ancrage institutionnel de la plateforme.</p>
+      <p>Un aperçu rapide de la dynamique scientifique et de l'ancrage institutionnel de la plateforme.</p>
     </div>
     <div
-    class="figures-grid"
-    #keyFiguresSection
-    appViewportAnimate="softSlideRight"
-    [appViewportAnimateBidirectional]="true"
-    [appViewportAnimateDuration]="2000"
-    [appViewportAnimateDelay]="250">
-      @for (figure of keyFigures; track figure.label) {
-        <article class="figure-card">
-          <strong>{{ getAnimatedFigureValue(figure) }}+</strong>
-          <span>{{ figure.label }}</span>
+      class="figures-grid"
+      #keyFiguresSection
+      appViewportAnimate="softSlideRight"
+      [appViewportAnimateBidirectional]="true"
+      [appViewportAnimateDuration]="2000"
+      [appViewportAnimateDelay]="250"
+    >
+      @for (figure of keyFigures; track figure.label; let i = $index) {
+        <article class="figure-card" [style.--card-index]="i">
+          <div class="figure-card__accent"></div>
+          <strong class="figure-value">{{ getAnimatedFigureValue(figure) }}<span class="figure-plus">+</span></strong>
+          <span class="figure-label">{{ figure.label }}</span>
         </article>
       }
     </div>
   </section>
 
-  <section
-    class="home-section"
-  >
-    <div class="section-heading">
+  <!-- RESEARCH AXES SECTION -->
+  <section class="home-section axes-section">
+    <div
+      class="section-heading"
+      appViewportAnimate="fadeIn"
+      [appViewportAnimateBidirectional]="true"
+      [appViewportAnimateDuration]="900"
+    >
+      <div class="section-label">Thématiques prioritaires</div>
       <h2>Axes de recherche</h2>
       <p>Des priorités scientifiques structurées autour de thématiques transversales et à fort impact.</p>
     </div>
-    <div 
+    <div
       class="axes-grid"
       appViewportAnimate="softSlideLeft"
       [appViewportAnimateBidirectional]="true"
       [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="250">
-      @for (axis of researchAxes; track axis.title) {
-        <article class="axis-item">
-          <h3>{{ axis.title }}</h3>
-          <p>{{ axis.description }}</p>
+      [appViewportAnimateDelay]="250"
+    >
+      @for (axis of researchAxes; track axis.title; let i = $index) {
+        <article class="axis-item" [style.--axis-index]="i">
+          <div class="axis-item__number">{{ (i + 1).toString().padStart(2, '0') }}</div>
+          <div class="axis-item__body">
+            <h3>{{ axis.title }}</h3>
+            <p>{{ axis.description }}</p>
+          </div>
+          <div class="axis-item__bar"></div>
         </article>
       }
     </div>
   </section>
 
-  <section
-    class="home-section"
-  >
-    <div class="section-heading">
+  <!-- FEATURED PROJECTS SECTION -->
+  <section class="home-section projects-section">
+    <div
+      class="section-heading"
+      appViewportAnimate="fadeIn"
+      [appViewportAnimateBidirectional]="true"
+      [appViewportAnimateDuration]="900"
+    >
+      <div class="section-label">Initiatives emblématiques</div>
       <h2>Projets mis en avant</h2>
       <p>Des initiatives emblématiques conduites par les équipes LRSTA et LaRESI.</p>
     </div>
-    <div 
+    <div
       class="projects-grid"
       appViewportAnimate="softSlideRight"
       [appViewportAnimateBidirectional]="true"
       [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="250">
+      [appViewportAnimateDelay]="250"
+    >
       @for (project of featuredProjects; track project.title) {
         <app-project-card [project]="project" />
       }
