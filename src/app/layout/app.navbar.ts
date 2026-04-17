@@ -118,19 +118,6 @@ export class AppNavbar {
 
   navItems: NavItem[] = [
     {
-      title: 'ACCUEIL',
-      sections: [
-        {
-          label: 'main',
-          links: [
-            { label: 'Présentation générale', route: '/accueil/presentation' },
-            { label: 'Chiffres clés', route: '/accueil/chiffres' },
-            { label: 'Actualités récentes', route: '/accueil/actualites' }
-          ]
-        }
-      ]
-    },
-    {
       title: 'LABORATOIRES',
       sections: [
         {
@@ -189,10 +176,11 @@ export class AppNavbar {
   ];
 }
 
-interface NavLink {
-  label?: string;
+
+interface NavItem {
+  title: string;
   route?: string;
-  bold?: boolean;
+  sections: NavSection[];
 }
 
 interface NavSection {
@@ -202,7 +190,9 @@ interface NavSection {
   subLinks?: NavLink[];
 }
 
-interface NavItem {
-  title: string;
-  sections: NavSection[];
+interface NavLink {
+  label?: string;
+  route?: string;
+  bold?: boolean;
 }
+

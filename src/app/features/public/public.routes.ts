@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import { Actualites } from './accueil/actualites/actualites';
-import { Chiffres } from './accueil/chiffres/chiffres';
-import { Presentation } from './accueil/presentation/presentation';
 import { Brevets } from './innovation/brevets/brevets';
 import { PartenariatsIndustriels } from './innovation/partenariats/partenariats';
 import { ProjetsInnovation } from './innovation/projets/projets';
@@ -18,18 +15,13 @@ import { Axes } from './recherche/axes/axes';
 import { Partenariats } from './recherche/partenariats/partenariats';
 import { ProjetsRecherche } from './recherche/projets/projets';
 import { Structures } from './recherche/structures/structures';
+import { Presentation } from './presentation/presentation';
 
 export const PUBLIC_ROUTES: Routes = [
 
-  { path: '', redirectTo: 'accueil/presentation', pathMatch: 'full' },
-
   {
-    path: 'accueil',
-    children: [
-      { path: 'presentation', component: Presentation },
-      { path: 'chiffres', component: Chiffres },
-      { path: 'actualites', component: Actualites }
-    ]
+    path: '',
+    component: Presentation
   },
 
   {

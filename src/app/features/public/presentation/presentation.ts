@@ -7,13 +7,13 @@ import {
   signal
 } from '@angular/core';
 
-import { ViewportAnimateDirective } from '../../../../shared/animations/viewport-animate.directive';
 import { HeroCarouselComponent } from './hero-carousel/hero-carousel';
 import {
   ProjectCardComponent,
   type ProjectCardModel
 } from './components/project-card/project-card';
-import { type GlobalAnimationName } from '../../../../shared/animations/animations';
+import { GlobalAnimationName } from '../../../shared/animations/animations';
+import { ViewportAnimateDirective } from '../../../shared/animations/viewport-animate.directive';
 
 interface KeyFigureModel {
   readonly label: string;

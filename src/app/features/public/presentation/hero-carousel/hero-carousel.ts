@@ -1,7 +1,7 @@
 import { Component, OnDestroy, computed, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AnimateDirective } from '../../../../shared/animations/animate.directive';
 
-import { AnimateDirective } from '../../../../../shared/animations/animate.directive';
 
 type NavigationDirection = 'forward' | 'backward';
 
