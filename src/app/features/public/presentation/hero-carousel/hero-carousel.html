@@ -9,7 +9,6 @@
         [attr.aria-hidden]="true"
       ></div>
     }
-
     <div
       class="hero-carousel__slide hero-carousel__slide--current"
       [class.is-enter-forward]="direction() === 'forward'"
@@ -18,7 +17,6 @@
       [attr.aria-label]="currentSlide().alt"
     >
       <div class="hero-carousel__overlay"></div>
-
       @for (slide of [currentSlide()]; track currentIndex()) {
         <div
           class="hero-carousel__content"
@@ -26,24 +24,52 @@
           [appAnimateDuration]="1500"
           [appAnimateDelay]="500"
         >
-          <!-- <p class="hero-carousel__eyebrow">Plateforme des laboratoires</p> -->
+          <p class="hero-carousel__eyebrow">
+            <span class="hero-carousel__eyebrow-dash" aria-hidden="true"></span>
+            Plateforme des laboratoires
+          </p>
           <h1>{{ slide.title }}</h1>
           <p>{{ slide.subtitle }}</p>
-          <a class="hero-carousel__cta" [routerLink]="slide.ctaRoute">{{ slide.ctaLabel }}</a>
+          <a class="hero-carousel__cta" [routerLink]="slide.ctaRoute">
+            {{ slide.ctaLabel }}
+            <svg class="hero-carousel__cta-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
         </div>
       }
     </div>
   </div>
 
-  <button class="hero-carousel__control hero-carousel__control--prev" type="button" (click)="previous()" aria-label="Image précédente">
-    <span aria-hidden="true">‹</span>
+  <button
+    class="hero-carousel__control hero-carousel__control--prev"
+    type="button"
+    (click)="previous()"
+    aria-label="Image précédente"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button>
+  <button
+    class="hero-carousel__control hero-carousel__control--next"
+    type="button"
+    (click)="next()"
+    aria-label="Image suivante"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 18l6-6-6-6"/>
+    </svg>
   </button>
 
-  <button class="hero-carousel__control hero-carousel__control--next" type="button" (click)="next()" aria-label="Image suivante">
-    <span aria-hidden="true">›</span>
-  </button>
-
-  <div class="hero-carousel__indicators" appAnimate="fadeIn" [appAnimateDuration]="1200" [appAnimateDelay]="220">
+  <div
+    class="hero-carousel__indicators"
+    appAnimate="fadeIn"
+    [appAnimateDuration]="1200"
+    [appAnimateDelay]="220"
+    (mouseenter)="pauseAutoPlay()"
+    (mouseleave)="resumeAutoPlay()"
+  >
     @for (slide of slides; track trackByIndex($index)) {
       <button
         type="button"
@@ -52,7 +78,15 @@
         [attr.aria-label]="'Aller à la diapositive ' + ($index + 1)"
         [attr.aria-current]="$index === currentIndex() ? 'true' : null"
         (click)="goTo($index)"
-      ></button>
+      >
+        @if ($index === currentIndex()) {
+          <span
+            class="hero-carousel__dot-progress"
+            [style.animationDuration]="autoPlayInterval + 'ms'"
+            [class.is-paused]="isPaused()"
+          ></span>
+        }
+      </button>
     }
   </div>
 </section>
