@@ -19,7 +19,7 @@ export class LayoutViewportService {
   );
 
   readonly isHeroMergedRoute = computed(() =>
-    this.normalizePath(this.currentUrl()) === '/accueil/presentation'
+    this.normalizePath(this.currentUrl()) === '/'
   );
 
   readonly isAtPageTop = computed(() => this.scrollY() <= 0);

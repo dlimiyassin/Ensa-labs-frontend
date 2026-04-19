@@ -1,11 +1,11 @@
 .layout-navbar {
   position: fixed;
-  height: 5rem;
+  height: 4rem;
   z-index: 1000;
   top: 2rem;
   left: 0;
   width: 100%;
-  padding: 3.3rem 1rem 3.5rem 1rem;
+  padding: 2.3rem 1rem 2.5rem 1rem;
 
   display: flex;
   justify-content: space-between;
@@ -57,12 +57,12 @@
 
   .layout-navbar-logo-container {
     width: 14rem;
-    height: 4rem;
+    height: 3rem;
     display: flex;
     align-items: center;
 
     .logo-img {
-      height: 4rem;
+      height: 3rem;
       width: auto;
     }
   }
@@ -133,7 +133,7 @@
       }
 
       &.active p {
-        color: #0080a2;
+        color: var(--blue-color);
       }
 
       &.active p::after {
@@ -240,6 +240,7 @@
       padding: 1rem;
       display: none;
       border-top: 1px solid #e5e7eb;
+      margin-inline-start: 0rem;
     }
 
     &.is-on-hero.is-transparent .nav-menu {

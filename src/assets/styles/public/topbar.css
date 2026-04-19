@@ -5,7 +5,7 @@
 
 .topbar-ticker {
     width: 100%;
-    background: #007FA4;
+    background: var(--blue-color);
     overflow: hidden;
     height: 2rem;
     display: flex;

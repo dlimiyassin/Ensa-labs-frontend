@@ -37,7 +37,7 @@ import { LayoutViewportService } from './service/layout-viewport.service';
               [class.active]="isItemActive(item)"
               appAnimate="slideLeft"
               [appAnimateDuration]="2000"
-              [appAnimateDelay]="200"
+              [appAnimateDelay]="1000"
             >
               <p>{{ item.title }}</p>
               <span class="chevron">
@@ -76,11 +76,11 @@ import { LayoutViewportService } from './service/layout-viewport.service';
         }
       </div>
 
-      <div class="flex flex-row items-center gap-2">
+      <!-- <div class="flex flex-row items-center gap-2">
         <button class="cursor-pointer rounded py-2 px-4 hover:bg-gray-200" title="login" routerLink="private-backdoor-7">
           Admin
         </button>
-      </div>
+      </div> -->
     </nav>
   `
 })
@@ -118,19 +118,6 @@ export class AppNavbar {
 
   navItems: NavItem[] = [
     {
-      title: 'ACCUEIL',
-      sections: [
-        {
-          label: 'main',
-          links: [
-            { label: 'Présentation générale', route: '/accueil/presentation' },
-            { label: 'Chiffres clés', route: '/accueil/chiffres' },
-            { label: 'Actualités récentes', route: '/accueil/actualites' }
-          ]
-        }
-      ]
-    },
-    {
       title: 'LABORATOIRES',
       sections: [
         {
@@ -146,15 +133,26 @@ export class AppNavbar {
       ]
     },
     {
-      title: 'RECHERCHE',
+      title: 'PLATEFORMES',
       sections: [
         {
           label: 'main',
           links: [
-            { label: 'Axes de recherche', route: '/recherche/axes' },
-            { label: 'Structures de recherche', route: '/recherche/structures' },
-            { label: 'Projets de recherche', route: '/recherche/projets' },
-            { label: 'Partenariats', route: '/recherche/partenariats' }
+            { label: 'Publications', route: '/plateformes/publications' },
+            { label: 'Équipements', route: '/plateformes/equipements' },
+            { label: 'Technologiques', route: '/plateformes/technologiques' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'PROJECTS',
+      sections: [
+        {
+          label: 'main',
+          links: [
+            { label: 'Projets de recherche', route: '/projets/recherche' },
+            { label: 'Projets innovants', route: '/projets/innovation' },
           ]
         }
       ]
@@ -166,22 +164,19 @@ export class AppNavbar {
           label: 'main',
           links: [
             { label: 'Brevets', route: '/innovation/brevets' },
-            { label: 'Projets innovants', route: '/innovation/projets' },
-            { label: 'Transfert de technologie', route: '/innovation/transfert' },
-            { label: 'Partenariats industriels', route: '/innovation/partenariats' }
+            { label: 'Transfert de technologie', route: '/innovation/transfert' }
           ]
         }
       ]
     },
     {
-      title: 'PLATEFORMES',
+      title: 'PARTENARIATS',
       sections: [
         {
           label: 'main',
           links: [
-            { label: 'Plateformes technologiques', route: '/plateformes/technologiques' },
-            { label: 'Équipements', route: '/plateformes/equipements' },
-            { label: 'Services proposés', route: '/plateformes/services' }
+            { label: 'Partenariats de recherche', route: '/partenariats' },
+            { label: 'Partenariats industriels', route: '/partenariats/industriels' }
           ]
         }
       ]
@@ -189,10 +184,11 @@ export class AppNavbar {
   ];
 }
 
-interface NavLink {
-  label?: string;
+
+interface NavItem {
+  title: string;
   route?: string;
-  bold?: boolean;
+  sections: NavSection[];
 }
 
 interface NavSection {
@@ -202,7 +198,9 @@ interface NavSection {
   subLinks?: NavLink[];
 }
 
-interface NavItem {
-  title: string;
-  sections: NavSection[];
+interface NavLink {
+  label?: string;
+  route?: string;
+  bold?: boolean;
 }
+

@@ -1,0 +1,55 @@
+.lab-card {
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--blue-color) 16%, #ffffff);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+}
+
+.lab-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  border-color: color-mix(in srgb, var(--blue-color) 22%, #ffffff);
+}
+
+.lab-card__image {
+  width: 100%;
+  height: 10.8rem;
+  object-fit: cover;
+}
+
+.lab-card__body {
+  padding: 1rem;
+}
+
+.lab-card__body h3 {
+  margin: 0;
+  color: var(--blue-color);
+  font-size: 1.08rem;
+}
+
+.lab-card__body p {
+  margin: 0.65rem 0 1rem;
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: 0.93rem;
+}
+
+.lab-card__cta {
+  border: none;
+  border-radius: 999px;
+  background: var(--orange-color);
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.lab-card__cta:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
