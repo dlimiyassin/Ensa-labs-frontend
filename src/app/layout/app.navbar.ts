@@ -133,15 +133,26 @@ export class AppNavbar {
       ]
     },
     {
-      title: 'RECHERCHE',
+      title: 'PLATEFORMES',
       sections: [
         {
           label: 'main',
           links: [
-            { label: 'Axes de recherche', route: '/recherche/axes' },
-            { label: 'Structures de recherche', route: '/recherche/structures' },
-            { label: 'Projets de recherche', route: '/recherche/projets' },
-            { label: 'Partenariats', route: '/recherche/partenariats' }
+            { label: 'Publications', route: '/plateformes/publications' },
+            { label: 'Équipements', route: '/plateformes/equipements' },
+            { label: 'Technologiques', route: '/plateformes/technologiques' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'PROJECTS',
+      sections: [
+        {
+          label: 'main',
+          links: [
+            { label: 'Projets de recherche', route: '/projets/recherche' },
+            { label: 'Projets innovants', route: '/projets/innovation' },
           ]
         }
       ]
@@ -153,22 +164,19 @@ export class AppNavbar {
           label: 'main',
           links: [
             { label: 'Brevets', route: '/innovation/brevets' },
-            { label: 'Projets innovants', route: '/innovation/projets' },
-            { label: 'Transfert de technologie', route: '/innovation/transfert' },
-            { label: 'Partenariats industriels', route: '/innovation/partenariats' }
+            { label: 'Transfert de technologie', route: '/innovation/transfert' }
           ]
         }
       ]
     },
     {
-      title: 'PLATEFORMES',
+      title: 'PARTENARIATS',
       sections: [
         {
           label: 'main',
           links: [
-            { label: 'Plateformes technologiques', route: '/plateformes/technologiques' },
-            { label: 'Équipements', route: '/plateformes/equipements' },
-            { label: 'Services proposés', route: '/plateformes/services' }
+            { label: 'Partenariats de recherche', route: '/partenariats' },
+            { label: 'Partenariats industriels', route: '/partenariats/industriels' }
           ]
         }
       ]
