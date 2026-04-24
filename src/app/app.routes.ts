@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutPage } from './layout/layout-page';
 import { Signin } from './features/public/auth/signin/signin';
+import { authGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
 
@@ -22,6 +23,7 @@ export const routes: Routes = [
   // PRIVATE DASHBOARD
   {
     path: 'private',
+    canActivate: [authGuard],
     loadChildren: () =>
       import('./features/private/private.routes')
         .then(m => m.PRIVATE_ROUTES)
