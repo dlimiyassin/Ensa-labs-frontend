@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { API_BASE_URL } from '../services/api.config';
+import { API_BASE_URL } from '../../../assets/environment/environment';
 import { JWTAuthResponse, LoginDto, RegisterDto, RegisterResponse } from '../models/api.models';
 
 const ACCESS_TOKEN_KEY = 'access_token';

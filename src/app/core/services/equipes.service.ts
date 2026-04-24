@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_BASE_URL } from './api.config';
+import { API_BASE_URL } from '../../../assets/environment/environment';
 import { EquipeDTO } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
