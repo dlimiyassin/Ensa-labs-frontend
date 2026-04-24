@@ -1,1 +1,24 @@
-<p>signin works!</p>
+<section class="signin-page">
+  <form class="signin-card" [formGroup]="signinForm" (ngSubmit)="submit()">
+    <h1>Admin Sign In</h1>
+    <p>Use your account credentials to access the private dashboard.</p>
+
+    <label>
+      Username
+      <input type="text" formControlName="username" autocomplete="username" />
+    </label>
+
+    <label>
+      Password
+      <input type="password" formControlName="password" autocomplete="current-password" />
+    </label>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <button type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Signing in...' : 'Sign in' }}
+    </button>
+  </form>
+</section>
