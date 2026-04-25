@@ -19,7 +19,7 @@
     <app-filter-bar [fields]="filterFields()" [values]="filters()" (filterChange)="updateFilter($event)" />
 
     @if (loading()) {
-      <p class="internal-page__lead">Chargement des productions...</p>
+      <app-spinner message="Chargement des productions..." />
     } @else if (error()) {
       <p class="internal-page__lead">{{ error() }}</p>
     } @else if (activeTab() === 'publications') {

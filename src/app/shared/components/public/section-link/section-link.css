@@ -1,0 +1,22 @@
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: var(--blue-color);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: transform 220ms ease, color 220ms ease;
+}
+
+.section-link span {
+  transition: transform 220ms ease;
+}
+
+.section-link:hover {
+  color: color-mix(in srgb, var(--blue-color) 85%, #000);
+}
+
+.section-link:hover span {
+  transform: translateX(4px);
+}

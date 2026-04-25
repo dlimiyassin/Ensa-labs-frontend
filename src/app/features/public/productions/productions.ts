@@ -11,6 +11,7 @@ import { TabsComponent, TabItem } from '../../../shared/components/public/tabs/t
 import { FilterBarComponent, FilterField } from '../../../shared/components/public/filter-bar/filter-bar';
 import { EmptyStateComponent } from '../../../shared/components/public/empty-state/empty-state';
 import { SectionTitleComponent } from '../../../shared/components/public/section-title/section-title';
+import { SpinnerComponent } from '../../../shared/components/public/spinner/spinner';
 
 interface GroupedEntry<T> {
   readonly year: string;
@@ -21,7 +22,7 @@ type ProductionTab = 'publications' | 'communications' | 'theses';
 
 @Component({
   selector: 'app-productions',
-  imports: [PageHeroComponent, TabsComponent, FilterBarComponent, EmptyStateComponent, SectionTitleComponent],
+  imports: [PageHeroComponent, TabsComponent, FilterBarComponent, EmptyStateComponent, SectionTitleComponent, SpinnerComponent],
   templateUrl: './productions.html',
   styleUrl: './productions.css',
 })
