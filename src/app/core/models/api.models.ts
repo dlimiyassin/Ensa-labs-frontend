@@ -121,6 +121,7 @@ export interface EquipeDTO {
 
 export interface LabDTO {
   id?: string;
+  code?: string;
   titleFr?: string;
   titleEn?: string;
   acronym?: string;

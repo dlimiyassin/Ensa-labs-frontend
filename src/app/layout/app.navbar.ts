@@ -49,7 +49,7 @@ import { LayoutViewportService } from './service/layout-viewport.service';
               @for (section of item.sections; track section.label) {
                 @if (section.links) {
                   @for (link of section.links; track link.label) {
-                    <a [routerLink]="link.route" [style.fontWeight]="link.bold ? '500' : 'normal'">
+                    <a [routerLink]="link.route" [fragment]="link.fragment" [style.fontWeight]="link.bold ? '500' : 'normal'">
                       {{ link.label }}
                     </a>
                   }
@@ -64,7 +64,7 @@ import { LayoutViewportService } from './service/layout-viewport.service';
                 @if (section.subLinks) {
                   <div class="dropdown-sub">
                     @for (link of section.subLinks; track link.label) {
-                      <a [routerLink]="link.route">
+                      <a [routerLink]="link.route" [fragment]="link.fragment">
                         {{ link.label }}
                       </a>
                     }
@@ -143,9 +143,9 @@ export class AppNavbar {
         {
           label: 'Scientifique',
           links: [
-            { label: 'Publications', route: '/production/publications' },
-            { label: 'Communications', route: '/production/communications' },
-            { label: 'Thèses', route: '/production/theses' }
+            { label: 'Publications', route: '/production/LaRESI' },
+            { label: 'Communications', route: '/production/LaRESI', fragment: 'communications' },
+            { label: 'Thèses', route: '/production/LaRESI', fragment: 'theses' }
           ]
         }
       ]
@@ -196,6 +196,6 @@ interface NavSection {
 interface NavLink {
   label?: string;
   route?: string;
+  fragment?: string;
   bold?: boolean;
 }
-
