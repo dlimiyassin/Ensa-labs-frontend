@@ -1,20 +1,25 @@
 .animated-section {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  grid-template-columns: 1fr;
   gap: 2rem;
   align-items: center;
   margin: 2.5rem 0;
 }
 
-.animated-section--reverse {
-  direction: rtl;
+.animated-section--two-cols {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
 }
 
-.animated-section--reverse > * {
-  direction: ltr;
+.animated-section--reverse.animated-section--two-cols > :first-child {
+  order: 2;
+}
+
+.animated-section--reverse.animated-section--two-cols > :last-child {
+  order: 1;
 }
 
 .animated-section--compact {
+  grid-template-columns: 1fr;
   gap: 1.25rem;
 }
 

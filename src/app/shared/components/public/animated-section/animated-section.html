@@ -1,6 +1,10 @@
 <section
   class="animated-section"
-  [ngClass]="{ 'animated-section--reverse': reverse(), 'animated-section--compact': compact() }"
+  [ngClass]="{
+    'animated-section--reverse': reverse(),
+    'animated-section--compact': compact(),
+    'animated-section--two-cols': twoColumns()
+  }"
   [appViewportAnimate]="enter()"
   [appViewportAnimateLeave]="leave()"
   [appViewportAnimateBidirectional]="true"

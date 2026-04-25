@@ -64,6 +64,7 @@ export class LabPresentation {
   protected readonly associatedMembers = computed(() => this.membersByAssociation('ASSOCIATED'));
 
   protected readonly domaines = computed(() => (this.lab()?.domainesRecherche ?? []).map((item) => item.name ?? '').filter(Boolean));
+  protected readonly thematiques = computed(() => this.domaines());
   protected readonly axes = computed(() => (this.lab()?.axesRecherche ?? []).map((item) => item.title ?? '').filter(Boolean));
   protected readonly teams = computed(() => (this.lab()?.equipes ?? [])
     .map((team) => ({
@@ -72,9 +73,27 @@ export class LabPresentation {
     }))
     .filter((team) => !!team.name));
 
-  protected readonly committee = computed(() => (this.lab()?.comiteGestion ?? [])
-    .map((member) => this.toCommitteeCard(member))
-    .filter((member) => !!member.name));
+  protected readonly committee = computed(() => {
+    const grouped = new Map<string, Set<string>>();
+
+    for (const member of this.lab()?.comiteGestion ?? []) {
+      const card = this.toCommitteeCard(member);
+      if (!card.name) continue;
+
+      if (!grouped.has(card.name)) {
+        grouped.set(card.name, new Set<string>());
+      }
+
+      if (card.role) {
+        grouped.get(card.name)?.add(card.role);
+      }
+    }
+
+    return Array.from(grouped.entries()).map(([name, roles]) => ({
+      name,
+      roles: Array.from(roles)
+    }));
+  });
 
   protected readonly direction = computed(() => {
     const directors = [
