@@ -1,13 +1,198 @@
 <section class="internal-page">
   <app-page-hero
-    [title]="labName()"
-    subtitle="Présentation du laboratoire, de ses équipes, de ses axes scientifiques et de ses opportunités de collaboration."
-    [image]="imageLab()"
+    [title]="heroTitle()"
+    [subtitle]="lab()?.titleEn || 'Présentation institutionnelle du laboratoire et de ses axes scientifiques.'"
+    [image]="heroImage()"
   />
 
-  <div class="internal-page__content">
-    <p class="internal-page__lead">
-      Cette page sera enrichie avec les informations institutionnelles, les expertises clés, les projets et les publications du laboratoire.
-    </p>
+  <div class="internal-page__content lab-page">
+    @if (loading()) {
+      <app-spinner message="Chargement des données du laboratoire..." />
+    } @else if (error()) {
+      <p class="internal-page__lead">{{ error() }}</p>
+    } @else if (!lab()) {
+      <app-empty-state message="Laboratoire introuvable." />
+    } @else {
+      @if (hasAbout()) {
+        <section class="lab-about">
+          <app-section-title label="Laboratoire" title="À propos" />
+          <p class="lab-page__paragraph">
+            @if (lab()?.titleFr || lab()?.acronym) {
+              <span>{{ lab()?.titleFr }} @if (lab()?.acronym) {({{ lab()?.acronym }}) }</span>
+            }
+            @if (lab()?.university) {
+              <span> est rattaché à {{ lab()?.university }}</span>
+            }
+            @if (lab()?.program) {
+              <span>. Le programme {{ lab()?.program }} structure ses activités de recherche et de transfert.</span>
+            }
+          </p>
+        </section>
+      }
+
+      <app-tabs [tabs]="tabs" [activeId]="activeTab()" (tabChange)="selectTab($event)" />
+
+      @if (activeTab() === 'direction') {
+        <app-fade-container>
+          <section class="lab-panel">
+            <app-section-title label="Gouvernance" title="Direction" />
+            <div class="lab-page__cards">
+              @for (director of direction(); track director.name + director.role) {
+                <app-enhanced-member-card
+                  [name]="director.name"
+                  [grade]="director.grade"
+                  [speciality]="director.speciality"
+                  [role]="director.role"
+                  [avatar]="memberAvatar"
+                />
+              }
+            </div>
+
+            @if (committee().length > 0) {
+              <h3 class="lab-page__subtitle">Comité de gestion</h3>
+              <div class="lab-page__cards">
+                @for (member of committee(); track member.name) {
+                  <app-enhanced-member-card
+                    [name]="member.name"
+                    [role]="member.roles"
+                    [avatar]="memberAvatar"
+                  />
+                }
+              </div>
+            }
+          </section>
+        </app-fade-container>
+      }
+
+      @if (activeTab() === 'members') {
+        <app-fade-container>
+          <section class="lab-panel">
+            <app-section-title label="Membres" title="Composition du laboratoire" />
+            @if (permanentMembers().length > 0) {
+              <h3 class="lab-page__subtitle">Membres permanents</h3>
+              <div class="lab-page__cards">
+                @for (member of permanentMembers(); track member.name + member.grade + member.speciality) {
+                  <app-enhanced-member-card
+                    [name]="member.name"
+                    [grade]="member.grade"
+                    [speciality]="member.speciality"
+                    [role]="member.role"
+                    [avatar]="memberAvatar"
+                  />
+                }
+              </div>
+            }
+
+            @if (associatedMembers().length > 0) {
+              <h3 class="lab-page__subtitle">Membres associés</h3>
+              <div class="lab-page__cards">
+                @for (member of associatedMembers(); track member.name + member.grade + member.speciality) {
+                  <app-enhanced-member-card
+                    [name]="member.name"
+                    [grade]="member.grade"
+                    [speciality]="member.speciality"
+                    [role]="member.role"
+                    [avatar]="memberAvatar"
+                  />
+                }
+              </div>
+            }
+          </section>
+        </app-fade-container>
+      }
+
+      @if (activeTab() === 'equipes') {
+        <app-fade-container>
+          <section class="lab-panel" id="equipes">
+            <app-section-title label="Organisation" title="Équipes" />
+            @if (!hasTeams()) {
+              <app-empty-state message="Aucune équipe de recherche disponible pour ce laboratoire." />
+            } @else {
+              @for (team of teams(); track team.name) {
+                <section class="lab-page__team">
+                  <h4 class="lab-page__team-name">{{ team.name }}</h4>
+                  @if (team.responsable.name) {
+                    <div class="lab-page__cards">
+                      <app-enhanced-member-card
+                        [name]="team.responsable.name"
+                        [grade]="team.responsable.grade"
+                        [speciality]="team.responsable.speciality"
+                        [role]="team.responsable.role"
+                        [avatar]="memberAvatar"
+                      />
+                    </div>
+                  }
+
+                  @if (team.members.length > 0) {
+                    <div class="lab-page__cards">
+                      @for (member of team.members; track member.name + member.grade + member.speciality) {
+                        <app-enhanced-member-card
+                          [name]="member.name"
+                          [grade]="member.grade"
+                          [speciality]="member.speciality"
+                          [role]="member.role"
+                          [avatar]="memberAvatar"
+                        />
+                      }
+                    </div>
+                  }
+                </section>
+              }
+            }
+          </section>
+        </app-fade-container>
+      }
+
+      @if (activeTab() === 'axes') {
+        <app-fade-container>
+          <section class="lab-panel" id="axes">
+            <app-section-title label="Recherche" title="Axes et thématiques" />
+            <h3 class="lab-page__subtitle">Axes de recherche</h3>
+            @if (!hasAxes()) {
+              <app-empty-state message="Aucun axe de recherche disponible." />
+            } @else if (directAxes().length > 0) {
+              <ul class="axes-list">
+                @for (axis of directAxes(); track axis) {
+                  <li>{{ axis }}</li>
+                }
+              </ul>
+            } @else {
+              @for (axisGroup of groupedAxesFromTeams(); track axisGroup.team) {
+                <section class="axes-group">
+                  <h4>{{ axisGroup.team }}</h4>
+                  <ul class="axes-list">
+                    @for (axis of axisGroup.axes; track axis) {
+                      <li>{{ axis }}</li>
+                    }
+                  </ul>
+                </section>
+              }
+            }
+
+            <h3 class="lab-page__subtitle">Thématiques de recherche</h3>
+            @if (!hasThemes()) {
+              <app-empty-state message="Aucune thématique de recherche disponible." />
+            } @else if (groupedThemesFromTeams().length > 0) {
+              @for (themeGroup of groupedThemesFromTeams(); track themeGroup.team) {
+                <section class="axes-group">
+                  <h4>{{ themeGroup.team }}</h4>
+                  <ul class="axes-list axes-list--themes">
+                    @for (theme of themeGroup.themes; track theme) {
+                      <li>{{ theme }}</li>
+                    }
+                  </ul>
+                </section>
+              }
+            } @else {
+              <ul class="axes-list axes-list--themes">
+                @for (theme of thematiques(); track theme) {
+                  <li>{{ theme }}</li>
+                }
+              </ul>
+            }
+          </section>
+        </app-fade-container>
+      }
+    }
   </div>
 </section>

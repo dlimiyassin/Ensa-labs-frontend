@@ -1,0 +1,64 @@
+<section class="internal-page">
+  <app-page-hero
+    title="Partenariats de recherche"
+    subtitle="Vue institutionnelle des collaborations nationales et internationales."
+    image="images/projects/p1.jpg"
+  />
+
+  <div class="internal-page__content">
+    <app-section-title label="Collaborations" title="Cartographie des partenariats" />
+
+    @if (loading()) {
+      <app-spinner message="Chargement des partenariats..." />
+    } @else if (error()) {
+      <p class="internal-page__lead">{{ error() }}</p>
+    } @else if (!hasData()) {
+      <app-empty-state message="Aucun partenariat disponible." />
+    } @else {
+      <section class="partner-section">
+        <h3>National</h3>
+        <div class="partner-grid">
+          @for (card of national(); track card.title + card.description) {
+            <article class="partner-card">
+              <img [src]="card.image" [alt]="card.title" />
+              <div class="partner-card__body">
+                <h4>{{ card.title }}</h4>
+                <p>{{ card.description }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="partner-section">
+        <h3>International</h3>
+        <div class="partner-grid">
+          @for (card of international(); track card.title + card.description) {
+            <article class="partner-card">
+              <img [src]="card.image" [alt]="card.title" />
+              <div class="partner-card__body">
+                <h4>{{ card.title }}</h4>
+                <p>{{ card.description }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="partner-section">
+        <h3>Académique</h3>
+        <div class="partner-grid">
+          @for (card of academic(); track card.title + card.description) {
+            <article class="partner-card">
+              <img [src]="card.image" [alt]="card.title" />
+              <div class="partner-card__body">
+                <h4>{{ card.title }}</h4>
+                <p>{{ card.description }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  </div>
+</section>

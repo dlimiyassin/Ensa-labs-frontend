@@ -1,0 +1,81 @@
+.lab-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.lab-about,
+.lab-panel {
+  border: 1px solid color-mix(in srgb, var(--blue-color) 10%, #fff);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: color-mix(in srgb, #fff 95%, var(--surface-ground));
+}
+
+.lab-page__paragraph {
+  margin: 0;
+  color: var(--text-color);
+  line-height: 1.75;
+}
+
+.lab-page__subtitle {
+  margin: 0.35rem 0 0.75rem;
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.lab-page__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.lab-page__team {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--blue-color) 14%, #fff);
+  border-radius: .85rem;
+  background: color-mix(in srgb, var(--blue-color) 3%, #fff);
+}
+
+.lab-page__team-name {
+  margin: 0 0 .8rem;
+  color: var(--primary-color);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  padding-bottom: .45rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary-color) 20%, #fff);
+}
+
+.axes-group {
+  margin: 0.75rem 0 1rem;
+}
+
+.axes-group h4 {
+  margin: 0 0 .55rem;
+  color: var(--text-color);
+  font-size: .95rem;
+  font-weight: 700;
+}
+
+.axes-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.axes-list li {
+  border-left: 3px solid var(--orange-color);
+  padding: 0.4rem 0.65rem;
+  background: color-mix(in srgb, var(--blue-color) 4%, #fff);
+  color: var(--text-color);
+}
+
+.axes-list--themes li {
+  border-left-color: var(--blue-color);
+  background: color-mix(in srgb, var(--orange-color) 4%, #fff);
+}

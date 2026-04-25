@@ -1,0 +1,20 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: .5rem 0 1rem;
+}
+
+button {
+  border: 1px solid rgba(15, 23, 42, .14);
+  background: #fff;
+  color: #334155;
+  padding: .45rem .8rem;
+  cursor: pointer;
+}
+
+button.is-active {
+  border-color: var(--blue-color);
+  color: var(--blue-color);
+  background: rgba(0, 128, 162, .06);
+}

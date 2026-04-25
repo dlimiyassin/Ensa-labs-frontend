@@ -3,17 +3,22 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  ViewChild,
-  signal
+  computed,
+  inject,
+  signal,
+  ViewChild
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, of } from 'rxjs';
 
 import { HeroCarouselComponent } from './hero-carousel/hero-carousel';
-import {
-  ProjectCardComponent,
-  type ProjectCardModel
-} from './components/project-card/project-card';
 import { GlobalAnimationName } from '../../../shared/animations/animations';
 import { ViewportAnimateDirective } from '../../../shared/animations/viewport-animate.directive';
+import { LabsService } from '../../../core/services/labs.service';
+import { PublicationsService } from '../../../core/services/publications.service';
+import { AxeRechercheDTO, LabDTO, PublicationDTO } from '../../../core/models/api.models';
+import { SectionLinkComponent } from '../../../shared/components/public/section-link/section-link';
 
 interface KeyFigureModel {
   readonly label: string;
@@ -23,6 +28,7 @@ interface KeyFigureModel {
 interface ResearchAxisModel {
   readonly title: string;
   readonly description: string;
+  readonly labAcronym: string;
 }
 
 interface LaboratorySectionModel {
@@ -34,12 +40,20 @@ interface LaboratorySectionModel {
   readonly leaveAnimation: GlobalAnimationName;
 }
 
+interface PublicationHighlightModel {
+  readonly id: string;
+  readonly title: string;
+  readonly year: number | null;
+  readonly meta: string;
+}
+
 @Component({
   selector: 'app-presentation',
   imports: [
     HeroCarouselComponent,
     ViewportAnimateDirective,
-    ProjectCardComponent
+    RouterLink,
+    SectionLinkComponent
   ],
   templateUrl: './presentation.html',
   styleUrl: './presentation.css'
@@ -51,81 +65,79 @@ export class Presentation implements AfterViewInit, OnDestroy {
   private keyFiguresObserver?: IntersectionObserver;
   private hasAnimatedFigures = false;
   private counterFrameId: number | null = null;
+
+  private readonly labsService = inject(LabsService);
+  private readonly publicationsService = inject(PublicationsService);
+
   protected readonly animatedFigureValues = signal<Record<string, number>>({});
+  protected readonly dataError = signal('');
 
-  protected readonly labs: readonly LaboratorySectionModel[] = [
-    {
-      name: 'LRSTA',
-      domain: 'Technologies Avancées et Systèmes Intelligents',
-      description:
-        'Le Laboratoire de Recherche en Sciences et Technologies Avancées (LRSTA) développe des travaux de fond sur l’intelligence artificielle, la modélisation des systèmes complexes et l’exploitation de données à grande échelle. Ses équipes articulent recherche fondamentale et expérimentations appliquées autour de problématiques liées à la santé, à l’industrie et à la transformation numérique des territoires. Le laboratoire valorise une production scientifique rigoureuse, soutenue par des collaborations doctorales, des publications indexées et des partenariats académiques internationaux structurants. Les projets conduits au sein du LRSTA contribuent à la diffusion de connaissances robustes, transférables vers les acteurs publics et socio-économiques.',
-      image: 'images/labs/lab1.jpg',
-      enterAnimation: 'softSlideRight',
-      leaveAnimation: 'softSlideOutRight'
-    },
-    {
-      name: 'LaRESI',
-      domain: 'Ingénierie Durable et Innovation Interdisciplinaire',
-      description:
-        'Le Laboratoire de Recherche en Énergies, Systèmes et Innovation (LaRESI) inscrit ses activités dans une perspective de transition durable, d’optimisation des infrastructures et d’ingénierie au service des besoins sociétaux. Les équipes développent des approches interdisciplinaires associant sciences de l’ingénieur, évaluation environnementale et dispositifs technologiques orientés vers l’impact territorial. La dynamique scientifique repose sur des protocoles méthodologiques exigeants, un ancrage institutionnel fort et une coopération régulière avec les partenaires industriels et institutionnels. À travers ses programmes de recherche, LaRESI consolide le lien entre production académique, innovation responsable et transfert de solutions vers l’écosystème régional.',
-      image: 'images/labs/lab2.jpg',
-      enterAnimation: 'softSlideLeft',
-      leaveAnimation: 'softSlideOutLeft'
-    }
-  ];
+  private readonly labsData = toSignal(
+    this.labsService.findAll().pipe(
+      catchError(() => {
+        this.dataError.set('Certaines données n’ont pas pu être chargées.');
+        return of<LabDTO[]>([]);
+      })
+    ),
+    { initialValue: [] }
+  );
 
-  protected readonly keyFigures: readonly KeyFigureModel[] = [
-    { label: 'Projets en cours', value: 28 },
-    { label: 'Chercheurs actifs', value: 96 },
-    { label: 'Publications récentes', value: 214 },
-    { label: 'Partenariats académiques', value: 37 }
-  ];
+  private readonly publicationsData = toSignal(
+    this.publicationsService.findAll().pipe(
+      catchError(() => {
+        this.dataError.set('Certaines données n’ont pas pu être chargées.');
+        return of<PublicationDTO[]>([]);
+      })
+    ),
+    { initialValue: [] }
+  );
 
-  protected readonly researchAxes: readonly ResearchAxisModel[] = [
-    {
-      title: 'Intelligence artificielle et science des données',
-      description: 'Modèles prédictifs, vision par ordinateur et aide à la décision pour des usages scientifiques et industriels.'
-    },
-    {
-      title: 'Énergie, environnement et durabilité',
-      description: 'Optimisation énergétique, évaluation environnementale et solutions technologiques pour la transition durable.'
-    },
-    {
-      title: 'Systèmes embarqués et IoT',
-      description: 'Conception de plateformes connectées, sûres et performantes pour l’industrie, la santé et les villes intelligentes.'
-    },
-    {
-      title: 'Ingénierie numérique et innovation pédagogique',
-      description: 'Développement d’outils numériques pour renforcer l’enseignement, la simulation et le transfert de connaissance.'
-    }
-  ];
+  protected readonly labs = computed<readonly LaboratorySectionModel[]>(() => {
+    const data = this.labsData();
+    return data.slice(0, 2).map((lab, index) => ({
+      name: (lab.acronym ?? `LAB-${index + 1}`).trim(),
+      domain: (lab.titleFr ?? lab.titleEn ?? 'Structure de recherche').trim(),
+      description: this.buildLabDescription(lab),
+      image: this.resolveLabImage(lab.acronym, index),
+      enterAnimation: index % 2 === 0 ? 'softSlideRight' : 'softSlideLeft',
+      leaveAnimation: index % 2 === 0 ? 'softSlideOutRight' : 'softSlideOutLeft'
+    }));
+  });
 
-  protected readonly featuredProjects: readonly ProjectCardModel[] = [
-    {
-      title: 'Plateforme IA pour l’analyse territoriale',
-      description: 'Exploitation de données multi-sources pour appuyer la planification locale et l’anticipation des risques.',
-      laboratory: 'LRSTA',
-      image: 'images/projects/p1.jpg'
-    },
-    {
-      title: 'Smart Grid Campus',
-      description: 'Pilotage intelligent de la consommation électrique universitaire avec tableaux de bord en temps réel.',
-      laboratory: 'LaRESI',
-      image: 'images/projects/p2.jpg'
-    },
-    {
-      title: 'Observatoire des publications scientifiques',
-      description: 'Outil de suivi bibliométrique pour renforcer la visibilité des équipes et structurer les collaborations.',
-      laboratory: 'LRSTA',
-      image: 'images/projects/p3.jpg'
-    },
-    {
-      title: 'Fabrique de prototypes durables',
-      description: 'Accompagnement de projets de recherche appliquée vers des solutions transférables au tissu socio-économique.',
-      laboratory: 'LaRESI',
-      image: 'images/projects/p4.jpg'
-    }
-  ];
+  protected readonly keyFigures = computed<readonly KeyFigureModel[]>(() => {
+    const labs = this.labsData();
+    const publications = this.publicationsData();
+    const researchers = labs.reduce((sum, lab) => sum + (lab.members?.length ?? 0), 0);
+    const axes = labs.reduce((sum, lab) => sum + (lab.axesRecherche?.length ?? 0), 0);
+
+    return [
+      { label: 'Laboratoires actifs', value: labs.length },
+      { label: 'Chercheurs actifs', value: researchers },
+      { label: 'Publications indexées', value: publications.length },
+      { label: 'Axes de recherche', value: axes }
+    ];
+  });
+
+  protected readonly researchAxes = computed<readonly ResearchAxisModel[]>(() => {
+    const flattened = this.labsData()
+      .flatMap((lab) => (lab.axesRecherche ?? []).map((axis) => ({ axis, labAcronym: lab.acronym ?? 'LaRESI' })))
+      .filter(({ axis }) => !!axis.title)
+      .slice(0, 4);
+
+    return flattened.map(({ axis, labAcronym }) => this.toResearchAxis(axis, labAcronym));
+  });
+
+  protected readonly latestPublications = computed<readonly PublicationHighlightModel[]>(() => {
+    return [...this.publicationsData()]
+      .sort((a, b) => (b.publicationYear ?? 0) - (a.publicationYear ?? 0))
+      .slice(0, 5)
+      .map((item) => ({
+        id: item.id ?? `${item.title ?? 'publication'}-${item.publicationYear ?? 'na'}`,
+        title: (item.title ?? 'Sans titre').trim(),
+        year: item.publicationYear ?? null,
+        meta: (item.journal ?? item.conference ?? 'Publication scientifique').trim()
+      }));
+  });
 
   ngAfterViewInit(): void {
     const keyFiguresElement = this.keyFiguresSection?.nativeElement;
@@ -172,15 +184,16 @@ export class Presentation implements AfterViewInit, OnDestroy {
     }
 
     this.hasAnimatedFigures = true;
+    const figures = this.keyFigures();
     const startedAt = performance.now();
-    const maxValue = Math.max(...this.keyFigures.map((figure) => figure.value), 1);
+    const maxValue = Math.max(...figures.map((figure) => figure.value), 1);
     const durationMs = Math.min(2000, Math.max(1000, maxValue * 7));
 
     const animate = (timestamp: number): void => {
       const elapsed = timestamp - startedAt;
       const progress = Math.min(elapsed / durationMs, 1);
       const easedProgress = 1 - (1 - progress) ** 3;
-      const nextValues = this.keyFigures.reduce<Record<string, number>>((acc, figure) => {
+      const nextValues = figures.reduce<Record<string, number>>((acc, figure) => {
         acc[figure.label] = Math.round(figure.value * easedProgress);
         return acc;
       }, {});
@@ -195,5 +208,27 @@ export class Presentation implements AfterViewInit, OnDestroy {
     };
 
     this.counterFrameId = requestAnimationFrame(animate);
+  }
+
+  private buildLabDescription(lab: LabDTO): string {
+    const title = lab.titleFr ?? lab.titleEn ?? lab.acronym ?? 'Ce laboratoire';
+    const university = lab.university ? `rattaché à ${lab.university}` : 'inscrit dans un écosystème académique structurant';
+    const program = lab.program ? `Le programme ${lab.program} encadre ses priorités scientifiques.` : '';
+
+    return `${title} est ${university}. ${program}`.trim();
+  }
+
+  private toResearchAxis(axis: AxeRechercheDTO, labAcronym: string): ResearchAxisModel {
+    return {
+      title: (axis.title ?? 'Axe de recherche').trim(),
+      description: `Axe porté par le laboratoire ${labAcronym}.`,
+      labAcronym
+    };
+  }
+
+  private resolveLabImage(acronym: string | undefined, index: number): string {
+    if (acronym === 'LRSTA') return 'images/labs/lab1.jpg';
+    if (acronym === 'LaRESI') return 'images/labs/lab2.jpg';
+    return index % 2 === 0 ? 'images/labs/lab1.jpg' : 'images/labs/lab2.jpg';
   }
 }

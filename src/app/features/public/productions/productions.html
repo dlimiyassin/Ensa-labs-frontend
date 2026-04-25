@@ -1,0 +1,72 @@
+<section class="internal-page">
+  <app-page-hero
+    [title]="'Productions — ' + (selectedLab()?.titleFr || selectedLab()?.acronym || labCode())"
+    subtitle="Publications, communications et thèses des laboratoires."
+    image="images/labs/lab1.jpg"
+  />
+
+  <div class="internal-page__content productions-page">
+    <app-section-title label="Laboratoires" title="Sélection du laboratoire" />
+    <nav class="lab-nav">
+      @for (lab of labs(); track lab.id || lab.acronym) {
+        <button type="button" [class.is-active]="labCode() === ((lab.code ?? lab.acronym) || '')" (click)="selectLab((lab.code ?? lab.acronym) || '')">
+          {{ lab.acronym || lab.titleFr || (lab.code ?? '') }}
+        </button>
+      }
+    </nav>
+
+    <app-tabs [tabs]="tabs" [activeId]="activeTab()" (tabChange)="selectTab($event)" />
+    <app-filter-bar [fields]="filterFields()" [values]="filters()" (filterChange)="updateFilter($event)" />
+
+    @if (loading()) {
+      <app-spinner message="Chargement des productions..." />
+    } @else if (error()) {
+      <p class="internal-page__lead">{{ error() }}</p>
+    } @else if (activeTab() === 'publications') {
+      @if (groupedPublications().length === 0) {
+        <app-empty-state message="Aucune publication disponible pour ces filtres." />
+      } @else {
+        @for (group of groupedPublications(); track group.year) {
+          <section class="year-group">
+            <h3>{{ group.year }}</h3>
+            <ul>
+              @for (item of group.entries; track item.id || item.title) {
+                <li>{{ publicationLine(item) }}</li>
+              }
+            </ul>
+          </section>
+        }
+      }
+    } @else if (activeTab() === 'communications') {
+      @if (groupedCommunications().length === 0) {
+        <app-empty-state message="Aucune communication disponible pour ces filtres." />
+      } @else {
+        @for (group of groupedCommunications(); track group.year) {
+          <section class="year-group">
+            <h3>{{ group.year }}</h3>
+            <ul>
+              @for (item of group.entries; track item.id || item.title) {
+                <li>{{ publicationLine(item) }}</li>
+              }
+            </ul>
+          </section>
+        }
+      }
+    } @else {
+      @if (groupedTheses().length === 0) {
+        <app-empty-state message="Aucune thèse disponible pour ces filtres." />
+      } @else {
+        @for (group of groupedTheses(); track group.year) {
+          <section class="year-group">
+            <h3>{{ group.year }}</h3>
+            <ul>
+              @for (item of group.entries; track item.id || item.title) {
+                <li>{{ thesisLine(item) }}</li>
+              }
+            </ul>
+          </section>
+        }
+      }
+    }
+  </div>
+</section>

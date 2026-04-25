@@ -1,0 +1,20 @@
+<section class="internal-page">
+  <app-page-hero
+    title="Compétences scientifiques"
+    subtitle="Panorama des expertises mobilisables dans les laboratoires."
+    image="images/labs/lab2.jpg"
+  />
+
+  <div class="internal-page__content">
+    <app-section-title label="Ressources" title="Compétences par domaine" />
+
+    @if (!hasData()) {
+      <app-empty-state message="Aucune compétence n'a été remontée par le backend." />
+    } @else {
+      <app-list-block title="SCIENTIFIC" [items]="byType().SCIENTIFIC" />
+      <app-list-block title="TECHNOLOGICAL" [items]="byType().TECHNOLOGICAL" />
+      <app-list-block title="SECTORIAL" [items]="byType().SECTORIAL" />
+      <app-list-block title="INNOVATION" [items]="byType().INNOVATION" />
+    }
+  </div>
+</section>

@@ -1,0 +1,15 @@
+<article class="member-card">
+  <img [src]="avatar()" [alt]="name()" class="member-card__avatar" />
+  <div class="member-card__body">
+    <h4>{{ name() }}</h4>
+    @if (grade()) {
+      <span class="member-card__badge">{{ grade() }}</span>
+    }
+    @if (speciality()) {
+      <p>Spécialité : {{ speciality() }}</p>
+    }
+    @if (role()) {
+      <p>Rôle : {{ role() }}</p>
+    }
+  </div>
+</article>

@@ -1,30 +1,30 @@
 <section class="presentation-page">
   <app-hero-carousel />
 
-  <!-- LABS SECTION -->
-  <section class="home-section labs-section">
+  <section class="home-section labs-section" id="labs">
     <div
       class="section-heading"
       appViewportAnimate="fadeIn"
       [appViewportAnimateBidirectional]="true"
-      [appViewportAnimateDuration]="900"
-      [appViewportAnimateDelay]="0"
+      [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Structures de recherche</div>
-      <h2>Nos laboratoires</h2>
+      <h2><a [routerLink]="['/laboratoires', labs()[0]?.name || 'LaRESI']">Nos laboratoires <span>→</span></a></h2>
       <p>Deux structures complémentaires pour porter la recherche académique, technologique et partenariale.</p>
+      <app-section-link to="/laboratoires/LaRESI" label="Voir plus" />
     </div>
 
     <div class="labs-editorial-list">
-      @for (lab of labs; track lab.name; let i = $index) {
+      @for (lab of labs(); track lab.name; let i = $index) {
         <article
           class="lab-editorial"
           [class.lab-editorial--reverse]="i % 2 === 1"
           [appViewportAnimate]="lab.enterAnimation"
           [appViewportAnimateLeave]="lab.leaveAnimation"
           [appViewportAnimateBidirectional]="true"
-          [appViewportAnimateDuration]="1800"
-          [appViewportAnimateDelay]="150"
+          [appViewportAnimateDuration]="1250"
+          [appViewportAnimateDelay]="120"
+          [routerLink]="['/laboratoires', lab.name]"
         >
           <div class="lab-editorial__content">
             <header class="lab-editorial__header">
@@ -34,16 +34,13 @@
             </header>
             <p class="lab-editorial__description">{{ lab.description }}</p>
             <div class="lab-editorial__footer">
-              <span class="lab-tag">Recherche fondamentale</span>
-              <span class="lab-tag">Partenariats</span>
+              <span class="lab-tag">Entrer dans la section</span>
+              <span class="lab-tag lab-tag--link">Voir le laboratoire →</span>
             </div>
           </div>
           <figure class="lab-editorial__media">
             <div class="lab-editorial__media-inner">
               <img [src]="lab.image" [alt]="'Laboratoire ' + lab.name" loading="lazy" />
-              <div class="lab-editorial__media-overlay">
-                <span class="lab-name-overlay">{{ lab.name }}</span>
-              </div>
             </div>
           </figure>
         </article>
@@ -51,13 +48,12 @@
     </div>
   </section>
 
-  <!-- KEY FIGURES SECTION -->
   <section class="home-section figures-section">
     <div
       class="section-heading"
       appViewportAnimate="fadeIn"
       [appViewportAnimateBidirectional]="true"
-      [appViewportAnimateDuration]="900"
+      [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Impact scientifique</div>
       <h2>Chiffres clés</h2>
@@ -68,10 +64,10 @@
       #keyFiguresSection
       appViewportAnimate="softSlideRight"
       [appViewportAnimateBidirectional]="true"
-      [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="250"
+      [appViewportAnimateDuration]="1400"
+      [appViewportAnimateDelay]="200"
     >
-      @for (figure of keyFigures; track figure.label; let i = $index) {
+      @for (figure of keyFigures(); track figure.label; let i = $index) {
         <article class="figure-card" [style.--card-index]="i">
           <div class="figure-card__accent"></div>
           <strong class="figure-value">{{ getAnimatedFigureValue(figure) }}<span class="figure-plus">+</span></strong>
@@ -81,27 +77,27 @@
     </div>
   </section>
 
-  <!-- RESEARCH AXES SECTION -->
-  <section class="home-section axes-section">
+  <section class="home-section axes-section" id="axes">
     <div
       class="section-heading"
       appViewportAnimate="fadeIn"
       [appViewportAnimateBidirectional]="true"
-      [appViewportAnimateDuration]="900"
+      [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Thématiques prioritaires</div>
-      <h2>Axes de recherche</h2>
+      <h2><a [routerLink]="['/laboratoires', researchAxes()[0]?.labAcronym || 'LaRESI']" fragment="axes">Axes de recherche <span>→</span></a></h2>
       <p>Des priorités scientifiques structurées autour de thématiques transversales et à fort impact.</p>
+      <app-section-link [to]="'/laboratoires/' + (researchAxes()[0]?.labAcronym || 'LaRESI')" fragment="axes" label="Voir plus" />
     </div>
     <div
       class="axes-grid"
       appViewportAnimate="softSlideLeft"
       [appViewportAnimateBidirectional]="true"
-      [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="250"
+      [appViewportAnimateDuration]="1400"
+      [appViewportAnimateDelay]="200"
     >
-      @for (axis of researchAxes; track axis.title; let i = $index) {
-        <article class="axis-item" [style.--axis-index]="i">
+      @for (axis of researchAxes(); track axis.title; let i = $index) {
+        <article class="axis-item" [style.--axis-index]="i" [routerLink]="['/laboratoires', axis.labAcronym]" fragment="axes">
           <div class="axis-item__number">{{ (i + 1).toString().padStart(2, '0') }}</div>
           <div class="axis-item__body">
             <h3>{{ axis.title }}</h3>
@@ -113,27 +109,26 @@
     </div>
   </section>
 
-  <!-- FEATURED PROJECTS SECTION -->
-  <section class="home-section projects-section">
+  <section class="home-section publications-section" id="publications">
     <div
       class="section-heading"
       appViewportAnimate="fadeIn"
       [appViewportAnimateBidirectional]="true"
-      [appViewportAnimateDuration]="900"
+      [appViewportAnimateDuration]="700"
     >
-      <div class="section-label">Initiatives emblématiques</div>
-      <h2>Projets mis en avant</h2>
-      <p>Des initiatives emblématiques conduites par les équipes LRSTA et LaRESI.</p>
+      <div class="section-label">Production scientifique</div>
+      <h2><a [routerLink]="['/production/publications']">Publications <span>→</span></a></h2>
+      <p>Sélection des publications les plus récentes issues des laboratoires.</p>
+      <app-section-link to="/production/publications" label="Voir plus" />
     </div>
-    <div
-      class="projects-grid"
-      appViewportAnimate="softSlideRight"
-      [appViewportAnimateBidirectional]="true"
-      [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="250"
-    >
-      @for (project of featuredProjects; track project.title) {
-        <app-project-card [project]="project" />
+
+    <div class="publications-list" appViewportAnimate="fadeIn" [appViewportAnimateBidirectional]="true" [appViewportAnimateDuration]="1100">
+      @for (publication of latestPublications(); track publication.id) {
+        <article class="publication-row" [routerLink]="['/production/publications']">
+          <h3>{{ publication.title }}</h3>
+          <p>{{ publication.meta }}</p>
+          <span>{{ publication.year || 'N/A' }}</span>
+        </article>
       }
     </div>
   </section>

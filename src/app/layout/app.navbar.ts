@@ -49,7 +49,7 @@ import { LayoutViewportService } from './service/layout-viewport.service';
               @for (section of item.sections; track section.label) {
                 @if (section.links) {
                   @for (link of section.links; track link.label) {
-                    <a [routerLink]="link.route" [style.fontWeight]="link.bold ? '500' : 'normal'">
+                    <a [routerLink]="link.route" [fragment]="link.fragment" [style.fontWeight]="link.bold ? '500' : 'normal'">
                       {{ link.label }}
                     </a>
                   }
@@ -64,7 +64,7 @@ import { LayoutViewportService } from './service/layout-viewport.service';
                 @if (section.subLinks) {
                   <div class="dropdown-sub">
                     @for (link of section.subLinks; track link.label) {
-                      <a [routerLink]="link.route">
+                      <a [routerLink]="link.route" [fragment]="link.fragment">
                         {{ link.label }}
                       </a>
                     }
@@ -123,57 +123,52 @@ export class AppNavbar {
         {
           label: 'LRSTA',
           subLabel: 'Technologies Avancées',
-          subLinks: [{ label: 'LRSTA', route: '/laboratoires/LRSTA' }]
+          subLinks: [
+            { label: 'LRSTA', route: '/laboratoires/LRSTA' }
+          ]
         },
         {
           label: 'LaRESI',
           subLabel: 'Ingénierie et Innovation',
-          subLinks: [{ label: 'LaRESI', route: '/laboratoires/LaRESI' }]
-        }
-      ]
-    },
-    {
-      title: 'PLATEFORMES',
-      sections: [
-        {
-          label: 'main',
-          links: [
-            { label: 'Publications', route: '/plateformes/publications' },
-            { label: 'Équipements', route: '/plateformes/equipements' },
-            { label: 'Technologiques', route: '/plateformes/technologiques' }
+          subLinks: [
+            { label: 'LaRESI', route: '/laboratoires/LaRESI' }
           ]
         }
       ]
     },
+
     {
-      title: 'PROJECTS',
+      title: 'PRODUCTION',
       sections: [
         {
-          label: 'main',
+          label: 'Scientifique',
           links: [
-            { label: 'Projets de recherche', route: '/projets/recherche' },
-            { label: 'Projets innovants', route: '/projets/innovation' },
+            { label: 'Publications', route: '/production/LaRESI' },
+            { label: 'Communications', route: '/production/LaRESI', fragment: 'communications' },
+            { label: 'Thèses', route: '/production/LaRESI', fragment: 'theses' }
           ]
         }
       ]
     },
+
     {
-      title: 'INNOVATION',
+      title: 'RESSOURCES',
       sections: [
         {
-          label: 'main',
+          label: 'Laboratoires',
           links: [
-            { label: 'Brevets', route: '/innovation/brevets' },
-            { label: 'Transfert de technologie', route: '/innovation/transfert' }
+            { label: 'Équipements', route: '/ressources/equipements' },
+            { label: 'Compétences', route: '/ressources/competences' }
           ]
         }
       ]
     },
+
     {
-      title: 'PARTENARIATS',
+      title: 'COLLABORATIONS',
       sections: [
         {
-          label: 'main',
+          label: 'Partenariats',
           links: [
             { label: 'Partenariats de recherche', route: '/partenariats' },
             { label: 'Partenariats industriels', route: '/partenariats/industriels' }
@@ -201,6 +196,6 @@ interface NavSection {
 interface NavLink {
   label?: string;
   route?: string;
+  fragment?: string;
   bold?: boolean;
 }
-
