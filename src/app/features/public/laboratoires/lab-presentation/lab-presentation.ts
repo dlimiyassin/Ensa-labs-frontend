@@ -24,7 +24,7 @@ import { EmptyStateComponent } from '../../../../shared/components/public/empty-
   styleUrl: './lab-presentation.css'
 })
 export class LabPresentation {
-  protected readonly memberAvatar = 'images/members/avatar.png';
+  protected readonly memberAvatar = 'images/members/member.png';
 
   private readonly route = inject(ActivatedRoute);
   private readonly labsService = inject(LabsService);
@@ -63,8 +63,7 @@ export class LabPresentation {
   protected readonly permanentMembers = computed(() => this.membersByAssociation('PERMENANET'));
   protected readonly associatedMembers = computed(() => this.membersByAssociation('ASSOCIATED'));
 
-  protected readonly domaines = computed(() => (this.lab()?.domainesRecherche ?? []).map((item) => item.name ?? '').filter(Boolean));
-  protected readonly thematiques = computed(() => this.domaines());
+  protected readonly thematiques = computed(() => (this.lab()?.domainesRecherche ?? []).map((item) => item.name ?? '').filter(Boolean));
   protected readonly axes = computed(() => (this.lab()?.axesRecherche ?? []).map((item) => item.title ?? '').filter(Boolean));
   protected readonly teams = computed(() => (this.lab()?.equipes ?? [])
     .map((team) => ({
@@ -108,7 +107,7 @@ export class LabPresentation {
     return Boolean(entity?.titleFr || entity?.acronym || entity?.university || entity?.program);
   });
 
-  protected readonly hasResearch = computed(() => this.domaines().length > 0 || this.axes().length > 0);
+  protected readonly hasResearch = computed(() => this.thematiques().length > 0 || this.axes().length > 0);
 
   private membersByAssociation(type: AssociationType): Array<{ name: string; grade: string; speciality: string; associationType: string }> {
     return (this.lab()?.members ?? [])

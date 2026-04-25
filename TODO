@@ -1,9 +1,21 @@
 
 
-correct content on presontation page from descriptif
-add view more buttons for projects and axe de recherche
+load reel content on presontation page from backend
+replace projets by publication on homepage
+add view more buttons for publications and axe de recherche
 add links to each section to its concened page in modern way
 change scrollbar color
+add spinner while data is loading except homepage
 
-in topbar add 3 buttons, A+, A, A-: for zooming, like in sobronne university
 
+in lab presentation:
+keep about as it is
+remove scrolling experince with slide in / out from direction and below
+relpace it with a nav buttons (direction, members, equipes, axes) with fade in and out annimations
+also enhance the design of members cards
+
+
+in backend:
+add member id and image fields in Comité de gestion within lab object
+add  image in members within lab object
+in lab rename domaine de recherche -> thematiques de rechreche

@@ -29,7 +29,7 @@
               }
             </p>
           </div>
-          <img [src]="heroImage()" [alt]="heroTitle()" class="lab-page__image" />
+          <!-- <img [src]="heroImage()" [alt]="heroTitle()" class="lab-page__image" /> -->
         </app-animated-section>
       }
 
@@ -120,9 +120,6 @@
         <app-animated-section enter="softSlideRight" leave="softSlideOutRight" [compact]="true">
           <div>
             <app-section-title label="Recherche" title="Domaines et axes" />
-            @if (domaines().length > 0) {
-              <app-list-block title="Domaines de recherche" [items]="domaines()" />
-            }
             @if (thematiques().length > 0) {
               <app-list-block title="Thématiques de recherche" [items]="thematiques()" />
             }
