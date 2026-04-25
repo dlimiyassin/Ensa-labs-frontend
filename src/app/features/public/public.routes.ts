@@ -21,6 +21,12 @@ export const PUBLIC_ROUTES: Routes = [
     ]
   },
 
+  // Production (entrypoint publications)
+  {
+    path: 'production/publications',
+    component: Productions
+  },
+
   // Production (global)
   {
     path: 'production/:code',

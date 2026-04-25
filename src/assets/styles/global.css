@@ -62,3 +62,27 @@ app-footer,
 .layout-navbar p {
   font-family: var(--font-ui);
 }
+/* Global scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--blue-color) 48%, #fff) color-mix(in srgb, var(--blue-color) 8%, #fff);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--blue-color) 8%, #fff);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--blue-color) 48%, #fff);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--blue-color) 62%, #fff);
+}

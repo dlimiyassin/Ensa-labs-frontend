@@ -7,156 +7,154 @@
 
   <div class="internal-page__content lab-page">
     @if (loading()) {
-      <p class="internal-page__lead">Chargement des données du laboratoire...</p>
+      <app-spinner message="Chargement des données du laboratoire..." />
     } @else if (error()) {
       <p class="internal-page__lead">{{ error() }}</p>
     } @else if (!lab()) {
       <app-empty-state message="Laboratoire introuvable." />
     } @else {
       @if (hasAbout()) {
-        <app-animated-section enter="softSlideRight" leave="softSlideOutRight">
-          <div>
-            <app-section-title label="Laboratoire" title="À propos" />
-            <p class="lab-page__paragraph">
-              @if (lab()?.titleFr || lab()?.acronym) {
-                <span>{{ lab()?.titleFr }} @if (lab()?.acronym) {({{ lab()?.acronym }}) }</span>
-              }
-              @if (lab()?.university) {
-                <span> est rattaché à {{ lab()?.university }}</span>
-              }
-              @if (lab()?.program) {
-                <span>. Le programme {{ lab()?.program }} structure ses activités de recherche et de transfert.</span>
-              }
-            </p>
-          </div>
-          <!-- <img [src]="heroImage()" [alt]="heroTitle()" class="lab-page__image" /> -->
-        </app-animated-section>
+        <section class="lab-about">
+          <app-section-title label="Laboratoire" title="À propos" />
+          <p class="lab-page__paragraph">
+            @if (lab()?.titleFr || lab()?.acronym) {
+              <span>{{ lab()?.titleFr }} @if (lab()?.acronym) {({{ lab()?.acronym }}) }</span>
+            }
+            @if (lab()?.university) {
+              <span> est rattaché à {{ lab()?.university }}</span>
+            }
+            @if (lab()?.program) {
+              <span>. Le programme {{ lab()?.program }} structure ses activités de recherche et de transfert.</span>
+            }
+          </p>
+        </section>
       }
 
-      @if (direction().length > 0 || committee().length > 0) {
-        <app-animated-section enter="softSlideLeft" leave="softSlideOutLeft" [compact]="true">
-          <div>
+      <app-tabs [tabs]="tabs" [activeId]="activeTab()" (tabChange)="selectTab($event)" />
+
+      @if (activeTab() === 'direction') {
+        <app-fade-container>
+          <section class="lab-panel">
             <app-section-title label="Gouvernance" title="Direction" />
-            @if (direction().length > 0) {
-              <div class="lab-page__cards">
-                @for (director of direction(); track director.name + director.role) {
-                  <article class="lab-page__card">
-                    <img [src]="memberAvatar" [alt]="director.name || director.role" class="lab-page__avatar" />
-                    <h4 class="lab-page__card-title">{{ director.name }}</h4>
-                    <p class="lab-page__card-meta">{{ director.role }}</p>
-                  </article>
-                }
-              </div>
-            }
+            <div class="lab-page__cards">
+              @for (director of direction(); track director.name + director.role) {
+                <app-enhanced-member-card
+                  [name]="director.name"
+                  [grade]="director.grade"
+                  [speciality]="director.speciality"
+                  [role]="director.role"
+                  [avatar]="memberAvatar"
+                />
+              }
+            </div>
+
             @if (committee().length > 0) {
               <h3 class="lab-page__subtitle">Comité de gestion</h3>
               <div class="lab-page__cards">
                 @for (member of committee(); track member.name) {
-                  <article class="lab-page__card">
-                    <img [src]="memberAvatar" [alt]="member.name || 'Membre du comité'" class="lab-page__avatar" />
-                    <h4 class="lab-page__card-title">{{ member.name }}</h4>
-                    @if (member.roles.length > 0) {
-                      <ul class="lab-page__roles">
-                        @for (role of member.roles; track role) {
-                          <li class="lab-page__card-meta">{{ role }}</li>
-                        }
-                      </ul>
-                    }
-                  </article>
+                  <app-enhanced-member-card
+                    [name]="member.name"
+                    [role]="member.roles"
+                    [avatar]="memberAvatar"
+                  />
                 }
               </div>
             }
-          </div>
-        </app-animated-section>
+          </section>
+        </app-fade-container>
       }
 
-      <app-animated-section [reverse]="true" enter="softSlideLeft" leave="softSlideOutLeft" [compact]="true">
-        <div>
-          <app-section-title label="Membres" title="Composition du laboratoire" />
-          @if (permanentMembers().length > 0) {
-            <h3 class="lab-page__subtitle">Membres permanents</h3>
-            <div class="lab-page__cards">
-              @for (member of permanentMembers(); track member.name + member.grade + member.speciality + member.associationType) {
-                <article class="lab-page__card">
-                  <img [src]="memberAvatar" [alt]="member.name || 'Membre permanent'" class="lab-page__avatar" />
-                  <h4 class="lab-page__card-title">{{ member.name }}</h4>
-                  @if (member.grade) {
-                    <p class="lab-page__card-meta">Grade : {{ member.grade }}</p>
-                  }
-                  @if (member.speciality) {
-                    <p class="lab-page__card-meta">Spécialité : {{ member.speciality }}</p>
-                  }
-                  @if (member.associationType) {
-                    <p class="lab-page__card-meta">Association : {{ member.associationType }}</p>
-                  }
-                </article>
-              }
-            </div>
-          }
-          @if (associatedMembers().length > 0) {
-            <h3 class="lab-page__subtitle">Membres associés</h3>
-            <div class="lab-page__cards">
-              @for (member of associatedMembers(); track member.name + member.grade + member.speciality + member.associationType) {
-                <article class="lab-page__card">
-                  <img [src]="memberAvatar" [alt]="member.name || 'Membre associé'" class="lab-page__avatar" />
-                  <h4 class="lab-page__card-title">{{ member.name }}</h4>
-                  @if (member.grade) {
-                    <p class="lab-page__card-meta">Grade : {{ member.grade }}</p>
-                  }
-                  @if (member.speciality) {
-                    <p class="lab-page__card-meta">Spécialité : {{ member.speciality }}</p>
-                  }
-                  @if (member.associationType) {
-                    <p class="lab-page__card-meta">Association : {{ member.associationType }}</p>
-                  }
-                </article>
-              }
-            </div>
-          }
-        </div>
-      </app-animated-section>
+      @if (activeTab() === 'members') {
+        <app-fade-container>
+          <section class="lab-panel">
+            <app-section-title label="Membres" title="Composition du laboratoire" />
+            @if (permanentMembers().length > 0) {
+              <h3 class="lab-page__subtitle">Membres permanents</h3>
+              <div class="lab-page__cards">
+                @for (member of permanentMembers(); track member.name + member.grade + member.speciality) {
+                  <app-enhanced-member-card
+                    [name]="member.name"
+                    [grade]="member.grade"
+                    [speciality]="member.speciality"
+                    [role]="member.role"
+                    [avatar]="memberAvatar"
+                  />
+                }
+              </div>
+            }
 
-      @if (hasResearch() || teams().length > 0) {
-        <app-animated-section enter="softSlideRight" leave="softSlideOutRight" [compact]="true">
-          <div>
-            <app-section-title label="Recherche" title="Domaines et axes" />
-            @if (thematiques().length > 0) {
-              <app-list-block title="Thématiques de recherche" [items]="thematiques()" />
+            @if (associatedMembers().length > 0) {
+              <h3 class="lab-page__subtitle">Membres associés</h3>
+              <div class="lab-page__cards">
+                @for (member of associatedMembers(); track member.name + member.grade + member.speciality) {
+                  <app-enhanced-member-card
+                    [name]="member.name"
+                    [grade]="member.grade"
+                    [speciality]="member.speciality"
+                    [role]="member.role"
+                    [avatar]="memberAvatar"
+                  />
+                }
+              </div>
             }
-            @if (axes().length > 0) {
-              <app-list-block title="Axes de recherche" [items]="axes()" />
-            }
-            @if (teams().length > 0) {
-              <h3 class="lab-page__subtitle">Équipes</h3>
-              @for (team of teams(); track team.name) {
-                <section class="lab-page__team">
-                  <h4 class="lab-page__team-name">{{ team.name }}</h4>
-                  @if (team.members.length > 0) {
-                    <div class="lab-page__cards">
-                      @for (member of team.members; track member.name + member.grade + member.speciality + member.associationType) {
-                        <article class="lab-page__card">
-                          <img [src]="memberAvatar" [alt]="member.name || 'Membre de l’équipe'" class="lab-page__avatar" />
-                          <h5 class="lab-page__card-title">{{ member.name }}</h5>
-                          @if (member.grade) {
-                            <p class="lab-page__card-meta">Grade : {{ member.grade }}</p>
-                          }
-                          @if (member.speciality) {
-                            <p class="lab-page__card-meta">Spécialité : {{ member.speciality }}</p>
-                          }
-                          @if (member.associationType) {
-                            <p class="lab-page__card-meta">Association : {{ member.associationType }}</p>
-                          }
-                        </article>
-                      }
-                    </div>
-                  }
-                </section>
-              }
-            }
-          </div>
-        </app-animated-section>
+          </section>
+        </app-fade-container>
       }
 
+      @if (activeTab() === 'equipes') {
+        <app-fade-container>
+          <section class="lab-panel" id="equipes">
+            <app-section-title label="Organisation" title="Équipes" />
+            @for (team of teams(); track team.name) {
+              <section class="lab-page__team">
+                <h4 class="lab-page__team-name">{{ team.name }}</h4>
+                @if (team.responsable.name) {
+                  <div class="lab-page__cards">
+                    <app-enhanced-member-card
+                      [name]="team.responsable.name"
+                      [grade]="team.responsable.grade"
+                      [speciality]="team.responsable.speciality"
+                      [role]="team.responsable.role"
+                      [avatar]="memberAvatar"
+                    />
+                  </div>
+                }
+
+                @if (team.members.length > 0) {
+                  <div class="lab-page__cards">
+                    @for (member of team.members; track member.name + member.grade + member.speciality) {
+                      <app-enhanced-member-card
+                        [name]="member.name"
+                        [grade]="member.grade"
+                        [speciality]="member.speciality"
+                        [role]="member.role"
+                        [avatar]="memberAvatar"
+                      />
+                    }
+                  </div>
+                }
+              </section>
+            }
+          </section>
+        </app-fade-container>
+      }
+
+      @if (activeTab() === 'axes') {
+        <app-fade-container>
+          <section class="lab-panel" id="axes">
+            <app-section-title label="Recherche" title="Axes" />
+            @if (axes().length === 0) {
+              <app-empty-state message="Aucun axe de recherche disponible." />
+            } @else {
+              <ul class="axes-list">
+                @for (axis of axes(); track axis) {
+                  <li>{{ axis }}</li>
+                }
+              </ul>
+            }
+          </section>
+        </app-fade-container>
+      }
     }
   </div>
 </section>
