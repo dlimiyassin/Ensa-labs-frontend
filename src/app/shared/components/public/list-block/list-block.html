@@ -1,0 +1,12 @@
+<section class="list-block">
+  <h3>{{ title() }}</h3>
+  @if (items().length > 0) {
+    <ul>
+      @for (item of items(); track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+  } @else {
+    <p class="list-block__empty">{{ emptyLabel() }}</p>
+  }
+</section>

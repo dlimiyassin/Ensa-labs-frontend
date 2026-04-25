@@ -1,0 +1,42 @@
+.productions-page {
+  display: grid;
+  gap: .6rem;
+}
+
+.lab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: .8rem;
+}
+
+.lab-nav button {
+  border: 1px solid rgba(15, 23, 42, .14);
+  background: #fff;
+  color: #334155;
+  padding: .45rem .8rem;
+  cursor: pointer;
+}
+
+.lab-nav button.is-active {
+  border-color: var(--blue-color);
+  color: var(--blue-color);
+}
+
+.year-group {
+  padding: .8rem 0;
+  border-top: 1px solid rgba(15, 23, 42, .08);
+}
+
+.year-group h3 {
+  margin: 0 0 .55rem;
+}
+
+.year-group ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--text-color);
+  display: grid;
+  gap: .5rem;
+  line-height: 1.7;
+}

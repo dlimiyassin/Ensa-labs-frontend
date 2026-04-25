@@ -1,0 +1,17 @@
+.lab-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.lab-page__paragraph {
+  margin: 0 0 .85rem;
+  color: var(--text-color);
+  line-height: 1.75;
+}
+
+.lab-page__image {
+  width: 100%;
+  min-height: 16rem;
+  max-height: 24rem;
+  object-fit: cover;
+}

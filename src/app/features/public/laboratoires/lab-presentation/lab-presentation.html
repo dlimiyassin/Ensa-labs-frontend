@@ -1,13 +1,58 @@
 <section class="internal-page">
   <app-page-hero
-    [title]="labName()"
-    subtitle="Présentation du laboratoire, de ses équipes, de ses axes scientifiques et de ses opportunités de collaboration."
-    [image]="imageLab()"
+    [title]="heroTitle()"
+    [subtitle]="lab()?.titleEn || 'Présentation institutionnelle du laboratoire et de ses axes scientifiques.'"
+    [image]="heroImage()"
   />
 
-  <div class="internal-page__content">
-    <p class="internal-page__lead">
-      Cette page sera enrichie avec les informations institutionnelles, les expertises clés, les projets et les publications du laboratoire.
-    </p>
+  <div class="internal-page__content lab-page">
+    @if (loading()) {
+      <p class="internal-page__lead">Chargement des données du laboratoire...</p>
+    } @else if (error()) {
+      <p class="internal-page__lead">{{ error() }}</p>
+    } @else if (!lab()) {
+      <app-empty-state message="Laboratoire introuvable." />
+    } @else {
+      <app-animated-section enter="softSlideRight" leave="softSlideOutRight">
+        <div>
+          <app-section-title label="Laboratoire" title="À propos" />
+          <p class="lab-page__paragraph">
+            {{ lab()?.titleFr }} ({{ lab()?.acronym }}) est rattaché à {{ lab()?.university || 'l’université' }}.
+            Le programme {{ lab()?.program || 'de recherche' }} structure ses activités de recherche et de transfert.
+          </p>
+        </div>
+        <img [src]="heroImage()" [alt]="heroTitle()" class="lab-page__image" />
+      </app-animated-section>
+
+      <app-animated-section [reverse]="true" enter="softSlideLeft" leave="softSlideOutLeft">
+        <div>
+          <app-section-title label="Gouvernance" title="Direction" />
+          <p class="lab-page__paragraph"><strong>Directeur:</strong> {{ memberLabel(lab()?.directeur || {}) || 'Non renseigné' }}</p>
+          <p class="lab-page__paragraph"><strong>Directeur adjoint:</strong> {{ memberLabel(lab()?.directeurAdjoint || {}) || 'Non renseigné' }}</p>
+          <app-list-block title="Comité de gestion" [items]="committee()" />
+        </div>
+        <div></div>
+      </app-animated-section>
+
+      <app-animated-section enter="softSlideRight" leave="softSlideOutRight" [compact]="true">
+        <div>
+          <app-section-title label="Recherche" title="Domaines et axes" />
+          <app-list-block title="Domaines de recherche" [items]="domaines()" />
+          <app-list-block title="Axes de recherche" [items]="axes()" />
+        </div>
+        <div>
+          <app-list-block title="Équipes" [items]="teams()" emptyLabel="Aucune équipe renseignée." />
+        </div>
+      </app-animated-section>
+
+      <app-animated-section [reverse]="true" enter="softSlideLeft" leave="softSlideOutLeft" [compact]="true">
+        <div>
+          <app-section-title label="Membres" title="Composition du laboratoire" />
+          <app-list-block title="Membres permanents" [items]="permanentMembers()" />
+          <app-list-block title="Membres associés" [items]="associatedMembers()" />
+        </div>
+        <div></div>
+      </app-animated-section>
+    }
   </div>
 </section>

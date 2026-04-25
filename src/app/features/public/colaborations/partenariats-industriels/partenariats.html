@@ -1,13 +1,19 @@
 <section class="internal-page">
   <app-page-hero
     title="Partenariats industriels"
-    subtitle="Des collaborations ciblées entre laboratoires et acteurs économiques pour accélérer l’innovation appliquée."
+    subtitle="Collaborations avec les acteurs économiques autour de la valorisation de la recherche."
     image="images/home/innovation.jpg"
   />
 
   <div class="internal-page__content">
-    <p class="internal-page__lead">
-      Le contenu sera enrichi avec les modèles de partenariat, les succès de co-développement et les modalités de collaboration.
-    </p>
+    <app-section-title label="Industrie" title="Cadre des collaborations" />
+
+    @if (!hasData()) {
+      <app-empty-state message="Aucun partenariat industriel disponible." />
+    } @else {
+      <app-list-block title="Organisation" [items]="organizations()" />
+      <app-list-block title="Thème" [items]="themes()" />
+      <app-list-block title="Nature" [items]="natures()" />
+    }
   </div>
 </section>

@@ -1,0 +1,16 @@
+<div class="filter-bar">
+  @for (field of fields(); track field.key) {
+    <label>
+      <span>{{ field.label }}</span>
+      <select
+        [ngModel]="values()[field.key]"
+        (ngModelChange)="onChange(field.key, $event)"
+      >
+        <option value="">Tous</option>
+        @for (option of field.options; track option) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </label>
+  }
+</div>

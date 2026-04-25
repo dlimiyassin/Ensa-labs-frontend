@@ -1,0 +1,11 @@
+<nav class="tabs" aria-label="Onglets">
+  @for (tab of tabs(); track tab.id) {
+    <button
+      type="button"
+      [class.is-active]="tab.id === activeId()"
+      (click)="tabChange.emit(tab.id)"
+    >
+      {{ tab.label }}
+    </button>
+  }
+</nav>

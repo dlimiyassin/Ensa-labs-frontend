@@ -1,0 +1,26 @@
+.animated-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: 2rem;
+  align-items: center;
+  margin: 2.5rem 0;
+}
+
+.animated-section--reverse {
+  direction: rtl;
+}
+
+.animated-section--reverse > * {
+  direction: ltr;
+}
+
+.animated-section--compact {
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .animated-section {
+    grid-template-columns: 1fr;
+    margin: 2rem 0;
+  }
+}

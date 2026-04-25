@@ -1,0 +1,24 @@
+.list-block {
+  padding: 1.2rem 0;
+  border-top: 1px solid rgba(15, 23, 42, .08);
+}
+
+.list-block h3 {
+  margin: 0 0 .8rem;
+  color: #0f172a;
+  font-size: 1.02rem;
+}
+
+.list-block ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text-color);
+  display: grid;
+  gap: .35rem;
+  line-height: 1.6;
+}
+
+.list-block__empty {
+  margin: 0;
+  color: #64748b;
+}
