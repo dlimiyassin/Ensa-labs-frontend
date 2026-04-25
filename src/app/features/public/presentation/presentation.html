@@ -130,7 +130,7 @@
       appViewportAnimate="softSlideRight"
       [appViewportAnimateBidirectional]="true"
       [appViewportAnimateDuration]="2000"
-      [appViewportAnimateDelay]="250"
+      [appViewportAnimateDelay]="0"
     >
       @for (project of featuredProjects; track project.title) {
         <app-project-card [project]="project" />

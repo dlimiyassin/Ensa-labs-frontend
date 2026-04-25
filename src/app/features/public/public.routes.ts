@@ -1,15 +1,11 @@
 import { Routes } from '@angular/router';
-import { Brevets } from './innovation/brevets/brevets';
-import { PartenariatsIndustriels } from './innovation/partenariats/partenariats';
-import { ProjetsInnovation } from './innovation/projets/projets';
-import { Transfert } from './innovation/transfert/transfert';
-import { Equipements } from './plateformes/equipements/equipements';
-import { LabPresentation } from './laboratoires/lab-presentation/lab-presentation';
-import { Publications } from './plateformes/publications/publications';
-import { Technologiques } from './plateformes/technologiques/technologiques';
-import { Partenariats } from './recherche/partenariats/partenariats';
-import { ProjetsRecherche } from './recherche/projets/projets';
 import { Presentation } from './presentation/presentation';
+import { LabPresentation } from './laboratoires/lab-presentation/lab-presentation';
+import { Productions } from './productions/productions';
+import { Equipements } from './ressources/equipements/equipements';
+import { Competences } from './ressources/competences/competences';
+import { PartenariatsIndustriels } from './colaborations/partenariats-industriels/partenariats';
+import { Partenariats } from './colaborations/partenariats/partenariats';
 
 export const PUBLIC_ROUTES: Routes = [
 
@@ -21,37 +17,32 @@ export const PUBLIC_ROUTES: Routes = [
   {
     path: 'laboratoires/:code',
     children: [
-      { path: '', component: LabPresentation },
-      { path: 'publications', component: Publications }
+      { path: '', component: LabPresentation }
     ]
   },
+
+  // Production (global)
   {
-    path: 'projets',
-    children: [
-      { path: 'recherche', component: ProjetsRecherche },
-      { path: 'innovation', component: ProjetsInnovation }
-    ]
+    path: 'production/:code',
+    component: Productions
   },
+
+  // Resources (global)
   {
-    path: 'innovation',
+    path: 'ressources',
     children: [
-      { path: 'brevets', component: Brevets },
-      { path: 'transfert', component: Transfert },
+      { path: 'equipements', component: Equipements },
+      { path: 'competences', component: Competences }
     ]
   },
+
+  // Partenariats (global)
   {
     path: 'partenariats',
     children: [
       { path: '', component: Partenariats },
       { path: 'industriels', component: PartenariatsIndustriels }
     ]
-  },
-  {
-    path: 'plateformes',
-    children: [
-      { path: 'publications', component: Publications },
-      { path: 'equipements', component: Equipements },
-      { path: 'technologiques', component: Technologiques }
-    ]
   }
+
 ];
