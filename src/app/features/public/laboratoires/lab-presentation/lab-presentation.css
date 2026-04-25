@@ -15,3 +15,57 @@
   max-height: 24rem;
   object-fit: cover;
 }
+
+.lab-page__subtitle {
+  margin: 0 0 .75rem;
+  color: var(--primary-color);
+}
+
+.lab-page__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: .9rem;
+  margin-bottom: 1rem;
+}
+
+.lab-page__card {
+  border: 1px solid color-mix(in srgb, var(--surface-border) 75%, #fff);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: color-mix(in srgb, #fff 90%, var(--surface-ground));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: .3rem;
+}
+
+.lab-page__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid color-mix(in srgb, var(--primary-color) 30%, #fff);
+  margin-bottom: .35rem;
+}
+
+.lab-page__card-title {
+  margin: 0;
+  font-size: .95rem;
+  color: var(--text-color);
+}
+
+.lab-page__card-meta {
+  margin: 0;
+  font-size: .82rem;
+  color: var(--text-color-secondary);
+}
+
+.lab-page__team {
+  margin-bottom: .9rem;
+}
+
+.lab-page__team-name {
+  margin: 0 0 .6rem;
+  color: var(--text-color);
+}
