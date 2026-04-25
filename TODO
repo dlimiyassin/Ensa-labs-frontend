@@ -19,3 +19,19 @@ in backend:
 add member id and image fields in Comité de gestion within lab object
 add  image in members within lab object
 in lab rename domaine de recherche -> thematiques de rechreche
+
+
+
+
+
+
+
+
+
+====================================
+- when navigating in profuction. (comunucation or theses or publications) must be the code in path (not the lab acronym) so then it got extracted and the navbutton didcated to that is automatically selected, and the lab LaRESI button must be selected as default always, and update that methods that calls with 'code' because code is not the name of lab
+- labPresentation/equipes/ equipe titles or are not highlithed well
+- when you dont find axe de recherche in lab object, try to extract axes in equipes and display them in axes and groupe them by equipe.
+- when no equipe exist in lab say something
+- in axe seperate axes de rechreche from themateques de rechreche
+- spiner is not working in 'http://localhost:4200/partenariats/industriels' and 'http://localhost:4200/partenariats', andenhance the  colaboratrors cards with this picture 'images/colabs/building.png'
