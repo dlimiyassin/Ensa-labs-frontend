@@ -8,32 +8,27 @@ import { PartenariatsIndustriels } from './colaborations/partenariats-industriel
 import { Partenariats } from './colaborations/partenariats/partenariats';
 
 export const PUBLIC_ROUTES: Routes = [
-
   {
     path: '',
     component: Presentation
   },
-
   {
     path: 'laboratoires/:code',
-    children: [
-      { path: '', component: LabPresentation }
-    ]
+    children: [{ path: '', component: LabPresentation }]
   },
-
-  // Production (entrypoint publications)
   {
-    path: 'production/publications',
+    path: 'production/:tab/:code',
     component: Productions
   },
-
-  // Production (global)
   {
-    path: 'production/:code',
+    path: 'production/:tab',
     component: Productions
   },
-
-  // Resources (global)
+  {
+    path: 'production',
+    redirectTo: 'production/publications/LaRESI',
+    pathMatch: 'full'
+  },
   {
     path: 'ressources',
     children: [
@@ -41,8 +36,6 @@ export const PUBLIC_ROUTES: Routes = [
       { path: 'competences', component: Competences }
     ]
   },
-
-  // Partenariats (global)
   {
     path: 'partenariats',
     children: [
@@ -50,5 +43,4 @@ export const PUBLIC_ROUTES: Routes = [
       { path: 'industriels', component: PartenariatsIndustriels }
     ]
   }
-
 ];

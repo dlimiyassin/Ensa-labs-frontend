@@ -1,10 +1,10 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, computed, effect, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
 
 import { LabsService } from '../../../../core/services/labs.service';
-import { AssociationType, ComiteGestionMembreDTO, LabDTO, MemberDTO } from '../../../../core/models/api.models';
+import { AssociationType, ComiteGestionMembreDTO, EquipeDTO, LabDTO, MemberDTO } from '../../../../core/models/api.models';
 import { PageHeroComponent } from '../../../../shared/components/page-hero/page-hero';
 import { SectionTitleComponent } from '../../../../shared/components/public/section-title/section-title';
 import { EmptyStateComponent } from '../../../../shared/components/public/empty-state/empty-state';
@@ -20,6 +20,18 @@ interface MemberCardModel {
   grade: string;
   speciality: string;
   role: string;
+}
+
+interface TeamViewModel {
+  name: string;
+  description: string;
+  responsable: MemberCardModel;
+  members: MemberCardModel[];
+}
+
+interface AxisGroupModel {
+  teamName: string;
+  axes: string[];
 }
 
 @Component({
@@ -40,6 +52,7 @@ export class LabPresentation {
   protected readonly memberAvatar = 'images/members/member.png';
 
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly labsService = inject(LabsService);
 
   protected readonly loading = signal(true);
@@ -53,49 +66,75 @@ export class LabPresentation {
     { id: 'axes', label: 'Axes' }
   ];
 
-  private readonly code = toSignal(this.route.paramMap.pipe(
-    map((params) => (params.get('code') ?? 'LaRESI').trim()),
+  private readonly labs = toSignal(this.labsService.findAll().pipe(catchError(() => of<LabDTO[]>([]))), { initialValue: [] });
+
+  private readonly routeCode = toSignal(this.route.paramMap.pipe(
+    map((params) => (params.get('code') ?? '').trim()),
     distinctUntilChanged()
-  ), { initialValue: 'LaRESI' });
+  ), { initialValue: '' });
+
+  protected readonly selectedLabCode = computed(() => this.resolveLabCode(this.routeCode()));
 
   private readonly fragment = toSignal(this.route.fragment, { initialValue: null });
 
   protected readonly lab = toSignal(
     this.route.paramMap.pipe(
-      map((params) => (params.get('code') ?? 'LaRESI').trim()),
+      map((params) => (params.get('code') ?? '').trim()),
       distinctUntilChanged(),
       tap(() => {
         this.loading.set(true);
         this.error.set('');
       }),
-      switchMap((code) => this.labsService.findByAcronym(code).pipe(
-        catchError(() => {
+      switchMap((code) => {
+        const selectedLab = this.resolveLab(this.resolveLabCode(code));
+        if (!selectedLab) {
           this.error.set('Impossible de charger les informations du laboratoire.');
+          this.loading.set(false);
           return of<LabDTO | null>(null);
-        })
-      )),
-      tap(() => {
-        this.loading.set(false);
-        this.syncTabFromFragment();
-      })
+        }
+
+        return of(selectedLab).pipe(tap(() => this.loading.set(false)));
+      }),
+      tap(() => this.syncTabFromFragment())
     ),
     { initialValue: null }
   );
 
-  protected readonly heroTitle = computed(() => this.lab()?.titleFr || this.lab()?.acronym || this.code());
+  constructor() {
+    effect(() => {
+      const code = this.selectedLabCode();
+      if (!code) {
+        return;
+      }
+
+      if (this.routeCode() !== code) {
+        this.router.navigate(['/laboratoires', code], {
+          fragment: this.fragment() ?? undefined,
+          replaceUrl: true
+        });
+      }
+    });
+  }
+
+  protected readonly heroTitle = computed(() => this.lab()?.titleFr || this.lab()?.acronym || this.selectedLabCode());
   protected readonly heroImage = computed(() => this.resolveLabImage(this.lab()?.acronym));
 
   protected readonly permanentMembers = computed(() => this.membersByAssociation('PERMENANET'));
   protected readonly associatedMembers = computed(() => this.membersByAssociation('ASSOCIATED'));
 
-  protected readonly axes = computed(() => (this.lab()?.axesRecherche ?? []).map((item) => item.title ?? '').filter(Boolean));
-  protected readonly teams = computed(() => (this.lab()?.equipes ?? [])
+  protected readonly teams = computed<TeamViewModel[]>(() => (this.lab()?.equipes ?? [])
     .map((team) => ({
       name: (team.name ?? '').trim(),
+      description: this.getTeamDescription(team),
       responsable: this.toMemberCard(team.responsable, 'Responsable'),
       members: (team.members ?? []).map((member) => this.toMemberCard(member)).filter((member) => !!member.name)
     }))
     .filter((team) => !!team.name));
+
+  protected readonly hasTeams = computed(() => this.teams().length > 0);
+
+  protected readonly axesOfResearch = computed(() => this.resolveTypedAxes('axes'));
+  protected readonly researchThemes = computed(() => this.resolveTypedAxes('themes'));
 
   protected readonly committee = computed(() => {
     const grouped = new Map<string, Set<string>>();
@@ -136,6 +175,68 @@ export class LabPresentation {
     this.activeTab.set(tabId as LabTab);
   }
 
+  private resolveTypedAxes(kind: 'axes' | 'themes'): AxisGroupModel[] {
+    const current = this.lab();
+    if (!current) {
+      return [];
+    }
+
+    const directAxes = (current.axesRecherche ?? [])
+      .map((item) => ({
+        title: (item.title ?? '').trim(),
+        type: (item.type ?? 'AXE').toUpperCase(),
+        teamName: 'Laboratoire'
+      }))
+      .filter((item) => !!item.title);
+
+    const groupedFromLab = kind === 'axes'
+      ? directAxes.filter((item) => item.type !== 'THEMATIQUE')
+      : directAxes.filter((item) => item.type === 'THEMATIQUE');
+
+    if (groupedFromLab.length > 0) {
+      return [{ teamName: 'Laboratoire', axes: groupedFromLab.map((item) => item.title) }];
+    }
+
+    return (current.equipes ?? [])
+      .map((team) => {
+        const rawAxes = this.extractTeamAxes(team, kind);
+        return {
+          teamName: (team.name ?? 'Équipe').trim(),
+          axes: rawAxes
+        };
+      })
+      .filter((item) => item.axes.length > 0);
+  }
+
+  private extractTeamAxes(team: EquipeDTO, kind: 'axes' | 'themes'): string[] {
+    const typedAxes = (team.axesRecherche ?? [])
+      .filter((axis) => {
+        const axisType = (axis.type ?? 'AXE').toUpperCase();
+        return kind === 'axes' ? axisType !== 'THEMATIQUE' : axisType === 'THEMATIQUE';
+      })
+      .map((axis) => (axis.title ?? '').trim())
+      .filter(Boolean);
+
+    if (typedAxes.length > 0) {
+      return typedAxes;
+    }
+
+    const teamData = team as EquipeDTO & {
+      axes_de_recherche?: Array<string | { title?: string; nom?: string }>;
+      thematiques_de_recherche?: Array<string | { title?: string; nom?: string }>;
+    };
+
+    const source = kind === 'axes' ? teamData.axes_de_recherche : teamData.thematiques_de_recherche;
+    return (source ?? [])
+      .map((entry) => typeof entry === 'string' ? entry.trim() : (entry.title ?? entry.nom ?? '').trim())
+      .filter(Boolean);
+  }
+
+  private getTeamDescription(team: EquipeDTO): string {
+    const raw = team as EquipeDTO & { description_fr?: string; descriptionFr?: string };
+    return (team.description ?? raw.description_fr ?? raw.descriptionFr ?? '').trim();
+  }
+
   private syncTabFromFragment(): void {
     const fragment = (this.fragment() ?? '').toLowerCase();
     if (fragment === 'axes') {
@@ -154,6 +255,41 @@ export class LabPresentation {
     }
 
     this.activeTab.set('direction');
+  }
+
+  private resolveLabCode(rawCode: string): string {
+    const allLabs = this.labs();
+    if (allLabs.length === 0) {
+      return 'LaRESI';
+    }
+
+    const normalized = rawCode.trim().toLowerCase();
+    const matching = allLabs.find((lab) => {
+      const code = (lab.code ?? '').trim().toLowerCase();
+      const acronym = (lab.acronym ?? '').trim().toLowerCase();
+      return normalized && (code === normalized || acronym === normalized);
+    });
+
+    if (matching) {
+      return this.getLabCode(matching);
+    }
+
+    const laresi = allLabs.find((lab) => {
+      const code = (lab.code ?? '').trim().toLowerCase();
+      const acronym = (lab.acronym ?? '').trim().toLowerCase();
+      return code === 'laresi' || acronym === 'laresi';
+    });
+
+    return this.getLabCode(laresi ?? allLabs[0]);
+  }
+
+  private getLabCode(lab: LabDTO): string {
+    return (lab.code ?? lab.acronym ?? '').trim();
+  }
+
+  private resolveLab(code: string): LabDTO | undefined {
+    const normalized = code.trim().toLowerCase();
+    return this.labs().find((lab) => this.getLabCode(lab).toLowerCase() === normalized);
   }
 
   private membersByAssociation(type: AssociationType): MemberCardModel[] {

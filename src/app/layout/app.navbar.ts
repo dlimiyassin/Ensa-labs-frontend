@@ -143,9 +143,9 @@ export class AppNavbar {
         {
           label: 'Scientifique',
           links: [
-            { label: 'Publications', route: '/production/publications' },
-            { label: 'Communications', route: '/production/communications' },
-            { label: 'Thèses', route: '/production/theses' }
+            { label: 'Publications', route: '/production/publications/LaRESI' },
+            { label: 'Communications', route: '/production/communications/LaRESI' },
+            { label: 'Thèses', route: '/production/theses/LaRESI' }
           ]
         }
       ]

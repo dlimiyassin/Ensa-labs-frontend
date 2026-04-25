@@ -1,0 +1,45 @@
+.collaboration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.collaboration-card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--orange-color) 16%, #fff);
+  border-radius: 0.9rem;
+  padding: 0.8rem;
+  background: #fff;
+}
+
+.collaboration-card__media {
+  margin: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--surface-ground) 88%, #fff);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.collaboration-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.collaboration-card__body h3 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.collaboration-card__body p {
+  margin: 0.3rem 0 0;
+  color: var(--text-color);
+  line-height: 1.45;
+}

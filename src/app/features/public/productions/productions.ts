@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
@@ -45,26 +45,63 @@ export class Productions {
 
   protected readonly labs = toSignal(this.labsService.findAll().pipe(catchError(() => of<LabDTO[]>([]))), { initialValue: [] });
 
-  protected readonly labCode = toSignal(this.route.paramMap.pipe(
-    map((params) => (params.get('code') ?? 'LaRESI').trim()),
+  private readonly routeTab = toSignal(this.route.paramMap.pipe(
+    map((params) => this.normalizeTab(params.get('tab'))),
     distinctUntilChanged()
-  ), { initialValue: 'LaRESI' });
+  ), { initialValue: 'publications' as ProductionTab });
+
+  private readonly routeCode = toSignal(this.route.paramMap.pipe(
+    map((params) => (params.get('code') ?? '').trim()),
+    distinctUntilChanged()
+  ), { initialValue: '' });
+
+  protected readonly selectedLabCode = computed(() => this.resolveLabCode(this.routeCode()));
 
   protected readonly production = toSignal(this.route.paramMap.pipe(
-    map((params) => (params.get('code') ?? 'LaRESI').trim()),
-    distinctUntilChanged(),
-    tap(() => {
+    map((params) => ({
+      tab: this.normalizeTab(params.get('tab')),
+      code: (params.get('code') ?? '').trim()
+    })),
+    distinctUntilChanged((a, b) => a.tab === b.tab && a.code === b.code),
+    tap(({ tab }) => {
+      this.activeTab.set(tab);
       this.loading.set(true);
       this.error.set('');
     }),
-    switchMap((code) => this.productionsService.findByLabAcronym(code).pipe(
-      catchError(() => {
-        this.error.set('Impossible de charger les productions.');
+    switchMap(({ code }) => {
+      const selected = this.resolveLab(this.resolveLabCode(code));
+      const acronym = (selected?.acronym ?? '').trim();
+
+      if (!acronym) {
+        this.loading.set(false);
+        this.error.set('Aucun laboratoire disponible.');
         return of<ProductionDTO | null>(null);
-      })
-    )),
-    tap(() => this.loading.set(false))
+      }
+
+      return this.productionsService.findByLabAcronym(acronym).pipe(
+        catchError(() => {
+          this.error.set('Impossible de charger les productions.');
+          return of<ProductionDTO | null>(null);
+        }),
+        tap(() => this.loading.set(false))
+      );
+    })
   ), { initialValue: null });
+
+  constructor() {
+    effect(() => {
+      const tab = this.routeTab();
+      const code = this.selectedLabCode();
+      const routeCode = this.routeCode();
+      if (!code) {
+        return;
+      }
+
+      if (routeCode !== code) {
+        this.router.navigate(['/production', tab, code], { replaceUrl: true });
+      }
+    });
+  }
 
   protected readonly filterFields = computed<readonly FilterField[]>(() => {
     if (this.activeTab() === 'theses') {
@@ -87,16 +124,21 @@ export class Productions {
   protected readonly groupedTheses = computed(() => this.groupTheses(this.filterTheses(this.production()?.theses ?? [])));
 
   protected selectLab(code: string): void {
-    this.router.navigate(['/production', code]);
+    this.router.navigate(['/production', this.activeTab(), code]);
   }
 
   protected selectTab(tabId: string): void {
-    this.activeTab.set(tabId as ProductionTab);
+    const tab = this.normalizeTab(tabId);
     this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
+    this.router.navigate(['/production', tab, this.selectedLabCode()]);
   }
 
   protected updateFilter(event: { key: string; value: string }): void {
     this.filters.update((current) => ({ ...current, [event.key]: event.value }));
+  }
+
+  protected getCode(lab: LabDTO): string {
+    return (lab.code ?? lab.acronym ?? '').trim();
   }
 
   protected publicationLine(item: PublicationDTO): string {
@@ -108,6 +150,45 @@ export class Productions {
   protected thesisLine(item: ThesisDTO): string {
     const defenseYear = item.defenseDate ? new Date(item.defenseDate).getFullYear().toString() : '';
     return `${item.author ?? 'Auteur non précisé'} — ${item.title ?? 'Sans titre'}${defenseYear ? ` (${defenseYear})` : ''}`;
+  }
+
+  private normalizeTab(tab: string | null): ProductionTab {
+    if (tab === 'communications' || tab === 'theses' || tab === 'publications') {
+      return tab;
+    }
+
+    return 'publications';
+  }
+
+  private resolveLabCode(rawCode: string): string {
+    const allLabs = this.labs();
+    if (allLabs.length === 0) {
+      return 'LaRESI';
+    }
+
+    const normalized = rawCode.trim().toLowerCase();
+    const selected = allLabs.find((lab) => {
+      const code = (lab.code ?? '').trim().toLowerCase();
+      const acronym = (lab.acronym ?? '').trim().toLowerCase();
+      return normalized && (code === normalized || acronym === normalized);
+    });
+
+    if (selected) {
+      return this.getCode(selected);
+    }
+
+    const laresi = allLabs.find((lab) => {
+      const code = (lab.code ?? '').trim().toLowerCase();
+      const acronym = (lab.acronym ?? '').trim().toLowerCase();
+      return code === 'laresi' || acronym === 'laresi';
+    });
+
+    return this.getCode(laresi ?? allLabs[0]);
+  }
+
+  private resolveLab(code: string): LabDTO | undefined {
+    const normalized = code.trim().toLowerCase();
+    return this.labs().find((lab) => this.getCode(lab).toLowerCase() === normalized);
   }
 
   private filterPublications(items: readonly PublicationDTO[]): PublicationDTO[] {

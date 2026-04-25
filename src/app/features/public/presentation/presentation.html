@@ -11,7 +11,7 @@
       <div class="section-label">Structures de recherche</div>
       <h2><a [routerLink]="['/laboratoires', labs()[0]?.name || 'LaRESI']">Nos laboratoires <span>→</span></a></h2>
       <p>Deux structures complémentaires pour porter la recherche académique, technologique et partenariale.</p>
-      <app-section-link to="/laboratoires/LaRESI" label="Voir plus" />
+      <app-section-link [to]="'/laboratoires/' + (labs()[0]?.name || 'LaRESI')" label="Voir plus" />
     </div>
 
     <div class="labs-editorial-list">
@@ -85,9 +85,9 @@
       [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Thématiques prioritaires</div>
-      <h2><a [routerLink]="['/laboratoires', researchAxes()[0]?.labAcronym || 'LaRESI']" fragment="axes">Axes de recherche <span>→</span></a></h2>
+      <h2><a [routerLink]="['/laboratoires', researchAxes()[0]?.labCode || 'LaRESI']" fragment="axes">Axes de recherche <span>→</span></a></h2>
       <p>Des priorités scientifiques structurées autour de thématiques transversales et à fort impact.</p>
-      <app-section-link [to]="'/laboratoires/' + (researchAxes()[0]?.labAcronym || 'LaRESI')" fragment="axes" label="Voir plus" />
+      <app-section-link [to]="'/laboratoires/' + (researchAxes()[0]?.labCode || 'LaRESI')" fragment="axes" label="Voir plus" />
     </div>
     <div
       class="axes-grid"
@@ -97,7 +97,7 @@
       [appViewportAnimateDelay]="200"
     >
       @for (axis of researchAxes(); track axis.title; let i = $index) {
-        <article class="axis-item" [style.--axis-index]="i" [routerLink]="['/laboratoires', axis.labAcronym]" fragment="axes">
+        <article class="axis-item" [style.--axis-index]="i" [routerLink]="['/laboratoires', axis.labCode]" fragment="axes">
           <div class="axis-item__number">{{ (i + 1).toString().padStart(2, '0') }}</div>
           <div class="axis-item__body">
             <h3>{{ axis.title }}</h3>
@@ -117,14 +117,14 @@
       [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Production scientifique</div>
-      <h2><a [routerLink]="['/production/publications']">Publications <span>→</span></a></h2>
+      <h2><a [routerLink]="['/production/publications/LaRESI']">Publications <span>→</span></a></h2>
       <p>Sélection des publications les plus récentes issues des laboratoires.</p>
-      <app-section-link to="/production/publications" label="Voir plus" />
+      <app-section-link to="/production/publications/LaRESI" label="Voir plus" />
     </div>
 
     <div class="publications-list" appViewportAnimate="fadeIn" [appViewportAnimateBidirectional]="true" [appViewportAnimateDuration]="1100">
       @for (publication of latestPublications(); track publication.id) {
-        <article class="publication-row" [routerLink]="['/production/publications']">
+        <article class="publication-row" [routerLink]="['/production/publications/LaRESI']">
           <h3>{{ publication.title }}</h3>
           <p>{{ publication.meta }}</p>
           <span>{{ publication.year || 'N/A' }}</span>

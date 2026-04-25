@@ -28,7 +28,7 @@ interface KeyFigureModel {
 interface ResearchAxisModel {
   readonly title: string;
   readonly description: string;
-  readonly labAcronym: string;
+  readonly labCode: string;
 }
 
 interface LaboratorySectionModel {
@@ -95,7 +95,7 @@ export class Presentation implements AfterViewInit, OnDestroy {
   protected readonly labs = computed<readonly LaboratorySectionModel[]>(() => {
     const data = this.labsData();
     return data.slice(0, 2).map((lab, index) => ({
-      name: (lab.acronym ?? `LAB-${index + 1}`).trim(),
+      name: this.resolveLabCode(lab, index),
       domain: (lab.titleFr ?? lab.titleEn ?? 'Structure de recherche').trim(),
       description: this.buildLabDescription(lab),
       image: this.resolveLabImage(lab.acronym, index),
@@ -120,11 +120,11 @@ export class Presentation implements AfterViewInit, OnDestroy {
 
   protected readonly researchAxes = computed<readonly ResearchAxisModel[]>(() => {
     const flattened = this.labsData()
-      .flatMap((lab) => (lab.axesRecherche ?? []).map((axis) => ({ axis, labAcronym: lab.acronym ?? 'LaRESI' })))
+      .flatMap((lab, index) => (lab.axesRecherche ?? []).map((axis) => ({ axis, labCode: this.resolveLabCode(lab, index) })))
       .filter(({ axis }) => !!axis.title)
       .slice(0, 4);
 
-    return flattened.map(({ axis, labAcronym }) => this.toResearchAxis(axis, labAcronym));
+    return flattened.map(({ axis, labCode }) => this.toResearchAxis(axis, labCode));
   });
 
   protected readonly latestPublications = computed<readonly PublicationHighlightModel[]>(() => {
@@ -218,14 +218,19 @@ export class Presentation implements AfterViewInit, OnDestroy {
     return `${title} est ${university}. ${program}`.trim();
   }
 
-  private toResearchAxis(axis: AxeRechercheDTO, labAcronym: string): ResearchAxisModel {
+  private toResearchAxis(axis: AxeRechercheDTO, labCode: string): ResearchAxisModel {
     return {
       title: (axis.title ?? 'Axe de recherche').trim(),
-      description: `Axe porté par le laboratoire ${labAcronym}.`,
-      labAcronym
+      description: `Axe porté par le laboratoire ${labCode}.`,
+      labCode
     };
   }
 
+
+
+  private resolveLabCode(lab: LabDTO, index: number): string {
+    return (lab.code ?? lab.acronym ?? `LAB-${index + 1}`).trim();
+  }
   private resolveLabImage(acronym: string | undefined, index: number): string {
     if (acronym === 'LRSTA') return 'images/labs/lab1.jpg';
     if (acronym === 'LaRESI') return 'images/labs/lab2.jpg';

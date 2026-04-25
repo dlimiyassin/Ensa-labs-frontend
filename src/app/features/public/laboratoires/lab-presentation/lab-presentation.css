@@ -32,15 +32,42 @@
 
 .lab-page__team {
   margin-bottom: 1rem;
+  border-radius: 0.85rem;
+  padding: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--text-color) 8%, #fff);
+  background: color-mix(in srgb, #fff 92%, var(--surface-ground));
+}
+
+.lab-page__team-header {
+  margin-bottom: 0.65rem;
 }
 
 .lab-page__team-name {
-  margin: 0 0 0.65rem;
-  color: var(--text-color);
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.lab-page__team-description {
+  margin: 0.35rem 0 0;
+  color: color-mix(in srgb, var(--text-color) 85%, #000);
+  line-height: 1.6;
+}
+
+.axes-panel + .axes-panel {
+  margin-top: 1rem;
+}
+
+.lab-page__axes-group {
+  margin: 0.35rem 0 0.5rem;
+  font-size: 0.98rem;
+  color: color-mix(in srgb, var(--text-color) 90%, #000);
 }
 
 .axes-list {
-  margin: 0;
+  margin: 0 0 1rem;
   padding: 0;
   list-style: none;
   display: grid;
@@ -52,4 +79,9 @@
   padding: 0.4rem 0.65rem;
   background: color-mix(in srgb, var(--blue-color) 4%, #fff);
   color: var(--text-color);
+}
+
+.axes-list--themes li {
+  border-left-color: var(--blue-color);
+  background: color-mix(in srgb, var(--orange-color) 5%, #fff);
 }

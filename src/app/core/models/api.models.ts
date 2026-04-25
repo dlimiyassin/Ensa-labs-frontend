@@ -74,6 +74,7 @@ export interface AxeRechercheDTO {
   title?: string;
   labAcronym?: string;
   equipeId?: string;
+  type?: 'AXE' | 'THEMATIQUE';
 }
 
 export interface ComiteGestionMembreDTO {
@@ -113,6 +114,7 @@ export interface TagDTO {
 export interface EquipeDTO {
   id?: string;
   name?: string;
+  description?: string;
   labAcronym?: string;
   axesRecherche?: AxeRechercheDTO[];
   responsable?: MemberDTO;
@@ -124,6 +126,7 @@ export interface LabDTO {
   titleFr?: string;
   titleEn?: string;
   acronym?: string;
+  code?: string;
   university?: string;
   program?: string;
   accreditationStart?: string;

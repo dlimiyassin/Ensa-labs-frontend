@@ -5,15 +5,27 @@
     image="images/projects/p1.jpg"
   />
 
-  <div class="internal-page__content">
+  <div class="internal-page__content collaborations-page">
     <app-section-title label="Collaborations" title="Cartographie des partenariats" />
 
-    @if (!hasData()) {
+    @if (loading()) {
+      <app-spinner message="Chargement des partenariats..." />
+    } @else if (!hasData()) {
       <app-empty-state message="Aucun partenariat disponible." />
     } @else {
-      <app-list-block title="National" [items]="national()" />
-      <app-list-block title="International" [items]="international()" />
-      <app-list-block title="Academic" [items]="academic()" />
+      <div class="collaboration-grid">
+        @for (card of cards(); track card.title + card.subtitle) {
+          <article class="collaboration-card">
+            <figure class="collaboration-card__media">
+              <img src="images/colabs/building.png" alt="Partenaire institutionnel" />
+            </figure>
+            <div class="collaboration-card__body">
+              <h3>{{ card.title }}</h3>
+              <p>{{ card.subtitle }}</p>
+            </div>
+          </article>
+        }
+      </div>
     }
   </div>
 </section>

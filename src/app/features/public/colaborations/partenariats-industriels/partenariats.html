@@ -5,15 +5,27 @@
     image="images/home/innovation.jpg"
   />
 
-  <div class="internal-page__content">
+  <div class="internal-page__content collaborations-page">
     <app-section-title label="Industrie" title="Cadre des collaborations" />
 
-    @if (!hasData()) {
+    @if (loading()) {
+      <app-spinner message="Chargement des partenariats industriels..." />
+    } @else if (!hasData()) {
       <app-empty-state message="Aucun partenariat industriel disponible." />
     } @else {
-      <app-list-block title="Organisation" [items]="organizations()" />
-      <app-list-block title="Thème" [items]="themes()" />
-      <app-list-block title="Nature" [items]="natures()" />
+      <div class="collaboration-grid">
+        @for (card of cards(); track card.title + card.domain) {
+          <article class="collaboration-card">
+            <figure class="collaboration-card__media">
+              <img src="images/colabs/building.png" alt="Partenaire industriel" />
+            </figure>
+            <div class="collaboration-card__body">
+              <h3>{{ card.title }}</h3>
+              <p>{{ card.domain }}</p>
+            </div>
+          </article>
+        }
+      </div>
     }
   </div>
 </section>
