@@ -105,35 +105,39 @@
         <app-fade-container>
           <section class="lab-panel" id="equipes">
             <app-section-title label="Organisation" title="Équipes" />
-            @for (team of teams(); track team.name) {
-              <section class="lab-page__team">
-                <h4 class="lab-page__team-name">{{ team.name }}</h4>
-                @if (team.responsable.name) {
-                  <div class="lab-page__cards">
-                    <app-enhanced-member-card
-                      [name]="team.responsable.name"
-                      [grade]="team.responsable.grade"
-                      [speciality]="team.responsable.speciality"
-                      [role]="team.responsable.role"
-                      [avatar]="memberAvatar"
-                    />
-                  </div>
-                }
-
-                @if (team.members.length > 0) {
-                  <div class="lab-page__cards">
-                    @for (member of team.members; track member.name + member.grade + member.speciality) {
+            @if (!hasTeams()) {
+              <app-empty-state message="Aucune équipe de recherche disponible pour ce laboratoire." />
+            } @else {
+              @for (team of teams(); track team.name) {
+                <section class="lab-page__team">
+                  <h4 class="lab-page__team-name">{{ team.name }}</h4>
+                  @if (team.responsable.name) {
+                    <div class="lab-page__cards">
                       <app-enhanced-member-card
-                        [name]="member.name"
-                        [grade]="member.grade"
-                        [speciality]="member.speciality"
-                        [role]="member.role"
+                        [name]="team.responsable.name"
+                        [grade]="team.responsable.grade"
+                        [speciality]="team.responsable.speciality"
+                        [role]="team.responsable.role"
                         [avatar]="memberAvatar"
                       />
-                    }
-                  </div>
-                }
-              </section>
+                    </div>
+                  }
+
+                  @if (team.members.length > 0) {
+                    <div class="lab-page__cards">
+                      @for (member of team.members; track member.name + member.grade + member.speciality) {
+                        <app-enhanced-member-card
+                          [name]="member.name"
+                          [grade]="member.grade"
+                          [speciality]="member.speciality"
+                          [role]="member.role"
+                          [avatar]="memberAvatar"
+                        />
+                      }
+                    </div>
+                  }
+                </section>
+              }
             }
           </section>
         </app-fade-container>
@@ -142,13 +146,47 @@
       @if (activeTab() === 'axes') {
         <app-fade-container>
           <section class="lab-panel" id="axes">
-            <app-section-title label="Recherche" title="Axes" />
-            @if (axes().length === 0) {
+            <app-section-title label="Recherche" title="Axes et thématiques" />
+            <h3 class="lab-page__subtitle">Axes de recherche</h3>
+            @if (!hasAxes()) {
               <app-empty-state message="Aucun axe de recherche disponible." />
-            } @else {
+            } @else if (directAxes().length > 0) {
               <ul class="axes-list">
-                @for (axis of axes(); track axis) {
+                @for (axis of directAxes(); track axis) {
                   <li>{{ axis }}</li>
+                }
+              </ul>
+            } @else {
+              @for (axisGroup of groupedAxesFromTeams(); track axisGroup.team) {
+                <section class="axes-group">
+                  <h4>{{ axisGroup.team }}</h4>
+                  <ul class="axes-list">
+                    @for (axis of axisGroup.axes; track axis) {
+                      <li>{{ axis }}</li>
+                    }
+                  </ul>
+                </section>
+              }
+            }
+
+            <h3 class="lab-page__subtitle">Thématiques de recherche</h3>
+            @if (!hasThemes()) {
+              <app-empty-state message="Aucune thématique de recherche disponible." />
+            } @else if (groupedThemesFromTeams().length > 0) {
+              @for (themeGroup of groupedThemesFromTeams(); track themeGroup.team) {
+                <section class="axes-group">
+                  <h4>{{ themeGroup.team }}</h4>
+                  <ul class="axes-list axes-list--themes">
+                    @for (theme of themeGroup.themes; track theme) {
+                      <li>{{ theme }}</li>
+                    }
+                  </ul>
+                </section>
+              }
+            } @else {
+              <ul class="axes-list axes-list--themes">
+                @for (theme of thematiques(); track theme) {
+                  <li>{{ theme }}</li>
                 }
               </ul>
             }

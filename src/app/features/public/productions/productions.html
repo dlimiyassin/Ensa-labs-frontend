@@ -1,6 +1,6 @@
 <section class="internal-page">
   <app-page-hero
-    [title]="'Productions — ' + labCode()"
+    [title]="'Productions — ' + (selectedLab()?.titleFr || selectedLab()?.acronym || labCode())"
     subtitle="Publications, communications et thèses des laboratoires."
     image="images/labs/lab1.jpg"
   />
@@ -8,9 +8,9 @@
   <div class="internal-page__content productions-page">
     <app-section-title label="Laboratoires" title="Sélection du laboratoire" />
     <nav class="lab-nav">
-      @for (lab of labs(); track lab.acronym) {
-        <button type="button" [class.is-active]="lab.acronym === labCode()" (click)="selectLab(lab.acronym || '')">
-          {{ lab.acronym }}
+      @for (lab of labs(); track lab.id || lab.acronym) {
+        <button type="button" [class.is-active]="labCode() === ((lab.code ?? lab.acronym) || '')" (click)="selectLab((lab.code ?? lab.acronym) || '')">
+          {{ lab.acronym || lab.titleFr || (lab.code ?? '') }}
         </button>
       }
     </nav>

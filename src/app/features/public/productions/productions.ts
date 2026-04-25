@@ -1,7 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
+import { catchError, combineLatest, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
 
 import { PageHeroComponent } from '../../../shared/components/page-hero/page-hero';
 import { LabsService } from '../../../core/services/labs.service';
@@ -44,20 +44,32 @@ export class Productions {
   ];
 
   protected readonly labs = toSignal(this.labsService.findAll().pipe(catchError(() => of<LabDTO[]>([]))), { initialValue: [] });
-
-  protected readonly labCode = toSignal(this.route.paramMap.pipe(
-    map((params) => (params.get('code') ?? 'LaRESI').trim()),
+  private readonly labRouteCode = toSignal(this.route.paramMap.pipe(
+    map((params) => (params.get('code') ?? '').trim()),
     distinctUntilChanged()
-  ), { initialValue: 'LaRESI' });
+  ), { initialValue: '' });
+  private readonly routeFragment = toSignal(this.route.fragment, { initialValue: null });
 
-  protected readonly production = toSignal(this.route.paramMap.pipe(
-    map((params) => (params.get('code') ?? 'LaRESI').trim()),
-    distinctUntilChanged(),
+  protected readonly selectedLab = computed(() => {
+    const labs = this.labs();
+    const routeCode = this.labRouteCode();
+    if (labs.length === 0) return null;
+
+    return this.findLabByRouteCode(routeCode, labs) ?? this.findLabByRouteCode('LaRESI', labs) ?? labs[0];
+  });
+
+  protected readonly labCode = computed(() => this.labIdentifier(this.selectedLab()));
+
+  protected readonly production = toSignal(combineLatest([
+    this.route.paramMap.pipe(map((params) => (params.get('code') ?? '').trim()), distinctUntilChanged()),
+    this.labsService.findAll().pipe(catchError(() => of<LabDTO[]>([])))
+  ]).pipe(
     tap(() => {
       this.loading.set(true);
       this.error.set('');
     }),
-    switchMap((code) => this.productionsService.findByLabAcronym(code).pipe(
+    map(([paramsCode, labs]) => this.findLabByRouteCode(paramsCode, labs) ?? this.findLabByRouteCode('LaRESI', labs) ?? null),
+    switchMap((lab) => this.productionsService.findByLabAcronym(lab?.acronym ?? 'LaRESI').pipe(
       catchError(() => {
         this.error.set('Impossible de charger les productions.');
         return of<ProductionDTO | null>(null);
@@ -185,5 +197,56 @@ export class Productions {
   private supervisorOptions(): string[] {
     const theses = this.production()?.theses ?? [];
     return [...new Set(theses.map((item) => item.supervisor ?? '').filter(Boolean))];
+  }
+
+  private readonly syncRouteEffect = effect(() => {
+    const rawCode = this.labRouteCode().toLowerCase();
+    const selectedCode = this.labCode();
+    const fragment = this.routeFragment()?.toLowerCase() ?? '';
+    const tabFromCode = this.tabFromLegacyRoute(rawCode);
+
+    if (tabFromCode && this.activeTab() !== tabFromCode) {
+      this.activeTab.set(tabFromCode);
+      this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
+    } else if (fragment && this.tabFromLegacyRoute(fragment) && this.activeTab() !== this.tabFromLegacyRoute(fragment)) {
+      this.activeTab.set(this.tabFromLegacyRoute(fragment) as ProductionTab);
+      this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
+    }
+
+    if (!selectedCode) return;
+
+    const isLegacySlug = Boolean(tabFromCode);
+    const isKnownLab = this.labs().some((lab) => this.labIdentifier(lab).toLowerCase() === rawCode);
+    const shouldRedirect = rawCode.length === 0 || isLegacySlug || !isKnownLab;
+
+    if (shouldRedirect) {
+      const nextFragment = this.activeTab() === 'publications' ? undefined : this.activeTab();
+      this.router.navigate(['/production', selectedCode], { fragment: nextFragment, replaceUrl: true });
+    }
+  });
+
+  private tabFromLegacyRoute(code: string): ProductionTab | null {
+    if (code === 'publications') return 'publications';
+    if (code === 'communication' || code === 'communications') return 'communications';
+    if (code === 'theses' || code === 'thèse' || code === 'theses') return 'theses';
+    return null;
+  }
+
+  private labIdentifier(lab: LabDTO | null | undefined): string {
+    return ((lab as { code?: string } | null)?.code ?? lab?.acronym ?? '').trim();
+  }
+
+  private findLabByRouteCode(routeCode: string, labs: readonly LabDTO[]): LabDTO | null {
+    const normalized = routeCode.trim().toLowerCase();
+    if (!normalized) return null;
+    return labs.find((lab) => {
+      const candidates = [
+        this.labIdentifier(lab),
+        lab.acronym ?? '',
+        lab.titleFr ?? '',
+        lab.titleEn ?? ''
+      ].map((item) => item.trim().toLowerCase());
+      return candidates.includes(normalized);
+    }) ?? null;
   }
 }

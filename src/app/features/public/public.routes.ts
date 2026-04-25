@@ -24,7 +24,8 @@ export const PUBLIC_ROUTES: Routes = [
   // Production (entrypoint publications)
   {
     path: 'production/publications',
-    component: Productions
+    redirectTo: 'production/LaRESI',
+    pathMatch: 'full'
   },
 
   // Production (global)
