@@ -1,0 +1,9 @@
+<header class="section-title" [class.section-title--center]="align() === 'center'">
+  @if (label()) {
+    <p class="section-title__label">{{ label() }}</p>
+  }
+  <h2>{{ title() }}</h2>
+  @if (subtitle()) {
+    <p class="section-title__subtitle">{{ subtitle() }}</p>
+  }
+</header>

@@ -1,0 +1,24 @@
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .9rem;
+  padding: .8rem 0 1.2rem;
+}
+
+label {
+  display: grid;
+  gap: .35rem;
+  min-width: 10rem;
+}
+
+label span {
+  font-size: .82rem;
+  color: #475569;
+}
+
+select {
+  border: 1px solid rgba(15, 23, 42, .16);
+  background: #fff;
+  padding: .5rem .6rem;
+  font-size: .92rem;
+}
