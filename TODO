@@ -1,37 +1,5 @@
-
-
-load reel content on presontation page from backend
-replace projets by publication on homepage
-add view more buttons for publications and axe de recherche
-add links to each section to its concened page in modern way
-change scrollbar color
-add spinner while data is loading except homepage
-
-
-in lab presentation:
-keep about as it is
-remove scrolling experince with slide in / out from direction and below
-relpace it with a nav buttons (direction, members, equipes, axes) with fade in and out annimations
-also enhance the design of members cards
-
-
-in backend:
-add member id and image fields in Comité de gestion within lab object
-add  image in members within lab object
-in lab rename domaine de recherche -> thematiques de rechreche
-
-
-
-
-
-
-
-
-
-====================================
-- when navigating in profuction. (comunucation or theses or publications) must be the code in path (not the lab acronym) so then it got extracted and the navbutton didcated to that is automatically selected, and the lab LaRESI button must be selected as default always, and update that methods that calls with 'code' because code is not the name of lab
-- labPresentation/equipes/ equipe titles or are not highlithed well
-- when you dont find axe de recherche in lab object, try to extract axes in equipes and display them in axes and groupe them by equipe.
-- when no equipe exist in lab say something
-- in axe seperate axes de rechreche from themateques de rechreche
-- spiner is not working in 'http://localhost:4200/partenariats/industriels' and 'http://localhost:4200/partenariats', andenhance the  colaboratrors cards with this picture 'images/colabs/building.png'
+- in lab/equipes, only show equipes as buttons, then when we click on equipe then fade in the details below it
+- i dont want this: when i click on a lab in production it scrol up to 0 ,position
+- when i naviagte from production dropdwon, nav buttons (pubs, theses ...)  got stuck
+- fill colaboration data and fix images
+- spiner not working resources, no styling exist
