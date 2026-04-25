@@ -34,7 +34,7 @@
       }
 
       @if (direction().length > 0 || committee().length > 0) {
-        <app-animated-section [reverse]="true" enter="softSlideLeft" leave="softSlideOutLeft">
+        <app-animated-section enter="softSlideLeft" leave="softSlideOutLeft" [compact]="true">
           <div>
             <app-section-title label="Gouvernance" title="Direction" />
             @if (direction().length > 0) {
@@ -51,19 +51,22 @@
             @if (committee().length > 0) {
               <h3 class="lab-page__subtitle">Comité de gestion</h3>
               <div class="lab-page__cards">
-                @for (member of committee(); track member.name + member.role) {
+                @for (member of committee(); track member.name) {
                   <article class="lab-page__card">
                     <img [src]="memberAvatar" [alt]="member.name || 'Membre du comité'" class="lab-page__avatar" />
                     <h4 class="lab-page__card-title">{{ member.name }}</h4>
-                    @if (member.role) {
-                      <p class="lab-page__card-meta">{{ member.role }}</p>
+                    @if (member.roles.length > 0) {
+                      <ul class="lab-page__roles">
+                        @for (role of member.roles; track role) {
+                          <li class="lab-page__card-meta">{{ role }}</li>
+                        }
+                      </ul>
                     }
                   </article>
                 }
               </div>
             }
           </div>
-          <div></div>
         </app-animated-section>
       }
 
@@ -111,7 +114,6 @@
             </div>
           }
         </div>
-        <div></div>
       </app-animated-section>
 
       @if (hasResearch() || teams().length > 0) {
@@ -121,11 +123,12 @@
             @if (domaines().length > 0) {
               <app-list-block title="Domaines de recherche" [items]="domaines()" />
             }
+            @if (thematiques().length > 0) {
+              <app-list-block title="Thématiques de recherche" [items]="thematiques()" />
+            }
             @if (axes().length > 0) {
               <app-list-block title="Axes de recherche" [items]="axes()" />
             }
-          </div>
-          <div>
             @if (teams().length > 0) {
               <h3 class="lab-page__subtitle">Équipes</h3>
               @for (team of teams(); track team.name) {
