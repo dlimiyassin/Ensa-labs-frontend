@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
 
 import { LabsService } from '../../../../core/services/labs.service';
-import { AssociationType, LabDTO, MemberDTO } from '../../../../core/models/api.models';
+import { AssociationType, ComiteGestionMembreDTO, LabDTO, MemberDTO } from '../../../../core/models/api.models';
 import { PageHeroComponent } from '../../../../shared/components/page-hero/page-hero';
 import { AnimatedSectionComponent } from '../../../../shared/components/public/animated-section/animated-section';
 import { SectionTitleComponent } from '../../../../shared/components/public/section-title/section-title';
@@ -24,6 +24,8 @@ import { EmptyStateComponent } from '../../../../shared/components/public/empty-
   styleUrl: './lab-presentation.css'
 })
 export class LabPresentation {
+  protected readonly memberAvatar = 'images/members/avatar.png';
+
   private readonly route = inject(ActivatedRoute);
   private readonly labsService = inject(LabsService);
 
@@ -63,25 +65,60 @@ export class LabPresentation {
 
   protected readonly domaines = computed(() => (this.lab()?.domainesRecherche ?? []).map((item) => item.name ?? '').filter(Boolean));
   protected readonly axes = computed(() => (this.lab()?.axesRecherche ?? []).map((item) => item.title ?? '').filter(Boolean));
-  protected readonly teams = computed(() => (this.lab()?.equipes ?? []).map((item) => item.name ?? '').filter(Boolean));
+  protected readonly teams = computed(() => (this.lab()?.equipes ?? [])
+    .map((team) => ({
+      name: (team.name ?? '').trim(),
+      members: (team.members ?? []).map((member) => this.toMemberCard(member)).filter((member) => !!member.name)
+    }))
+    .filter((team) => !!team.name));
+
   protected readonly committee = computed(() => (this.lab()?.comiteGestion ?? [])
-    .map((member) => `${member.nomEnseignant ?? 'Membre'}${member.roleComite ? ` — ${member.roleComite}` : ''}`)
-    .filter(Boolean));
+    .map((member) => this.toCommitteeCard(member))
+    .filter((member) => !!member.name));
 
-  protected memberLabel(member: MemberDTO): string {
-    const fullName = `${member.firstName ?? ''} ${member.lastName ?? ''}`.trim();
-    if (!member.grade) {
-      return fullName;
-    }
+  protected readonly direction = computed(() => {
+    const directors = [
+      this.toDirectionCard(this.lab()?.directeur, 'Directeur'),
+      this.toDirectionCard(this.lab()?.directeurAdjoint, 'Directeur adjoint')
+    ];
+    return directors.filter((member) => !!member.name);
+  });
 
-    return `${fullName} (${member.grade})`;
-  }
+  protected readonly hasAbout = computed(() => {
+    const entity = this.lab();
+    return Boolean(entity?.titleFr || entity?.acronym || entity?.university || entity?.program);
+  });
 
-  private membersByAssociation(type: AssociationType): string[] {
+  protected readonly hasResearch = computed(() => this.domaines().length > 0 || this.axes().length > 0);
+
+  private membersByAssociation(type: AssociationType): Array<{ name: string; grade: string; speciality: string; associationType: string }> {
     return (this.lab()?.members ?? [])
       .filter((member) => member.associationType === type)
-      .map((member) => this.memberLabel(member))
-      .filter(Boolean);
+      .map((member) => this.toMemberCard(member))
+      .filter((member) => !!member.name);
+  }
+
+  protected toMemberCard(member: MemberDTO): { name: string; grade: string; speciality: string; associationType: string } {
+    return {
+      name: `${member.firstName ?? ''} ${member.lastName ?? ''}`.trim(),
+      grade: (member.grade ?? '').trim(),
+      speciality: (member.speciality ?? '').trim(),
+      associationType: (member.associationType ?? '').trim()
+    };
+  }
+
+  protected toCommitteeCard(member: ComiteGestionMembreDTO): { name: string; role: string } {
+    return {
+      name: (member.nomEnseignant ?? '').trim(),
+      role: (member.roleComite ?? '').trim()
+    };
+  }
+
+  protected toDirectionCard(member: MemberDTO | undefined, role: string): { name: string; role: string } {
+    return {
+      name: `${member?.firstName ?? ''} ${member?.lastName ?? ''}`.trim(),
+      role
+    };
   }
 
   private resolveLabImage(acronym?: string): string {

@@ -13,46 +13,150 @@
     } @else if (!lab()) {
       <app-empty-state message="Laboratoire introuvable." />
     } @else {
-      <app-animated-section enter="softSlideRight" leave="softSlideOutRight">
-        <div>
-          <app-section-title label="Laboratoire" title="À propos" />
-          <p class="lab-page__paragraph">
-            {{ lab()?.titleFr }} ({{ lab()?.acronym }}) est rattaché à {{ lab()?.university || 'l’université' }}.
-            Le programme {{ lab()?.program || 'de recherche' }} structure ses activités de recherche et de transfert.
-          </p>
-        </div>
-        <img [src]="heroImage()" [alt]="heroTitle()" class="lab-page__image" />
-      </app-animated-section>
+      @if (hasAbout()) {
+        <app-animated-section enter="softSlideRight" leave="softSlideOutRight">
+          <div>
+            <app-section-title label="Laboratoire" title="À propos" />
+            <p class="lab-page__paragraph">
+              @if (lab()?.titleFr || lab()?.acronym) {
+                <span>{{ lab()?.titleFr }} @if (lab()?.acronym) {({{ lab()?.acronym }}) }</span>
+              }
+              @if (lab()?.university) {
+                <span> est rattaché à {{ lab()?.university }}</span>
+              }
+              @if (lab()?.program) {
+                <span>. Le programme {{ lab()?.program }} structure ses activités de recherche et de transfert.</span>
+              }
+            </p>
+          </div>
+          <img [src]="heroImage()" [alt]="heroTitle()" class="lab-page__image" />
+        </app-animated-section>
+      }
 
-      <app-animated-section [reverse]="true" enter="softSlideLeft" leave="softSlideOutLeft">
-        <div>
-          <app-section-title label="Gouvernance" title="Direction" />
-          <p class="lab-page__paragraph"><strong>Directeur:</strong> {{ memberLabel(lab()?.directeur || {}) || 'Non renseigné' }}</p>
-          <p class="lab-page__paragraph"><strong>Directeur adjoint:</strong> {{ memberLabel(lab()?.directeurAdjoint || {}) || 'Non renseigné' }}</p>
-          <app-list-block title="Comité de gestion" [items]="committee()" />
-        </div>
-        <div></div>
-      </app-animated-section>
-
-      <app-animated-section enter="softSlideRight" leave="softSlideOutRight" [compact]="true">
-        <div>
-          <app-section-title label="Recherche" title="Domaines et axes" />
-          <app-list-block title="Domaines de recherche" [items]="domaines()" />
-          <app-list-block title="Axes de recherche" [items]="axes()" />
-        </div>
-        <div>
-          <app-list-block title="Équipes" [items]="teams()" emptyLabel="Aucune équipe renseignée." />
-        </div>
-      </app-animated-section>
+      @if (direction().length > 0 || committee().length > 0) {
+        <app-animated-section [reverse]="true" enter="softSlideLeft" leave="softSlideOutLeft">
+          <div>
+            <app-section-title label="Gouvernance" title="Direction" />
+            @if (direction().length > 0) {
+              <div class="lab-page__cards">
+                @for (director of direction(); track director.name + director.role) {
+                  <article class="lab-page__card">
+                    <img [src]="memberAvatar" [alt]="director.name || director.role" class="lab-page__avatar" />
+                    <h4 class="lab-page__card-title">{{ director.name }}</h4>
+                    <p class="lab-page__card-meta">{{ director.role }}</p>
+                  </article>
+                }
+              </div>
+            }
+            @if (committee().length > 0) {
+              <h3 class="lab-page__subtitle">Comité de gestion</h3>
+              <div class="lab-page__cards">
+                @for (member of committee(); track member.name + member.role) {
+                  <article class="lab-page__card">
+                    <img [src]="memberAvatar" [alt]="member.name || 'Membre du comité'" class="lab-page__avatar" />
+                    <h4 class="lab-page__card-title">{{ member.name }}</h4>
+                    @if (member.role) {
+                      <p class="lab-page__card-meta">{{ member.role }}</p>
+                    }
+                  </article>
+                }
+              </div>
+            }
+          </div>
+          <div></div>
+        </app-animated-section>
+      }
 
       <app-animated-section [reverse]="true" enter="softSlideLeft" leave="softSlideOutLeft" [compact]="true">
         <div>
           <app-section-title label="Membres" title="Composition du laboratoire" />
-          <app-list-block title="Membres permanents" [items]="permanentMembers()" />
-          <app-list-block title="Membres associés" [items]="associatedMembers()" />
+          @if (permanentMembers().length > 0) {
+            <h3 class="lab-page__subtitle">Membres permanents</h3>
+            <div class="lab-page__cards">
+              @for (member of permanentMembers(); track member.name + member.grade + member.speciality + member.associationType) {
+                <article class="lab-page__card">
+                  <img [src]="memberAvatar" [alt]="member.name || 'Membre permanent'" class="lab-page__avatar" />
+                  <h4 class="lab-page__card-title">{{ member.name }}</h4>
+                  @if (member.grade) {
+                    <p class="lab-page__card-meta">Grade : {{ member.grade }}</p>
+                  }
+                  @if (member.speciality) {
+                    <p class="lab-page__card-meta">Spécialité : {{ member.speciality }}</p>
+                  }
+                  @if (member.associationType) {
+                    <p class="lab-page__card-meta">Association : {{ member.associationType }}</p>
+                  }
+                </article>
+              }
+            </div>
+          }
+          @if (associatedMembers().length > 0) {
+            <h3 class="lab-page__subtitle">Membres associés</h3>
+            <div class="lab-page__cards">
+              @for (member of associatedMembers(); track member.name + member.grade + member.speciality + member.associationType) {
+                <article class="lab-page__card">
+                  <img [src]="memberAvatar" [alt]="member.name || 'Membre associé'" class="lab-page__avatar" />
+                  <h4 class="lab-page__card-title">{{ member.name }}</h4>
+                  @if (member.grade) {
+                    <p class="lab-page__card-meta">Grade : {{ member.grade }}</p>
+                  }
+                  @if (member.speciality) {
+                    <p class="lab-page__card-meta">Spécialité : {{ member.speciality }}</p>
+                  }
+                  @if (member.associationType) {
+                    <p class="lab-page__card-meta">Association : {{ member.associationType }}</p>
+                  }
+                </article>
+              }
+            </div>
+          }
         </div>
         <div></div>
       </app-animated-section>
+
+      @if (hasResearch() || teams().length > 0) {
+        <app-animated-section enter="softSlideRight" leave="softSlideOutRight" [compact]="true">
+          <div>
+            <app-section-title label="Recherche" title="Domaines et axes" />
+            @if (domaines().length > 0) {
+              <app-list-block title="Domaines de recherche" [items]="domaines()" />
+            }
+            @if (axes().length > 0) {
+              <app-list-block title="Axes de recherche" [items]="axes()" />
+            }
+          </div>
+          <div>
+            @if (teams().length > 0) {
+              <h3 class="lab-page__subtitle">Équipes</h3>
+              @for (team of teams(); track team.name) {
+                <section class="lab-page__team">
+                  <h4 class="lab-page__team-name">{{ team.name }}</h4>
+                  @if (team.members.length > 0) {
+                    <div class="lab-page__cards">
+                      @for (member of team.members; track member.name + member.grade + member.speciality + member.associationType) {
+                        <article class="lab-page__card">
+                          <img [src]="memberAvatar" [alt]="member.name || 'Membre de l’équipe'" class="lab-page__avatar" />
+                          <h5 class="lab-page__card-title">{{ member.name }}</h5>
+                          @if (member.grade) {
+                            <p class="lab-page__card-meta">Grade : {{ member.grade }}</p>
+                          }
+                          @if (member.speciality) {
+                            <p class="lab-page__card-meta">Spécialité : {{ member.speciality }}</p>
+                          }
+                          @if (member.associationType) {
+                            <p class="lab-page__card-meta">Association : {{ member.associationType }}</p>
+                          }
+                        </article>
+                      }
+                    </div>
+                  }
+                </section>
+              }
+            }
+          </div>
+        </app-animated-section>
+      }
+
     }
   </div>
 </section>
