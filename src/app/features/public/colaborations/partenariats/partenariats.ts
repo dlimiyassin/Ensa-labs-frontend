@@ -3,17 +3,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of, tap } from 'rxjs';
 
 import { PageHeroComponent } from '../../../../shared/components/page-hero/page-hero';
-import { LabsService } from '../../../../core/services/labs.service';
-import { LabDTO } from '../../../../core/models/api.models';
 import { SectionTitleComponent } from '../../../../shared/components/public/section-title/section-title';
 import { EmptyStateComponent } from '../../../../shared/components/public/empty-state/empty-state';
 import { SpinnerComponent } from '../../../../shared/components/public/spinner/spinner';
-
-interface CollaborationCard {
-  title: string;
-  description: string;
-  image: string;
-}
+import { CollaborationsService } from '../../../../core/services/collaborations.service';
+import { CollaborationDTO } from '../../../../core/models/api.models';
 
 @Component({
   selector: 'app-partenariats',
@@ -22,41 +16,52 @@ interface CollaborationCard {
   styleUrl: './partenariats.css',
 })
 export class Partenariats {
-  private readonly labsService = inject(LabsService);
+  private readonly collaborationsService = inject(CollaborationsService);
+
   protected readonly loading = signal(true);
   protected readonly error = signal('');
-  protected readonly fallbackImage = 'images/colabs/building.png';
 
-  private readonly labs = toSignal(this.labsService.findAll().pipe(
+  private readonly collaborations = toSignal(this.collaborationsService.findAllAcademic().pipe(
     tap(() => {
       this.loading.set(true);
       this.error.set('');
     }),
     catchError(() => {
-      this.error.set('Impossible de charger les partenariats.');
-      return of<LabDTO[]>([]);
+      this.error.set('Impossible de charger les partenariats académiques.');
+      return of<CollaborationDTO[]>([]);
     }),
     tap(() => this.loading.set(false))
   ), { initialValue: [] });
 
-  protected readonly national = computed<CollaborationCard[]>(() => this.labs().map((lab) => ({
-    title: `${lab.acronym ?? 'LAB'} — National`,
-    description: lab.establishment ?? 'Établissement national',
-    image: this.fallbackImage
-  })));
-  protected readonly international = computed<CollaborationCard[]>(() => this.labs().flatMap((lab) => (lab.tags ?? [])
-    .map((tag) => tag.name)
-    .filter((tag): tag is string => !!tag)
-    .map((tag) => ({
-      title: `${lab.acronym ?? 'LAB'} — International`,
-      description: tag,
-      image: this.fallbackImage
-    }))));
-  protected readonly academic = computed<CollaborationCard[]>(() => this.labs().map((lab) => ({
-    title: `${lab.acronym ?? 'LAB'} — Académique`,
-    description: lab.university ?? 'Université partenaire',
-    image: this.fallbackImage
-  })));
+  protected readonly hasData = computed(() => this.collaborations().length > 0);
 
-  protected readonly hasData = computed(() => this.labs().length > 0);
+  protected readonly collaborationsByScope = computed(() => {
+    const sections: Array<{ title: string; items: CollaborationDTO[] }> = [
+      { title: 'Régional', items: [] },
+      { title: 'National', items: [] },
+      { title: 'International', items: [] }
+    ];
+
+    for (const collaboration of this.collaborations()) {
+      switch (collaboration.scope) {
+        case 'REGIONAL':
+          sections[0].items.push(collaboration);
+          break;
+        case 'NATIONAL':
+          sections[1].items.push(collaboration);
+          break;
+        case 'INTERNATIONAL':
+          sections[2].items.push(collaboration);
+          break;
+        default:
+          sections[1].items.push(collaboration);
+      }
+    }
+
+    return sections.filter((section) => section.items.length > 0);
+  });
+
+  protected trackByCollaboration(index: number, collaboration: CollaborationDTO): string {
+    return String(collaboration.id ?? `${collaboration.organization}-${collaboration.theme}-${index}`);
+  }
 }
