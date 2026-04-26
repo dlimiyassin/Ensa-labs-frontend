@@ -28,8 +28,8 @@
 }
 
 .labs-nav__btn--active {
-  background: var(--primary-color);
-  color: #fff;
+  background: #ECF5F8;
+  color: var(--blue-color);
 }
 
 .partner-grid {

@@ -44,20 +44,20 @@ export class Partenariats {
 
   protected readonly collaborationsByScope = computed<CollaborationSection[]>(() => {
     const sections: CollaborationSection[] = [
-      { title: 'Régional', items: [] },
+      { title: 'International', items: [] },
       { title: 'National', items: [] },
-      { title: 'International', items: [] }
+      { title: 'Régional', items: [] }
     ];
 
     for (const collaboration of this.collaborations()) {
       switch (collaboration.scope) {
-        case 'REGIONAL':
+        case 'INTERNATIONAL':
           sections[0].items.push(collaboration);
           break;
         case 'NATIONAL':
           sections[1].items.push(collaboration);
           break;
-        case 'INTERNATIONAL':
+        case 'REGIONAL':
           sections[2].items.push(collaboration);
           break;
         default:
