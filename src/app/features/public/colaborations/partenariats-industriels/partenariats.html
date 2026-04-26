@@ -1,12 +1,12 @@
 <section class="internal-page">
   <app-page-hero
     title="Partenariats industriels"
-    subtitle="Collaborations avec les acteurs économiques autour de la valorisation de la recherche."
+    subtitle="Coopérations avec les acteurs socio-économiques pour l'innovation, le transfert et la valorisation."
     image="images/home/innovation.jpg"
   />
 
   <div class="internal-page__content">
-    <app-section-title label="Industrie" title="Cadre des collaborations" />
+    <app-section-title label="Industrie" title="Collaborations actives" />
 
     @if (loading()) {
       <app-spinner message="Chargement des partenariats industriels..." />
@@ -15,48 +15,49 @@
     } @else if (!hasData()) {
       <app-empty-state message="Aucun partenariat industriel disponible." />
     } @else {
-      <section class="partner-section">
-        <h3>Organisation</h3>
-        <div class="partner-grid">
-          @for (card of organizations(); track card.title + card.description) {
-            <article class="partner-card">
-              <img [src]="card.image" [alt]="card.title" />
-              <div class="partner-card__body">
-                <h4>{{ card.title }}</h4>
-                <p>{{ card.description }}</p>
-              </div>
-            </article>
+      @for (section of sections(); track section.title) {
+        <section class="partner-section">
+          <h3>{{ section.title }}</h3>
+
+          @if (labsForSection(section).length > 0) {
+            <nav class="labs-nav" aria-label="Filtrer par laboratoire">
+              @for (lab of labsForSection(section); track lab) {
+                <button
+                  type="button"
+                  class="labs-nav__btn"
+                  [class.labs-nav__btn--active]="(selectedLab(section.title) || labsForSection(section)[0]) === lab"
+                  (click)="setSelectedLab(section.title, lab)"
+                >
+                  {{ lab }}
+                </button>
+              }
+            </nav>
           }
-        </div>
-      </section>
-      <section class="partner-section">
-        <h3>Thèmes</h3>
-        <div class="partner-grid">
-          @for (card of themes(); track card.title + card.description) {
-            <article class="partner-card">
-              <img [src]="card.image" [alt]="card.title" />
-              <div class="partner-card__body">
-                <h4>{{ card.title }}</h4>
-                <p>{{ card.description }}</p>
-              </div>
-            </article>
-          }
-        </div>
-      </section>
-      <section class="partner-section">
-        <h3>Nature</h3>
-        <div class="partner-grid">
-          @for (card of natures(); track card.title + card.description) {
-            <article class="partner-card">
-              <img [src]="card.image" [alt]="card.title" />
-              <div class="partner-card__body">
-                <h4>{{ card.title }}</h4>
-                <p>{{ card.description }}</p>
-              </div>
-            </article>
-          }
-        </div>
-      </section>
+
+          <div class="partner-grid">
+            @for (collaboration of visibleCollaborations(section); track trackByCollaboration($index, collaboration)) {
+              <article class="partner-card">
+                <img class="partner-card__image" [src]="cardImage" [alt]="collaboration.organization || 'Organisation partenaire'" />
+                <div class="partner-card__head">
+                  <h4>{{ collaboration.organization || 'Organisation non précisée' }}</h4>
+                  <p class="partner-card__establishment">{{ collaboration.establishment || 'Établissement non précisé' }}</p>
+                </div>
+
+                <dl class="partner-card__details">
+                  <div>
+                    <dt>Nature</dt>
+                    <dd>{{ collaboration.nature || '—' }}</dd>
+                  </div>
+                  <div>
+                    <dt>Thème</dt>
+                    <dd>{{ collaboration.theme || '—' }}</dd>
+                  </div>
+                </dl>
+              </article>
+            }
+          </div>
+        </section>
+      }
     }
   </div>
 </section>

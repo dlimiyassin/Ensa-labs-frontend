@@ -1,64 +1,63 @@
 <section class="internal-page">
   <app-page-hero
-    title="Partenariats de recherche"
-    subtitle="Vue institutionnelle des collaborations nationales et internationales."
+    title="Partenariats académiques"
+    subtitle="Réseau de collaborations universitaires structurées autour de thématiques de recherche partagées."
     image="images/projects/p1.jpg"
   />
 
   <div class="internal-page__content">
-    <app-section-title label="Collaborations" title="Cartographie des partenariats" />
+    <app-section-title label="Académique" title="Collaborations actives" />
 
     @if (loading()) {
-      <app-spinner message="Chargement des partenariats..." />
+      <app-spinner message="Chargement des partenariats académiques..." />
     } @else if (error()) {
       <p class="internal-page__lead">{{ error() }}</p>
     } @else if (!hasData()) {
-      <app-empty-state message="Aucun partenariat disponible." />
+      <app-empty-state message="Aucun partenariat académique disponible." />
     } @else {
-      <section class="partner-section">
-        <h3>National</h3>
-        <div class="partner-grid">
-          @for (card of national(); track card.title + card.description) {
-            <article class="partner-card">
-              <img [src]="card.image" [alt]="card.title" />
-              <div class="partner-card__body">
-                <h4>{{ card.title }}</h4>
-                <p>{{ card.description }}</p>
-              </div>
-            </article>
-          }
-        </div>
-      </section>
+      @for (section of collaborationsByScope(); track section.title) {
+        <section class="partner-section">
+          <h3>{{ section.title }}</h3>
 
-      <section class="partner-section">
-        <h3>International</h3>
-        <div class="partner-grid">
-          @for (card of international(); track card.title + card.description) {
-            <article class="partner-card">
-              <img [src]="card.image" [alt]="card.title" />
-              <div class="partner-card__body">
-                <h4>{{ card.title }}</h4>
-                <p>{{ card.description }}</p>
-              </div>
-            </article>
+          @if (labsForSection(section).length > 0) {
+            <nav class="labs-nav" aria-label="Filtrer par laboratoire">
+              @for (lab of labsForSection(section); track lab) {
+                <button
+                  type="button"
+                  class="labs-nav__btn"
+                  [class.labs-nav__btn--active]="(selectedLab(section.title) || labsForSection(section)[0]) === lab"
+                  (click)="setSelectedLab(section.title, lab)"
+                >
+                  {{ lab }}
+                </button>
+              }
+            </nav>
           }
-        </div>
-      </section>
 
-      <section class="partner-section">
-        <h3>Académique</h3>
-        <div class="partner-grid">
-          @for (card of academic(); track card.title + card.description) {
-            <article class="partner-card">
-              <img [src]="card.image" [alt]="card.title" />
-              <div class="partner-card__body">
-                <h4>{{ card.title }}</h4>
-                <p>{{ card.description }}</p>
-              </div>
-            </article>
-          }
-        </div>
-      </section>
+          <div class="partner-grid">
+            @for (collaboration of visibleCollaborations(section); track trackByCollaboration($index, collaboration)) {
+              <article class="partner-card">
+                <img class="partner-card__image" [src]="cardImage" [alt]="collaboration.organization || 'Organisation partenaire'" />
+                <div class="partner-card__head">
+                  <h4>{{ collaboration.organization || 'Organisation non précisée' }}</h4>
+                  <p class="partner-card__establishment">{{ collaboration.establishment || 'Établissement non précisé' }}</p>
+                </div>
+
+                <dl class="partner-card__details">
+                  <div>
+                    <dt>Thème</dt>
+                    <dd>{{ collaboration.theme || '—' }}</dd>
+                  </div>
+                  <div>
+                    <dt>Nature</dt>
+                    <dd>{{ collaboration.nature || '—' }}</dd>
+                  </div>
+                </dl>
+              </article>
+            }
+          </div>
+        </section>
+      }
     }
   </div>
 </section>
