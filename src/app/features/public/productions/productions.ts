@@ -99,12 +99,22 @@ export class Productions {
   protected readonly groupedTheses = computed(() => this.groupTheses(this.filterTheses(this.production()?.theses ?? [])));
 
   protected selectLab(code: string): void {
-    this.router.navigate(['/production', code]);
+    const currentY = window.scrollY;
+    this.router.navigate(['/production', code], { fragment: this.activeTab() === 'publications' ? undefined : this.activeTab() })
+      .then(() => {
+        requestAnimationFrame(() => window.scrollTo({ top: currentY }));
+      });
   }
 
   protected selectTab(tabId: string): void {
-    this.activeTab.set(tabId as ProductionTab);
+    const nextTab = tabId as ProductionTab;
+    this.activeTab.set(nextTab);
     this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
+    this.router.navigate([], {
+      relativeTo: this.route,
+      fragment: nextTab === 'publications' ? undefined : nextTab,
+      replaceUrl: true
+    });
   }
 
   protected updateFilter(event: { key: string; value: string }): void {
@@ -210,6 +220,9 @@ export class Productions {
       this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
     } else if (fragment && this.tabFromLegacyRoute(fragment) && this.activeTab() !== this.tabFromLegacyRoute(fragment)) {
       this.activeTab.set(this.tabFromLegacyRoute(fragment) as ProductionTab);
+      this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
+    } else if (!fragment && !tabFromCode && this.activeTab() !== 'publications') {
+      this.activeTab.set('publications');
       this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
     }
 

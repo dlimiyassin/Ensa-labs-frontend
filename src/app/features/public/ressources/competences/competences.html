@@ -5,16 +5,30 @@
     image="images/labs/lab2.jpg"
   />
 
-  <div class="internal-page__content">
+  <div class="internal-page__content resources-page">
     <app-section-title label="Ressources" title="Compétences par domaine" />
 
-    @if (!hasData()) {
+    @if (loading()) {
+      <app-spinner message="Chargement des compétences..." />
+    } @else if (error()) {
+      <p class="internal-page__lead">{{ error() }}</p>
+    } @else if (!hasData()) {
       <app-empty-state message="Aucune compétence n'a été remontée par le backend." />
     } @else {
-      <app-list-block title="SCIENTIFIC" [items]="byType().SCIENTIFIC" />
-      <app-list-block title="TECHNOLOGICAL" [items]="byType().TECHNOLOGICAL" />
-      <app-list-block title="SECTORIAL" [items]="byType().SECTORIAL" />
-      <app-list-block title="INNOVATION" [items]="byType().INNOVATION" />
+      <div class="resources-grid">
+        @if (byType().SCIENTIFIC.length > 0) {
+          <app-list-block title="compétences scientifiques et méthodologiques." [items]="byType().SCIENTIFIC" />
+        }
+        @if (byType().TECHNOLOGICAL.length > 0) {
+          <app-list-block title="savoir-faire technologique-" [items]="byType().TECHNOLOGICAL" />
+        }
+        @if (byType().SECTORIAL.length > 0) {
+          <app-list-block title="compétences sectorielles" [items]="byType().SECTORIAL" />
+        }
+        @if (byType().INNOVATION.length > 0) {
+          <app-list-block title="Capacité d’innovation et de transfert" [items]="byType().INNOVATION" />
+        }
+      </div>
     }
   </div>
 </section>

@@ -76,7 +76,6 @@
                     [name]="member.name"
                     [grade]="member.grade"
                     [speciality]="member.speciality"
-                    [role]="member.role"
                     [avatar]="memberAvatar"
                   />
                 }
@@ -91,7 +90,6 @@
                     [name]="member.name"
                     [grade]="member.grade"
                     [speciality]="member.speciality"
-                    [role]="member.role"
                     [avatar]="memberAvatar"
                   />
                 }
@@ -108,35 +106,49 @@
             @if (!hasTeams()) {
               <app-empty-state message="Aucune équipe de recherche disponible pour ce laboratoire." />
             } @else {
-              @for (team of teams(); track team.name) {
-                <section class="lab-page__team">
-                  <h4 class="lab-page__team-name">{{ team.name }}</h4>
-                  @if (team.responsable.name) {
-                    <div class="lab-page__cards">
-                      <app-enhanced-member-card
-                        [name]="team.responsable.name"
-                        [grade]="team.responsable.grade"
-                        [speciality]="team.responsable.speciality"
-                        [role]="team.responsable.role"
-                        [avatar]="memberAvatar"
-                      />
-                    </div>
-                  }
+              <div class="team-selector">
+                @for (team of teams(); track team.name) {
+                  <button
+                    type="button"
+                    class="team-selector__button"
+                    [class.is-active]="selectedTeamName() === team.name"
+                    (click)="selectTeam(team.name)"
+                  >
+                    {{ team.name }}
+                  </button>
+                }
+              </div>
 
-                  @if (team.members.length > 0) {
-                    <div class="lab-page__cards">
-                      @for (member of team.members; track member.name + member.grade + member.speciality) {
+              @if (selectedTeam(); as team) {
+                <app-fade-container>
+                  <section class="lab-page__team">
+                    @if (team.responsable.name) {
+                      <div class="lab-page__cards">
                         <app-enhanced-member-card
-                          [name]="member.name"
-                          [grade]="member.grade"
-                          [speciality]="member.speciality"
-                          [role]="member.role"
+                          [name]="team.responsable.name"
+                          [grade]="team.responsable.grade"
+                          [speciality]="team.responsable.speciality"
+                          [role]="team.responsable.role"
                           [avatar]="memberAvatar"
                         />
-                      }
-                    </div>
-                  }
-                </section>
+                      </div>
+                    }
+
+                    @if (team.members.length > 0) {
+                      <div class="lab-page__cards">
+                        @for (member of team.members; track member.name + member.grade + member.speciality) {
+                          <app-enhanced-member-card
+                            [name]="member.name"
+                            [grade]="member.grade"
+                            [speciality]="member.speciality"
+                            [role]="member.role"
+                            [avatar]="memberAvatar"
+                          />
+                        }
+                      </div>
+                    }
+                  </section>
+                </app-fade-container>
               }
             }
           </section>

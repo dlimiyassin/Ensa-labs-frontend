@@ -11,7 +11,6 @@
       <div class="section-label">Structures de recherche</div>
       <h2><a [routerLink]="['/laboratoires', labs()[0]?.name || 'LaRESI']">Nos laboratoires <span>→</span></a></h2>
       <p>Deux structures complémentaires pour porter la recherche académique, technologique et partenariale.</p>
-      <app-section-link to="/laboratoires/LaRESI" label="Voir plus" />
     </div>
 
     <div class="labs-editorial-list">
@@ -34,8 +33,7 @@
             </header>
             <p class="lab-editorial__description">{{ lab.description }}</p>
             <div class="lab-editorial__footer">
-              <span class="lab-tag">Entrer dans la section</span>
-              <span class="lab-tag lab-tag--link">Voir le laboratoire →</span>
+              <span class="lab-tag">Voir le laboratoire →</span>
             </div>
           </div>
           <figure class="lab-editorial__media">
@@ -85,7 +83,7 @@
       [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Thématiques prioritaires</div>
-      <h2><a [routerLink]="['/laboratoires', researchAxes()[0]?.labAcronym || 'LaRESI']" fragment="axes">Axes de recherche <span>→</span></a></h2>
+      <h2><a [routerLink]="['/laboratoires', researchAxes()[0]?.labAcronym || 'LaRESI']" fragment="axes">Principaux domaines de recherche <span>→</span></a></h2>
       <p>Des priorités scientifiques structurées autour de thématiques transversales et à fort impact.</p>
       <app-section-link [to]="'/laboratoires/' + (researchAxes()[0]?.labAcronym || 'LaRESI')" fragment="axes" label="Voir plus" />
     </div>

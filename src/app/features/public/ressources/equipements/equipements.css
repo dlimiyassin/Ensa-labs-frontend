@@ -1,0 +1,10 @@
+.resources-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: .85rem;
+}

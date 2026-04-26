@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, combineLatest, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
@@ -53,6 +53,7 @@ export class LabPresentation {
   protected readonly loading = signal(true);
   protected readonly error = signal('');
   protected readonly activeTab = signal<LabTab>('direction');
+  protected readonly selectedTeamName = signal('');
 
   protected readonly tabs: readonly TabItem[] = [
     { id: 'direction', label: 'Direction' },
@@ -105,6 +106,11 @@ export class LabPresentation {
     .filter((team) => !!team.name));
 
   protected readonly hasTeams = computed(() => this.teams().length > 0);
+  protected readonly selectedTeam = computed(() => {
+    const teamName = this.selectedTeamName();
+    const allTeams = this.teams();
+    return allTeams.find((team) => team.name === teamName) ?? allTeams[0] ?? null;
+  });
   protected readonly directAxes = computed(() => this.readAxesTitles(this.lab()).filter(Boolean));
   protected readonly groupedAxesFromTeams = computed(() => this.teams()
     .filter((team) => team.axes.length > 0)
@@ -159,6 +165,10 @@ export class LabPresentation {
     this.activeTab.set(tabId as LabTab);
   }
 
+  protected selectTeam(teamName: string): void {
+    this.selectedTeamName.set(teamName);
+  }
+
   private syncTabFromFragment(): void {
     const fragment = (this.fragment() ?? '').toLowerCase();
     if (fragment === 'axes') {
@@ -178,6 +188,19 @@ export class LabPresentation {
 
     this.activeTab.set('direction');
   }
+
+  private readonly syncSelectedTeam = effect(() => {
+    const teams = this.teams();
+    if (teams.length === 0) {
+      this.selectedTeamName.set('');
+      return;
+    }
+
+    const selected = this.selectedTeamName();
+    if (!selected || !teams.some((team) => team.name === selected)) {
+      this.selectedTeamName.set(teams[0].name);
+    }
+  });
 
   private membersByAssociation(type: AssociationType): MemberCardModel[] {
     return (this.lab()?.members ?? [])

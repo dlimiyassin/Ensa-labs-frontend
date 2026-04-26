@@ -5,16 +5,30 @@
     image="images/labs/lab1.jpg"
   />
 
-  <div class="internal-page__content">
+  <div class="internal-page__content resources-page">
     <app-section-title label="Ressources" title="Équipements par catégorie" />
 
-    @if (!hasData()) {
+    @if (loading()) {
+      <app-spinner message="Chargement des équipements..." />
+    } @else if (error()) {
+      <p class="internal-page__lead">{{ error() }}</p>
+    } @else if (!hasData()) {
       <app-empty-state message="Aucun équipement n'a été remonté par le backend." />
     } @else {
-      <app-list-block title="LAB" [items]="byCategory().LAB" />
-      <app-list-block title="UNIVERSITY" [items]="byCategory().UNIVERSITY" />
-      <app-list-block title="SHARED" [items]="byCategory().SHARED" />
-      <app-list-block title="IT" [items]="byCategory().IT" />
+      <div class="resources-grid">
+        @if (byCategory().IT.length > 0) {
+          <app-list-block title="Équipements informatiques du laboratoire" [items]="byCategory().IT" />
+        }
+        @if (byCategory().SHARED.length > 0) {
+          <app-list-block title="Équipements scientifiques de l’établissement et de l’université" [items]="byCategory().SHARED" />
+        }
+        @if (byCategory().UNIVERSITY.length > 0) {
+          <app-list-block title="Équipements de recherche acquis via les dotations universitaires" [items]="byCategory().UNIVERSITY" />
+        }
+        @if (byCategory().LAB.length > 0) {
+          <app-list-block title="Équipements scientifiques du laboratoire" [items]="byCategory().LAB" />
+        }
+      </div>
     }
   </div>
 </section>

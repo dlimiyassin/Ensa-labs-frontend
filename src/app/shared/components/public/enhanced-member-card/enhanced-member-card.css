@@ -27,12 +27,43 @@
 .member-card__body {
   display: grid;
   gap: 0.35rem;
+  width: 100%;
+}
+
+.member-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .5rem;
 }
 
 .member-card__body h4 {
   margin: 0;
   font-size: 0.95rem;
   color: var(--text-color);
+}
+
+.member-card__role-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: .22rem .65rem;
+  border-radius: 999px;
+  font-size: .68rem;
+  line-height: 1.2;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid color-mix(in srgb, var(--orange-color) 34%, #fff);
+  color: color-mix(in srgb, var(--orange-color) 40%, #5b2f00);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--orange-color) 22%, #fff) 0%,
+    color-mix(in srgb, var(--blue-color) 11%, #fff) 100%
+  );
+  box-shadow: 0 10px 14px -14px color-mix(in srgb, var(--orange-color) 88%, transparent);
 }
 
 .member-card__badge {
