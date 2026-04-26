@@ -55,6 +55,33 @@ Tab selection gets stuck on the last navbar interaction
 
 
 
+4- in equipements: translate those 
+- IT
+- SHARED
+- UNIVERSITY
+- LAB
+ to 
+- Équipements informatiques du laboratoire
+- Équipements scientifiques de l’établissement et de l’université
+- Équipements de recherche acquis via les dotations universitaires
+- Équipements scientifiques du laboratoire
+
+if one of those data is null or empyty hide its section
+
+5- in compeneteces, translate those
+- SCIENTIFIC
+- TECHNOLOGICAL
+- SECTORIAL
+- INNOVATION
+to 
+- compétences scientifiques et méthodologiques.
+- savoir-faire technologique-
+- compétences sectorielles
+- Capacité d’innovation et de transfert
+
+
+
+
 
 
 - fill colaboration data and fix images
