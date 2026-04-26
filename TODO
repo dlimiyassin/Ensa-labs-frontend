@@ -1,5 +1,60 @@
-- in lab/equipes, only show equipes as buttons, then when we click on equipe then fade in the details below it
-- i dont want this: when i click on a lab in production it scrol up to 0 ,position
-- when i naviagte from production dropdwon, nav buttons (pubs, theses ...)  got stuck
+1- in lab/equipes, enhance style of buttons, make them as clickable cards with good styling, not taking full width. they better align at start, and remove  team.name under lab-page__team so to avoid redandency
+
+2- when taging member card, if role is Directeur or Directeur adjoint or Responsable: its better to dispaly in a modern way with one of the colors defined, like a unique seal/tag, and better to be in right side of card, make it look classic, pro. instaed of simple text
+
+3- There is a bug in the navigation behavior:
+
+When I am on the homepage and I hover over the PRODUCTION section in the navbar, then select one of the following items: Publications, Communications, or Thèses, I am redirected to the production page.
+
+{
+  title: 'PRODUCTION',
+  sections: [
+    {
+      label: 'Scientifique',
+      links: [
+        { label: 'Publications', route: '/production/LaRESI' },
+        { label: 'Communications', route: '/production/LaRESI', fragment: 'communications' },
+        { label: 'Thèses', route: '/production/LaRESI', fragment: 'theses' }
+      ]
+    }
+  ]
+}
+
+On the production page, the corresponding tab is automatically selected, which is expected.
+
+However, the issue appears when I try to change the selection:
+
+If I click another item from the navbar, the tabs update correctly.
+But if I try to change the selection directly using the tabs component, the selection becomes stuck on the last navbar-selected item.
+
+Tabs definition:
+
+protected readonly tabs: readonly TabItem[] = [
+  { id: 'publications', label: 'Publications' },
+  { id: 'communications', label: 'Communications' },
+  { id: 'theses', label: 'Thèses' }
+];
+
+Template:
+
+<app-tabs 
+  [tabs]="tabs" 
+  [activeId]="activeTab()" 
+  (tabChange)="selectTab($event)" 
+/>
+
+Expected behavior:
+
+Navbar selection and tabs should stay synchronized
+Tabs should remain independently clickable after navigation
+No “locking” on the last navbar-selected tab
+
+Actual behavior:
+
+Tab selection gets stuck on the last navbar interaction
+
+
+
+
+
 - fill colaboration data and fix images
-- spiner not working resources, no styling exist

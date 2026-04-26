@@ -14,6 +14,6 @@ import { Component } from '@angular/core';
     `
 })
 export class AppTopbar {
-    text = "Le lancement officiel de la Plateforme Des Laboratoires De L'ENSA Beni Mellal";
+    text = "Journée de Présentation des Projets de Recherche du Laboratoire – 30 mai 2026";
     items = Array(10);
 }
