@@ -152,19 +152,6 @@ export class AppNavbar {
     },
 
     {
-      title: 'RESSOURCES',
-      sections: [
-        {
-          label: 'Laboratoires',
-          links: [
-            { label: 'Équipements', route: '/ressources/equipements' },
-            { label: 'Compétences', route: '/ressources/competences' }
-          ]
-        }
-      ]
-    },
-
-    {
       title: 'COLLABORATIONS',
       sections: [
         {
@@ -172,6 +159,19 @@ export class AppNavbar {
           links: [
             { label: 'Partenariats de recherche', route: '/partenariats' },
             { label: 'Partenariats industriels', route: '/partenariats/industriels' }
+          ]
+        }
+      ]
+    },
+
+    {
+      title: 'RESSOURCES',
+      sections: [
+        {
+          label: 'Laboratoires',
+          links: [
+            { label: 'Équipements', route: '/ressources/equipements' },
+            { label: 'Compétences', route: '/ressources/competences' }
           ]
         }
       ]
