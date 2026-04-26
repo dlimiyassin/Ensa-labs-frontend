@@ -13,8 +13,8 @@ export class EnhancedMemberCardComponent {
   readonly role = input('');
   readonly avatar = input('images/members/member.png');
 
-  protected hasLeadershipRole(): boolean {
-    const normalizedRole = this.role().trim().toLowerCase();
-    return normalizedRole.includes('directeur') || normalizedRole.includes('responsable');
-  }
+protected hasLeadershipRole(): boolean {
+  const normalizedRole = this.role().trim().toLowerCase();
+  return normalizedRole === 'directeur' || normalizedRole === 'directeur adjoint' || normalizedRole === 'responsable';
+}
 }
