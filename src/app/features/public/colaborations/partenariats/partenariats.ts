@@ -9,6 +9,11 @@ import { SpinnerComponent } from '../../../../shared/components/public/spinner/s
 import { CollaborationsService } from '../../../../core/services/collaborations.service';
 import { CollaborationDTO } from '../../../../core/models/api.models';
 
+interface CollaborationSection {
+  title: string;
+  items: CollaborationDTO[];
+}
+
 @Component({
   selector: 'app-partenariats',
   imports: [PageHeroComponent, SectionTitleComponent, EmptyStateComponent, SpinnerComponent],
@@ -20,6 +25,8 @@ export class Partenariats {
 
   protected readonly loading = signal(true);
   protected readonly error = signal('');
+  protected readonly cardImage = '/images/colabs/building.png';
+  protected readonly selectedLabBySection = signal<Record<string, string>>({});
 
   private readonly collaborations = toSignal(this.collaborationsService.findAllAcademic().pipe(
     tap(() => {
@@ -35,8 +42,8 @@ export class Partenariats {
 
   protected readonly hasData = computed(() => this.collaborations().length > 0);
 
-  protected readonly collaborationsByScope = computed(() => {
-    const sections: Array<{ title: string; items: CollaborationDTO[] }> = [
+  protected readonly collaborationsByScope = computed<CollaborationSection[]>(() => {
+    const sections: CollaborationSection[] = [
       { title: 'Régional', items: [] },
       { title: 'National', items: [] },
       { title: 'International', items: [] }
@@ -60,6 +67,28 @@ export class Partenariats {
 
     return sections.filter((section) => section.items.length > 0);
   });
+
+  protected labsForSection(section: CollaborationSection): string[] {
+    return Array.from(new Set(section.items.map((item) => String(item.labAcronym ?? '').trim()).filter(Boolean))).slice(0, 2);
+  }
+
+  protected selectedLab(sectionTitle: string): string | null {
+    return this.selectedLabBySection()[sectionTitle] ?? null;
+  }
+
+  protected setSelectedLab(sectionTitle: string, labAcronym: string): void {
+    this.selectedLabBySection.update((current) => ({ ...current, [sectionTitle]: labAcronym }));
+  }
+
+  protected visibleCollaborations(section: CollaborationSection): CollaborationDTO[] {
+    const labs = this.labsForSection(section);
+    if (labs.length === 0) {
+      return section.items;
+    }
+
+    const selected = this.selectedLab(section.title) ?? labs[0];
+    return section.items.filter((item) => String(item.labAcronym ?? '').trim() === selected);
+  }
 
   protected trackByCollaboration(index: number, collaboration: CollaborationDTO): string {
     return String(collaboration.id ?? `${collaboration.organization}-${collaboration.theme}-${index}`);

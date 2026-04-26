@@ -9,6 +9,29 @@
   letter-spacing: .01em;
 }
 
+.labs-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .6rem;
+  margin-bottom: .85rem;
+}
+
+.labs-nav__btn {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--primary-color) 35%, #fff);
+  background: #fff;
+  color: var(--primary-color);
+  padding: .55rem .7rem;
+  border-radius: .65rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.labs-nav__btn--active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
 .partner-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -25,8 +48,17 @@
   box-shadow: 0 10px 26px rgba(15, 23, 42, .06);
 }
 
+.partner-card__image {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  background: color-mix(in srgb, var(--blue-color) 8%, #fff);
+  border-radius: .75rem;
+  padding: .65rem;
+}
+
 .partner-card__head h4 {
-  margin: .35rem 0 .2rem;
+  margin: 0 0 .2rem;
   font-size: 1rem;
   color: var(--title-color, #0f172a);
 }
@@ -35,18 +67,6 @@
   margin: 0;
   color: var(--text-color-secondary, #4b5563);
   font-size: .9rem;
-}
-
-.partner-card__badge {
-  display: inline-flex;
-  align-items: center;
-  padding: .2rem .6rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--primary-color) 20%, #fff);
-  color: color-mix(in srgb, var(--primary-color) 75%, #000);
-  font-weight: 600;
-  font-size: .74rem;
-  letter-spacing: .04em;
 }
 
 .partner-card__details {
