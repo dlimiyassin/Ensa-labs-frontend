@@ -5,6 +5,7 @@ export type AssociationType = 'ASSOCIATED' | 'PERMENANET';
 export type RoleInLab = 'DIRECTEUR' | 'DIRECTEUR_ADJOINT' | 'MEMBER' | 'MANAGEMENT_COMMITTEE';
 export type CompetenceType = 'SCIENTIFIC' | 'TECHNOLOGICAL' | 'SECTORIAL' | 'INNOVATION';
 export type EquipmentCategory = 'LAB' | 'UNIVERSITY' | 'SHARED' | 'IT';
+export type CollaborationScope = 'REGIONAL' | 'NATIONAL' | 'INTERNATIONAL';
 
 export interface UserDTO {
   id?: string;
@@ -150,6 +151,18 @@ export interface RoleCriteria {
   id?: string;
   name?: string;
 }
+
+
+export interface CollaborationDTO {
+        id?: String;
+        organization?: String;
+        establishment?: String;
+        theme?: String;
+        nature?: String;
+        scope?: CollaborationScope;
+        labAcronym?: String
+}
+
 
 export interface RegisterDto {
   firstName?: string;
