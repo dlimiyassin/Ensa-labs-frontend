@@ -1,14 +1,19 @@
 <article class="member-card">
   <img [src]="avatar()" [alt]="name()" class="member-card__avatar" />
   <div class="member-card__body">
-    <h4>{{ name() }}</h4>
+    <div class="member-card__header">
+      <h4>{{ name() }}</h4>
+      @if (role() && hasLeadershipRole()) {
+        <span class="member-card__role-seal">{{ role() }}</span>
+      }
+    </div>
     @if (grade()) {
       <span class="member-card__badge">{{ grade() }}</span>
     }
     @if (speciality()) {
       <p>Spécialité : {{ speciality() }}</p>
     }
-    @if (role()) {
+    @if (role() && !hasLeadershipRole()) {
       <p>Rôle : {{ role() }}</p>
     }
   </div>

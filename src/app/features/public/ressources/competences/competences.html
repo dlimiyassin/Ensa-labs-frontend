@@ -16,10 +16,18 @@
       <app-empty-state message="Aucune compétence n'a été remontée par le backend." />
     } @else {
       <div class="resources-grid">
-        <app-list-block title="SCIENTIFIC" [items]="byType().SCIENTIFIC" />
-        <app-list-block title="TECHNOLOGICAL" [items]="byType().TECHNOLOGICAL" />
-        <app-list-block title="SECTORIAL" [items]="byType().SECTORIAL" />
-        <app-list-block title="INNOVATION" [items]="byType().INNOVATION" />
+        @if (byType().SCIENTIFIC.length > 0) {
+          <app-list-block title="compétences scientifiques et méthodologiques." [items]="byType().SCIENTIFIC" />
+        }
+        @if (byType().TECHNOLOGICAL.length > 0) {
+          <app-list-block title="savoir-faire technologique-" [items]="byType().TECHNOLOGICAL" />
+        }
+        @if (byType().SECTORIAL.length > 0) {
+          <app-list-block title="compétences sectorielles" [items]="byType().SECTORIAL" />
+        }
+        @if (byType().INNOVATION.length > 0) {
+          <app-list-block title="Capacité d’innovation et de transfert" [items]="byType().INNOVATION" />
+        }
       </div>
     }
   </div>
