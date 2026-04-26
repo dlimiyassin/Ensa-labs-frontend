@@ -13,6 +13,14 @@ export class CollaborationsService {
     return this.http.get<CollaborationDTO[]>(this.endpoint);
   }
 
+  findAllAcademic(): Observable<CollaborationDTO[]> {
+    return this.http.get<CollaborationDTO[]>(`${this.endpoint}/academic`);
+  }
+
+  findAllIndustrial(): Observable<CollaborationDTO[]> {
+    return this.http.get<CollaborationDTO[]>(`${this.endpoint}/industrial`);
+  }
+
   findById(id: string): Observable<CollaborationDTO> {
     return this.http.get<CollaborationDTO>(`${this.endpoint}/${id}`);
   }

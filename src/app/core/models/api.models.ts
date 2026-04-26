@@ -6,6 +6,7 @@ export type RoleInLab = 'DIRECTEUR' | 'DIRECTEUR_ADJOINT' | 'MEMBER' | 'MANAGEME
 export type CompetenceType = 'SCIENTIFIC' | 'TECHNOLOGICAL' | 'SECTORIAL' | 'INNOVATION';
 export type EquipmentCategory = 'LAB' | 'UNIVERSITY' | 'SHARED' | 'IT';
 export type CollaborationScope = 'REGIONAL' | 'NATIONAL' | 'INTERNATIONAL';
+export type CollaborationType = 'ACADEMIC' | 'INDUSTRIAL';
 
 export interface UserDTO {
   id?: string;
@@ -160,6 +161,7 @@ export interface CollaborationDTO {
         theme?: String;
         nature?: String;
         scope?: CollaborationScope;
+        type?: CollaborationType;
         labAcronym?: String
 }
 

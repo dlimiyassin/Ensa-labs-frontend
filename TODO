@@ -2,3 +2,9 @@
 - prof profile as drawer
 - refcator desgin of ressources/competences-equipements
 - fill colaboration data and fix images
+
+
+use '/app/core/services/collaborations.service.ts' to refactor content of '/src/app/features/public/colaborations', update desgin, style based on CollaborationDTO fields,
+
+in http://localhost:4200/partenariats use CollaborationsService.findAllAcademic  
+in http://localhost:4200/partenariats/industriels use CollaborationsService.findAllIndustrial
