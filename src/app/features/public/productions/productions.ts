@@ -107,8 +107,14 @@ export class Productions {
   }
 
   protected selectTab(tabId: string): void {
-    this.activeTab.set(tabId as ProductionTab);
+    const nextTab = tabId as ProductionTab;
+    this.activeTab.set(nextTab);
     this.filters.set({ year: '', type: '', author: '', venue: '', supervisor: '' });
+    this.router.navigate([], {
+      relativeTo: this.route,
+      fragment: nextTab === 'publications' ? undefined : nextTab,
+      replaceUrl: true
+    });
   }
 
   protected updateFilter(event: { key: string; value: string }): void {
