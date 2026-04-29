@@ -29,9 +29,9 @@
         @for (group of groupedPublications(); track group.year) {
           <section class="year-group">
             <h3>{{ group.year }}</h3>
-            <ul>
+            <ul class="production-items-grid">
               @for (item of group.entries; track item.id || item.title) {
-                <li>{{ publicationLine(item) }}</li>
+                <li class="publication-row">{{ publicationLine(item) }}</li>
               }
             </ul>
           </section>
@@ -44,9 +44,9 @@
         @for (group of groupedCommunications(); track group.year) {
           <section class="year-group">
             <h3>{{ group.year }}</h3>
-            <ul>
+            <ul class="production-items-grid">
               @for (item of group.entries; track item.id || item.title) {
-                <li>{{ publicationLine(item) }}</li>
+                <li class="publication-row">{{ publicationLine(item) }}</li>
               }
             </ul>
           </section>
@@ -59,9 +59,9 @@
         @for (group of groupedTheses(); track group.year) {
           <section class="year-group">
             <h3>{{ group.year }}</h3>
-            <ul>
+            <ul class="production-items-grid">
               @for (item of group.entries; track item.id || item.title) {
-                <li>{{ thesisLine(item) }}</li>
+                <li class="publication-row">{{ thesisLine(item) }}</li>
               }
             </ul>
           </section>
