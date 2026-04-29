@@ -25,7 +25,7 @@ export class Partenariats {
 
   protected readonly loading = signal(true);
   protected readonly error = signal('');
-  protected readonly cardImage = '/images/colabs/building.png';
+  protected readonly cardImage = '/images/university.png';
   protected readonly selectedLabBySection = signal<Record<string, string>>({});
 
   private readonly collaborations = toSignal(this.collaborationsService.findAllAcademic().pipe(
