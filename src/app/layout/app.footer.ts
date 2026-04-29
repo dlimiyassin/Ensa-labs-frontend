@@ -30,24 +30,25 @@ import { Component } from '@angular/core';
     <nav class="footer-links" aria-label="Liens du pied de page">
 
       <div class="footer-col">
-        <span class="footer-col-title">Recherche</span>
-        <a class="footer-link" routerLink="/recherche/axes">Axes de recherche</a>
-        <a class="footer-link" routerLink="/recherche/projets">Projets</a>
-        <a class="footer-link" routerLink="/recherche/partenariats">Partenariats</a>
+        <span class="footer-col-title">Accueil</span>
+        <a class="footer-link" routerLink="/" fragment="labs">Structures de recherche</a>
+        <a class="footer-link" routerLink="/" fragment="axes">Domaines de recherche</a>
+        <a class="footer-link" routerLink="/" fragment="publications">Publications récentes</a>
       </div>
 
       <div class="footer-col">
         <span class="footer-col-title">Laboratoires</span>
-        <a class="footer-link" routerLink="/laboratoires">Liste des labos</a>
-        <a class="footer-link" routerLink="/laboratoires/equipes">Équipes</a>
-        <a class="footer-link" routerLink="/laboratoires/publications">Publications</a>
+        <a class="footer-link" routerLink="/laboratoires/LRSTA">LRSTA</a>
+        <a class="footer-link" routerLink="/laboratoires/LaRESI">LaRESI</a>
+        <a class="footer-link" routerLink="/production/LaRESI">Productions scientifiques</a>
       </div>
 
       <div class="footer-col">
-        <span class="footer-col-title">Innovation</span>
-        <a class="footer-link" routerLink="/innovation/brevets">Brevets</a>
-        <a class="footer-link" routerLink="/innovation/transfert">Transfert technologique</a>
-        <a class="footer-link" routerLink="/innovation/partenariats">Partenariats industriels</a>
+        <span class="footer-col-title">Ressources & collaborations</span>
+        <a class="footer-link" routerLink="/ressources/equipements">Équipements</a>
+        <a class="footer-link" routerLink="/ressources/competences">Compétences</a>
+        <a class="footer-link" routerLink="/partenariats">Partenariats de recherche</a>
+        <a class="footer-link" routerLink="/partenariats/industriels">Partenariats industriels</a>
       </div>
 
     </nav>

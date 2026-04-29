@@ -34,9 +34,26 @@
 
 .year-group ul {
   margin: 0;
-  padding-left: 1.2rem;
-  color: var(--text-color);
+  padding: 0;
+  list-style: none;
+}
+
+.production-items-grid {
   display: grid;
-  gap: .5rem;
+  gap: .75rem;
+}
+
+.publication-row {
+  border: 1px solid color-mix(in srgb, var(--blue-color) 11%, #fff);
+  border-radius: .75rem;
+  padding: 1rem;
+  color: var(--text-color);
   line-height: 1.7;
+  background: #fff;
+  transition: transform 220ms ease, background 220ms ease;
+}
+
+.publication-row:hover {
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--blue-color) 3%, #fff);
 }
