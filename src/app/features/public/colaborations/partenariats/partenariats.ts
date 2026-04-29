@@ -9,10 +9,7 @@ import { SpinnerComponent } from '../../../../shared/components/public/spinner/s
 import { CollaborationsService } from '../../../../core/services/collaborations.service';
 import { CollaborationDTO } from '../../../../core/models/api.models';
 
-interface CollaborationSection {
-  title: string;
-  items: CollaborationDTO[];
-}
+type ScopeFilter = 'NATIONAL' | 'INTERNATIONAL';
 
 @Component({
   selector: 'app-partenariats',
@@ -26,7 +23,8 @@ export class Partenariats {
   protected readonly loading = signal(true);
   protected readonly error = signal('');
   protected readonly cardImage = '/images/university.png';
-  protected readonly selectedLabBySection = signal<Record<string, string>>({});
+  protected readonly scopeFilters: ScopeFilter[] = ['NATIONAL', 'INTERNATIONAL'];
+  protected readonly selectedScope = signal<ScopeFilter>('NATIONAL');
 
   private readonly collaborations = toSignal(this.collaborationsService.findAllAcademic().pipe(
     tap(() => {
@@ -40,54 +38,24 @@ export class Partenariats {
     tap(() => this.loading.set(false))
   ), { initialValue: [] });
 
-  protected readonly hasData = computed(() => this.collaborations().length > 0);
+  protected readonly filteredCollaborations = computed(() =>
+    this.collaborations().filter((collaboration) =>
+      collaboration.scope === 'NATIONAL' || collaboration.scope === 'INTERNATIONAL'
+    )
+  );
 
-  protected readonly collaborationsByScope = computed<CollaborationSection[]>(() => {
-    const sections: CollaborationSection[] = [
-      { title: 'International', items: [] },
-      { title: 'National', items: [] },
-      { title: 'Régional', items: [] }
-    ];
+  protected readonly hasData = computed(() => this.filteredCollaborations().length > 0);
 
-    for (const collaboration of this.collaborations()) {
-      switch (collaboration.scope) {
-        case 'INTERNATIONAL':
-          sections[0].items.push(collaboration);
-          break;
-        case 'NATIONAL':
-          sections[1].items.push(collaboration);
-          break;
-        case 'REGIONAL':
-          sections[2].items.push(collaboration);
-          break;
-        default:
-          sections[1].items.push(collaboration);
-      }
-    }
+  protected readonly visibleCollaborations = computed(() =>
+    this.filteredCollaborations().filter((collaboration) => collaboration.scope === this.selectedScope())
+  );
 
-    return sections.filter((section) => section.items.length > 0);
-  });
-
-  protected labsForSection(section: CollaborationSection): string[] {
-    return Array.from(new Set(section.items.map((item) => String(item.labAcronym ?? '').trim()).filter(Boolean))).slice(0, 2);
+  protected scopeLabel(scope: ScopeFilter): string {
+    return scope === 'NATIONAL' ? 'National' : 'International';
   }
 
-  protected selectedLab(sectionTitle: string): string | null {
-    return this.selectedLabBySection()[sectionTitle] ?? null;
-  }
-
-  protected setSelectedLab(sectionTitle: string, labAcronym: string): void {
-    this.selectedLabBySection.update((current) => ({ ...current, [sectionTitle]: labAcronym }));
-  }
-
-  protected visibleCollaborations(section: CollaborationSection): CollaborationDTO[] {
-    const labs = this.labsForSection(section);
-    if (labs.length === 0) {
-      return section.items;
-    }
-
-    const selected = this.selectedLab(section.title) ?? labs[0];
-    return section.items.filter((item) => String(item.labAcronym ?? '').trim() === selected);
+  protected setSelectedScope(scope: ScopeFilter): void {
+    this.selectedScope.set(scope);
   }
 
   protected trackByCollaboration(index: number, collaboration: CollaborationDTO): string {
