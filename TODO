@@ -2,3 +2,721 @@
 - prof profile as drawer
 - refcator desgin of ressources/competences-equipements
 - fix colaboration images
+
+- remove token injection when not needed
+
+
+LaRESI:
+Publications :
+[
+  {
+    "title": "Building-integrated passive and renewable solar technologies: A review from 3E perspectives",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["Y. Elaouzy", "A. El Fadar", "O.B. Achkari"],
+    "journal": "Sustainable Energy Technologies and Assessments",
+    "pages": "104079",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Assessing the 3E performance of multiple energy supply scenarios based on photovoltaic, wind turbine, battery and hydrogen systems",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["Y. Elaouzy", "A. El Fadar", "O.B. Achkari"],
+    "journal": "Journal of Energy Storage",
+    "pages": "113378",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Concentrating and non-concentrating photovoltaic thermal collectors: Technologies, applications, exhaustive assessment and challenges",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["M. Mortadi", "A. El Fadar", "O.B. Achkari"],
+    "journal": "Solar Energy Materials and Solar Cells",
+    "pages": "112858",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "4E analysis of photovoltaic thermal collector-based tri-generation system with adsorption cooling",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["M. Mortadi", "A. El Fadar", "O. Achkari Begdouri"],
+    "journal": "Renewable Energy",
+    "pages": "119828",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Capacity of waste heat recovery-based polygeneration to achieve sustainable development goals",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["M. Ghema", "A. El Fadar", "O. Achkari Begdouri"],
+    "journal": "Science of The Total Environment",
+    "pages": "171983",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Five Levels of Traffic Congestion Classification Using CCTV Images and Traffic Jam Network Approach",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["A. Esswidi", "A. Daif", "S. Ardchir", "Y. Elghoumari", "M. Azzouazi"],
+    "journal": "International Journal on Technical and Physical Problems of Engineering",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Pythagorean fuzzy sublattices and ideals",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["I. Bakhadach", "M. Fakhraoui", "S. Achik", "S. Melliani"],
+    "journal": "Journal of Fuzzy Extension and Applications",
+    "pages": "365-373",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "An Enhanced Anonymous ECC-based Mutual Authentication and Key Agreement Scheme for Lightweight Application in TMIS",
+    "type": "CONFERENCE",
+    "publicationYear": 2023,
+    "authors": ["H. Idrissi", "M. Ennahbaoui"],
+    "conference": "CS2I-23",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Improving peer assessment validity and reliability through a fuzzy coherence measure",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["El Alaoui M."],
+    "journal": "IEEE Transactions on Learning Technologies",
+    "pages": "892-899",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Predicting the next word using the Markov chain model according to profiling personality",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["Elbaghazaoui B.E.", "Mohamed Amnai", "Youssef Fakhri"],
+    "journal": "The Journal of Supercomputing",
+    "doi": "10.1007/s11227-023-05125-2",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Predicting user behavior using data profiling and hidden Markov model",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["Elbaghazaoui B.E.", "Mohamed Amnai", "Youssef Fakhri"],
+    "journal": "International Journal of Electrical & Computer Engineering",
+    "pages": "5444-5453",
+    "doi": "10.11591/ijece.v13i5",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Effectiveness of the use of nanofluids in concentrated solar power plants",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["O. Achkari Begdouri", "A. El Fadar"],
+    "journal": "Renewable Energy Focus",
+    "pages": "10-20",
+    "lab": { "name": "LaRESI" }
+  }
+]
+
+Communications:
+[
+  {
+    "title": "Traffic congestion multilevel classification using deep learning",
+    "type": "CONFERENCE",
+    "publicationYear": 2023,
+    "authors": ["A. Esswidi", "K. Bayoude", "S. Ardchir", "Y. M. Elghoumari", "A. Daif", "M. Azzouazi"],
+    "conference": "ICRAMCS 2023 - International Conference on Research in Applied Mathematics and Computer Science, FSBM Casablanca",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Road users detection for traffic congestion classification",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["A. Es-swidi", "S. Ardchir", "A. Daif", "M. Azzouazi"],
+    "conference": "TIM 2022 - International Conference of the Technologies of Information and Modelling, FSBM Casablanca",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Traffic congestion and road anomalies detection using CCTV images processing: challenges and opportunities",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["A. Es-swidi", "S. Ardchir", "Y. Elghoumari", "A. Daif", "M. Azouazi"],
+    "conference": "AI2SD 2022 - International Conference on Advanced Intelligent Systems for Sustainable Development, ENSAM Rabat",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Road safety analysis: severity prediction and important factors of accidents",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["A. Esswidi", "K. Bayoude", "S. Ardchir", "Y. M. Elghoumari", "A. Daif", "M. Azzouazi"],
+    "conference": "ICRAMCS 2022 - International Conference on Research in Applied Mathematics and Computer Science, FSBM Casablanca",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "title": "Predictive analytics in email marketing based on machine learning tools",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["K. Bayoude", "A. Esswidi", "S. Ardchir", "M. Azzouazi"],
+    "conference": "ICRAMCS 2022 - International Conference on Research in Applied Mathematics and Computer Science, FSBM Casablanca",
+    "lab": { "name": "LaRESI" }
+  }
+]
+
+
+Thesis:
+[
+  {
+    "author": "Ouassam Elhoucine",
+    "title": "Méthodes heuristiques et intelligence artificielle : application aux systèmes complexes",
+    "defenseDate": "2023-12-30",
+    "supervisor": "Pr. Belaid Bouikhalene",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "author": "Radoine Hamzaoui",
+    "title": "Amélioration des techniques d’évaluation des apprentissages dans les plateformes e-learning en utilisant les algorithmes de l’intelligence artificielle",
+    "defenseDate": "2025-02-07",
+    "supervisor": "Pr. Belaid Bouikhalene",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "author": "Loubna Rabhi",
+    "title": "Approche holistique basée sur l’intelligence artificielle et big data analytics pour la modélisation de l’agriculture digitale",
+    "defenseDate": "2024-07-10",
+    "supervisor": "Pr. Belaid Bouikhalene",
+    "lab": { "name": "LaRESI" }
+  },
+  {
+    "author": "Saadia Nemmaoui",
+    "title": "Sécurité des données de la vie privée face aux enjeux des nouvelles technologies de communication",
+    "defenseDate": "2025-05-24",
+    "supervisor": "Pr. Belaid Bouikhalene",
+    "lab": { "name": "LaRESI" }
+  }
+]
+
+
+
+
+
+
+
+
+
+LRSTA:
+Publications :
+[
+  {
+    "title": "A Cascaded H Bridge Multilevel Inverter with DC Cells Input Fault Tolerance Capability Based on PSC-PWM Control",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["T. Khalili", "A. Raihani", "A. Kadri", "S. Saghir", "M. Oulcaid"],
+    "journal": "International Journal of Electrical and Electronics Research",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Effect of sisal fibers on physical characteristics of compacted bentonite/lime/sand mixtures",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["M. Essaleh", "R. Bouferra", "M. Mansori", "S. Lahbabi", "S. Belhouideg"],
+    "journal": "Euro-Mediterranean Journal for Environmental Integration",
+    "pages": "1-14",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Single star SCIDAR: Atmospheric parameters profiling using the power spectrum of scintillation",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["Y. Errazzoukia", "A. Habib", "A. Jabiria", "M. Sabil", "Z. Benkhaldoun", "Y. El Azharia", "O. Azagrouzea", "J. Chafia"],
+    "journal": "Astronomy and Computing",
+    "doi": "10.1016/j.ascom.2024.100817",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Optimization approach on volatile composition and sensory properties of Lben",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["S. Tsouli Sarhir", "A.A. Hayaloglu", "R. Belkhou", "A. Bouseta"],
+    "journal": "Journal of Food Composition and Analysis",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Strength and stiffness enhancement of a wind turbine blade using experimental fatigue test",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["O. Rajad", "H. Mounir", "M. Rich", "S. Belhouideg", "C. Haidar", "A. El Kasri"],
+    "journal": "International Journal on Interactive Design and Manufacturing",
+    "pages": "149-158",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Mixture design for new starter formulation for Lben",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["S. Tsouli Sarhir", "A.A. Hayaloglu", "R. Belkhou", "A. Bouseta"],
+    "journal": "International Dairy Journal",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Flow and heat transfer performance in TPMS heat exchangers",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["I. El Khadiri", "M. Abouelmajd", "M. Zemzami", "N. Hmina", "M. Lagache", "S. Belhouideg"],
+    "journal": "International Communications in Heat and Mass Transfer",
+    "pages": "107617",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Relative humidity absorption in clay-kaolin materials reinforced with Alfa fibers",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["R. Bouferra", "A. Bouchehma", "Y. Bahammou", "M. Essaleh", "S. Belhouideg", "A. Lamharrar", "A. Idlimam"],
+    "journal": "International Communications in Heat and Mass Transfer",
+    "pages": "107416",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Lattice Boltzmann analysis of mixed convection in a cavity with elliptical block",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["A. Daiz", "A. Bahlaoui", "I. Arroub", "S. Belhouideg", "A. Raji", "M. Hasnaoui"],
+    "journal": "Computational Thermal Sciences",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Mediterranean fruit fly management strategies: a review",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["A. Hallouti", "M. Ben El Caid", "H. Boubaker"],
+    "journal": "International Journal of Pest Management",
+    "pages": "1-13",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Household food wastes in Morocco: drivers and policy integration",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["A. Zoubi", "A. Hallouti", "M. El Mderssa", "H. Lionboui", "A. Boulli", "Y. Abbas"],
+    "journal": "Euro-Mediterranean Journal for Environmental Integration",
+    "pages": "1-15",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Impact of probiotic Lactiplantibacillus plantarum on fermented orange juice",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["H. Abouloifa", "S. Gaamouche", "N. Ghabbour", "I. Hasnaoui", "S. Moumnassi", "N. Bentouhami", "M. Yahyaoui"],
+    "journal": "Journal of Food Measurement and Characterization",
+    "pages": "7044-7051",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Improving citric acid production using Aspergillus Niger",
+    "type": "ARTICLE",
+    "publicationYear": 2024,
+    "authors": ["R. Bellaouchi", "I. Hasnaoui", "M. Yahyaoui", "N. Bentouhami"],
+    "journal": "Food Science & Nutrition",
+    "pages": "4248-4258",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Enhancing prediction of mechanical properties of 3D-printed parts using machine learning",
+    "type": "CONFERENCE",
+    "publicationYear": 2024,
+    "authors": ["M. Abouelmajd", "H. Reddad", "I. El Khadiri", "I. Ezzaraa"],
+    "conference": "ICDS 2024",
+    "pages": "1-7",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Finite element analysis of TPMS lattice structures",
+    "type": "BOOK_CHAPTER",
+    "publicationYear": 2024,
+    "authors": ["M. Abouelmajd", "I. El Khadiri", "I. Ezzaraa", "M. Zemzami"],
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Evaluation of lactic acid bacteria for Moroccan fermented milk",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["S. Tsouli Sarhir", "A.A. Hayaloglu", "R. Belkhou", "A. Bouseta"],
+    "journal": "International Dairy Journal",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Structural and thermal properties of compacted bentonite material",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["M. Essaleh", "R. Bouferra", "Y. Chihab", "M. Mansori", "A. Bouchehma"],
+    "journal": "Chemistry Africa",
+    "doi": "10.1007/s42250-023-00693-5",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Mixed convective cooling using nanofluids in a vented cavity",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["I. Arroub", "A. Bahlaoui", "S. Belhouideg", "A. Raji", "M. Hasnaoui"],
+    "journal": "Physical Chemistry Research",
+    "pages": "631-642",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Enhancement of photovoltaic performance of amorphous silicon solar cells",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["A. Hmairrou", "E. Chahid", "M. Azza", "R. Abdia", "S. Belhouideg"],
+    "journal": "Biointerface Research in Applied Chemistry",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Solar cell photocurrent comparison using Arduino and machine learning",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["E. Chahid", "E. Eljaoui", "M. Driouch", "S. Belhouideg"],
+    "journal": "International Journal of Computer Engineering and Data Science",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Controlled fermentation of Moroccan Picholine green olives",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["N. Ghabbour", "Y. Rokni", "H. Abouloifa", "R. Bellaouchi", "I. Hasnaoui"],
+    "journal": "Grasas y Aceites",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Antimicrobial activity of lactiplantibacillus strains for food biopreservation",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["I. Hasnaoui", "H. Abouloifa", "Y. Rokni"],
+    "journal": "Journal of Microbiology, Biotechnology and Food Sciences",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Numerical modeling of 3D-printed wood-PLA composites",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["I. Ezzaraa", "N. Ayrilmis", "M. Abouelmajd"],
+    "journal": "Forests",
+    "doi": "10.3390/f14010095",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Wind speed prediction using deep learning models",
+    "type": "ARTICLE",
+    "publicationYear": 2023,
+    "authors": ["I. Tyass", "T. Khalili", "R. Mohamed"],
+    "journal": "International Journal of Renewable Energy Development",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Potent odorants and sensory characteristics of Jben cheese",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["S. Tsouli Sarhir", "A. Amanpour", "A. Bouseta"],
+    "journal": "Flavour and Fragrance Journal",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Micromechanical models for 3D printed wood composites",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["I. Ezzaraa", "N. Ayrilmis", "M. Kuzman"],
+    "journal": "Mechanics of Advanced Materials and Structures",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Mechanical behavior of TPMS structures using additive manufacturing",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["M. Abouelmajd", "I. El Khadiri", "I. Ezzaraa"],
+    "conference": "ICOA 2022",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Islanded microgrids with distributed delay observer design",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["L. Ammeh", "H. El Fadil", "F. Giri", "M. Oulcaid"],
+    "journal": "IFAC-PapersOnLine",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Electrical characterization of bentonite material",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["M. Essaleh", "R. Bouferra", "S. Belhouideg"],
+    "journal": "EUREKA: Physics and Engineering",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Impedance spectroscopy of clay materials",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["M. Essaleh", "R. Bouferra", "M. Mansori"],
+    "journal": "International Journal of Mechanical Engineering",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Electrical conduction mechanisms in ceramic materials",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["M. Essaleh", "S. Amhil", "R. Bouferra"],
+    "journal": "Physics Letters A",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Heat transfer in porous media with nanoparticles",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["S. Mohamed", "K. Gueraoui", "M. Driouich"],
+    "journal": "Journal of Porous Media",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Weeds detection using convolutional neural networks",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["A. Tannouche", "A. Gaga", "M. Boutalline"],
+    "journal": "International Journal of Electrical and Computer Engineering",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Antimicrobial compounds from Lactiplantibacillus plantarum",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["H. Abouloifa", "Y. Rokni", "I. Hasnaoui"],
+    "journal": "Brazilian Journal of Microbiology",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Antifungal activity of lactic acid bacteria in food preservation",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["H. Abouloifa", "I. Hasnaoui", "Y. Rokni"],
+    "journal": "Advances in Applied Microbiology",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Bio-preservation of poultry meat using probiotic strains",
+    "type": "ARTICLE",
+    "publicationYear": 2022,
+    "authors": ["H. Abouloifa", "S. Gaamouche", "Y. Rokni"],
+    "journal": "Current Microbiology",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Fusarium isolates for biological control of Mediterranean fruit fly",
+    "type": "ARTICLE",
+    "publicationYear": 2021,
+    "authors": ["A. Hallouti", "M. Ait Hamza", "A. Zahidi"],
+    "journal": "Entomologia Experimentalis et Applicata",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Evaluation of entomopathogenic fungi for pest control",
+    "type": "ARTICLE",
+    "publicationYear": 2021,
+    "authors": ["A. Hallouti", "H. Benjlil", "A. El Hamdaoui"],
+    "journal": "Sumerianz Journal of Biotechnology",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Aroma compounds analysis in fermented butter (Smen)",
+    "type": "ARTICLE",
+    "publicationYear": 2021,
+    "authors": ["S. Tsouli Sarhir", "A. Amanpour", "A. Bouseta"],
+    "journal": "Journal of Food Composition and Analysis",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Multilevel inverter with battery state of charge adjustment",
+    "type": "ARTICLE",
+    "publicationYear": 2021,
+    "authors": ["M. Rafik", "T. Khalili", "O. Bouamrane"],
+    "journal": "Journal of Theoretical and Applied Information Technology",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Optimizing wind farm layout to minimize wake losses",
+    "type": "ARTICLE",
+    "publicationYear": 2021,
+    "authors": ["A. Bellat", "K. Mansouri", "A. Raihani"],
+    "journal": "Advances in Science, Technology and Engineering Systems",
+    "lab": { "name": "LRSTA" }
+  }
+]
+
+
+Communications:
+[
+  {
+    "title": "Numerical homogenization to investigate the effective elastic properties of 3D-printed wood polymer composites",
+    "type": "CONFERENCE",
+    "publicationYear": 2024,
+    "authors": ["Ismail Ezzaraa", "Mouhcine Bakhaddache", "Mohamed Abouelmajd", "Jamaa Bengourram", "Soufiane Belhouideg"],
+    "conference": "4th International Workshop on Advanced Computation Methods in Multiphysics, ENSEM Casablanca",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Analytical homogenization modeling to investigate the mechanical behavior of clay/alfa short fiber composites",
+    "type": "CONFERENCE",
+    "publicationYear": 2023,
+    "authors": ["Ismail Ezzaraa", "Abdeltif Bouchehma", "Mohamed Abouelmajd", "Mohamed Essaleh", "Yassine Chihab", "Rachid Bouferra", "Ahmed Bahlaoui", "Ismail Arroub", "Jamaa Bengourram", "Soufiane Belhouideg"],
+    "conference": "International Conference on Connected Innovation and Technology X.0, Rabat",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Global MPP tracking under partial shading conditions using LandS algorithm: hardware implementation",
+    "type": "CONFERENCE",
+    "publicationYear": 2023,
+    "authors": ["M. Oulcaid", "E. M. Acim", "N. Hmina", "H. El Fadil", "A. Rachid"],
+    "conference": "International Symposium on Automatic Control and Emerging Technologies",
+    "pages": "348-361",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "PEM fuel cell parameters identification based on Grey Wolf optimization algorithm",
+    "type": "CONFERENCE",
+    "publicationYear": 2023,
+    "authors": ["A. Rachid", "E. Saidi", "I. Mortabit", "N. Errifai", "H. E. Fadil", "M. Oulcaid"],
+    "conference": "International Symposium on Automatic Control and Emerging Technologies",
+    "pages": "155-166",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Nanoparticles shape effect on heat transfer by natural convection of nanofluid in a vertical porous cylindrical enclosure",
+    "type": "CONFERENCE",
+    "publicationYear": 2023,
+    "authors": ["Y. Foukhari", "M. Sammouda", "M. Driouich", "S. Belhouideg"],
+    "conference": "International Conference on Partial Differential Equations and Applications",
+    "pages": "437-445",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Comparative study on elastic properties of 3D printed continuous natural fiber reinforced polymer composites",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["Ismail Ezzaraa", "Nadir Ayrilmis", "Soufiane Belhouideg", "Jamaa Bengourram"],
+    "conference": "Cukurova International Scientific Researches Conference, Turkey",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "TPMS lattice structure derived using topology optimization for additive manufacturing",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["I. El Khadiri", "M. Abouelmajd", "M. Zemzami", "N. Hmina", "M. Lagache", "B. AlMangour", "S. Belhouideg"],
+    "conference": "ICOA 2022 - International Conference on Optimization and Applications",
+    "pages": "1-4",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Topology optimization of 3D beam structures obtained by additive manufacturing",
+    "type": "CONFERENCE",
+    "publicationYear": 2021,
+    "authors": ["I. El Khadiri", "M. Zemzami", "N. Hmina", "M. Lagache", "S. Belhouideg"],
+    "conference": "ICOA 2021 - International Conference on Optimization and Applications",
+    "pages": "1-4",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Artificial intelligence and machine learning applications in material science",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["S. Samine", "M. Zemzami", "N. Hmina", "M. Lagache", "S. Belhouideg"],
+    "conference": "ICOA 2022 - International Conference on Optimization and Applications",
+    "pages": "1-5",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Heat transfer performance in a tilted cavity with nanofluid flow",
+    "type": "CONFERENCE",
+    "publicationYear": 2021,
+    "authors": ["I. Arroub", "A. Bahlaoui", "S. Belhouideg", "A. Raji", "M. Hasnaoui"],
+    "conference": "AIP Conference Proceedings",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Mechanical behavior of TPMS-based structures obtained by additive manufacturing",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["M. Abouelmajd", "I. El Khadiri", "I. Ezzaraa", "M. Zemzami", "M. El Afi", "M. Lagache", "S. Belhouideg"],
+    "conference": "ICOA 2022 - International Conference on Optimization and Applications",
+    "pages": "1-5",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Mechanical properties of 3D printed natural fiber reinforced polymer composites: a short review",
+    "type": "CONFERENCE",
+    "publicationYear": 2021,
+    "authors": ["Ismail Ezzaraa", "Nadir Ayrilmis", "Jamaa Bengourram", "Soufiane Belhouideg"],
+    "conference": "ICASEM 2021 - International Conference on Applied Sciences, Engineering and Mathematics",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Dielectric spectroscopy of n-type Cu5In9Se16 semiconductor compound",
+    "type": "ARTICLE",
+    "publicationYear": 2021,
+    "authors": ["A. Bouchehma", "L. Essaleh", "G. Marín", "M. Essaleh", "S. M. Wasim", "S. Amhil", "S. Belhouideg"],
+    "journal": "Physica B: Condensed Matter",
+    "pages": "413356",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Determination of the geographical origins of olive mill wastewater using FT-MIR spectroscopy",
+    "type": "CONFERENCE",
+    "publicationYear": 2023,
+    "authors": ["F. Sbai El Otmani", "A. El Orche", "M. Mouhsin", "M. Kasbaji", "A. Ait Oumghar", "A. Hirri", "M. Oubenali", "M. Mbarki"],
+    "conference": "JOUMAT 2023 - Journées des Matériaux, FST Béni Mellal",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "title": "Detection and quantification of olive oil adulteration using MIR spectroscopy and chemometrics",
+    "type": "CONFERENCE",
+    "publicationYear": 2022,
+    "authors": ["A. Hirri", "H. Bouchafra", "L. Zarayby", "I. Sbai El Otmani"],
+    "conference": "Workshop Technique de la Métrologie, FST Béni Mellal",
+    "lab": { "name": "LRSTA" }
+  }
+]
+
+
+Thesis:
+[
+  {
+    "author": "Ismail Ezzaraa",
+    "title": "Modélisation micromécanique et numérique des structures biocomposites obtenues par impression 3D",
+    "defenseDate": "2023-10-21",
+    "supervisor": "Pr. Soufiane Belhouideg; Pr. Jamaa Bengourram",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "author": "Abdeltif Bouchehma",
+    "title": "Étude mécanique, thermique, hygroscopique et électrique de l’argile kaolin renforcé par la fibre alfa pour une utilisation dans le domaine du génie civil",
+    "defenseDate": "2023-12-02",
+    "supervisor": "Pr. Soufiane Belhouideg; Pr. Rachid Bouferra",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "author": "Mohamed Abouelmajd",
+    "title": "Développement de structures multifonctionnelles par la technologie d’impression 3D pour la surveillance de la santé structurelle",
+    "defenseDate": "2025-04-26",
+    "supervisor": "Pr. Soufiane Belhouideg; Pr. Ahmed Bahlaoui",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "author": "Mohamed Essaleh",
+    "title": "Étude des propriétés mécaniques, thermiques et électriques des matériaux composites à base de l'argile bentonite pour une utilisation dans le domaine du génie civil",
+    "defenseDate": "2025-04-19",
+    "supervisor": "Pr. Rachid Bouferra; Pr. Soufiane Belhouideg",
+    "lab": { "name": "LRSTA" }
+  },
+  {
+    "author": "Issam El Khadiri",
+    "title": "Optimisation topologique des structures obtenues par fabrication additive",
+    "defenseDate": "2025-07-28",
+    "supervisor": "Pr. Nabil Hmina; Pr. Soufiane Belhouideg",
+    "lab": { "name": "LRSTA" }
+  }
+]
