@@ -55,7 +55,7 @@ export class Productions {
     const routeCode = this.labRouteCode();
     if (labs.length === 0) return null;
 
-    return this.findLabByRouteCode(routeCode, labs) ?? this.findLabByRouteCode('LaRESI', labs) ?? labs[0];
+    return this.findLabByRouteCode(routeCode, labs) ?? labs[0];
   });
 
   protected readonly labCode = computed(() => this.labIdentifier(this.selectedLab()));
@@ -68,8 +68,8 @@ export class Productions {
       this.loading.set(true);
       this.error.set('');
     }),
-    map(([paramsCode, labs]) => this.findLabByRouteCode(paramsCode, labs) ?? this.findLabByRouteCode('LaRESI', labs) ?? null),
-    switchMap((lab) => this.productionsService.findByLabAcronym(lab?.acronym ?? 'LaRESI').pipe(
+    map(([paramsCode, labs]) => this.findLabByRouteCode(paramsCode, labs) ?? labs[0] ?? null),
+    switchMap((lab) => !lab?.acronym ? of<ProductionDTO | null>(null) : this.productionsService.findByLabAcronym(lab.acronym).pipe(
       catchError(() => {
         this.error.set('Impossible de charger les productions.');
         return of<ProductionDTO | null>(null);

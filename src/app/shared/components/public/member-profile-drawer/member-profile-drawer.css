@@ -1,0 +1,114 @@
+:host ::ng-deep .profile-drawer {
+  width: min(420px, 100vw);
+}
+
+.profile-drawer__kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue-color);
+}
+
+.profile {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.profile__head {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.profile__avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid color-mix(in srgb, var(--blue-color) 25%, #fff);
+  flex-shrink: 0;
+}
+
+.profile__head h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #0f172a;
+}
+
+.profile__grade {
+  margin: 0.15rem 0 0.5rem;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.profile__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.profile__badge {
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--blue-color) 10%, #fff);
+  color: var(--blue-color);
+}
+
+.profile__badge--accent {
+  background: color-mix(in srgb, var(--orange-color) 16%, #fff);
+  color: #b45309;
+}
+
+.profile__facts {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.profile__facts dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+.profile__facts dd {
+  margin: 0.15rem 0 0;
+  color: #1e293b;
+}
+
+.profile__section h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.profile__section ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.3rem;
+  color: #334155;
+}
+
+.profile__tag {
+  margin-left: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #b45309;
+}
+
+.profile__link {
+  justify-self: start;
+  color: var(--blue-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.profile__link:hover {
+  text-decoration: underline;
+}

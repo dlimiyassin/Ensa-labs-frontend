@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LabDirectoryService } from '../core/services/lab-directory.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -23,8 +24,9 @@ import { RouterModule } from '@angular/router';
         Plateforme de gestion de la recherche scientifique et de l'innovation universitaire.
       </p>
       <div class="footer-labs">
-        <span class="footer-lab-badge">LRSTA</span>
-        <span class="footer-lab-badge">LaRESI</span>
+        @for (lab of labs(); track lab.acronym) {
+          <span class="footer-lab-badge">{{ lab.acronym }}</span>
+        }
       </div>
     </div>
 
@@ -40,9 +42,10 @@ import { RouterModule } from '@angular/router';
 
 <div class="footer-col">
   <span class="footer-col-title">Laboratoires</span>
-  <a class="footer-link" [routerLink]="['/laboratoires', 'LRSTA']">LRSTA</a>
-  <a class="footer-link" [routerLink]="['/laboratoires', 'LaRESI']">LaRESI</a>
-  <a class="footer-link" [routerLink]="['/production', 'LaRESI']">Productions scientifiques</a>
+  @for (lab of labs(); track lab.acronym) {
+    <a class="footer-link" [routerLink]="['/laboratoires', lab.acronym]">{{ lab.acronym }}</a>
+  }
+  <a class="footer-link" routerLink="/production/publications">Productions scientifiques</a>
 </div>
 
 <div class="footer-col">
@@ -73,5 +76,6 @@ import { RouterModule } from '@angular/router';
   `
 })
 export class AppFooter {
+  protected readonly labs = inject(LabDirectoryService).labs;
   readonly year = new Date().getFullYear();
 }

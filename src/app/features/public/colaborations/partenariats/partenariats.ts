@@ -8,6 +8,7 @@ import { EmptyStateComponent } from '../../../../shared/components/public/empty-
 import { SpinnerComponent } from '../../../../shared/components/public/spinner/spinner';
 import { CollaborationsService } from '../../../../core/services/collaborations.service';
 import { CollaborationDTO } from '../../../../core/models/api.models';
+import { FilesService } from '../../../../core/services/files.service';
 
 type ScopeFilter = 'NATIONAL' | 'INTERNATIONAL';
 
@@ -19,10 +20,10 @@ type ScopeFilter = 'NATIONAL' | 'INTERNATIONAL';
 })
 export class Partenariats {
   private readonly collaborationsService = inject(CollaborationsService);
+  private readonly files = inject(FilesService);
 
   protected readonly loading = signal(true);
   protected readonly error = signal('');
-  protected readonly cardImage = '/images/university.png';
   protected readonly scopeFilters: ScopeFilter[] = ['NATIONAL', 'INTERNATIONAL'];
   protected readonly selectedScope = signal<ScopeFilter>('NATIONAL');
 
@@ -56,6 +57,11 @@ export class Partenariats {
 
   protected setSelectedScope(scope: ScopeFilter): void {
     this.selectedScope.set(scope);
+  }
+
+  /** Uploaded partner logo, or the generic university illustration. */
+  protected cardImage(collaboration: CollaborationDTO): string {
+    return this.files.imageUrl(collaboration.logo) ?? 'images/university.png';
   }
 
   protected trackByCollaboration(index: number, collaboration: CollaborationDTO): string {

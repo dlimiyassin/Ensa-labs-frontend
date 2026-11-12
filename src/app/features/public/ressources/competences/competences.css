@@ -2,23 +2,3 @@
   display: grid;
   gap: 1.4rem;
 }
-
-.resources-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-}
-
-.resources-grid app-list-block {
-  display: block;
-  padding: 1.15rem 1.1rem;
-  border: 1px solid color-mix(in srgb, var(--blue-color) 11%, #fff);
-  border-radius: .9rem;
-  background: #fff;
-  transition: transform 220ms ease, background 220ms ease;
-}
-
-.resources-grid app-list-block:hover {
-  transform: translateY(-2px);
-  background: color-mix(in srgb, var(--blue-color) 3%, #fff);
-}

@@ -1,0 +1,66 @@
+<p-drawer [visible]="visible()" (visibleChange)="visible.set($event)" position="right" [modal]="true"
+          styleClass="profile-drawer" [blockScroll]="true" ariaCloseLabel="Fermer le profil">
+  <ng-template #header>
+    <span class="profile-drawer__kicker">Profil chercheur</span>
+  </ng-template>
+
+  @if (member(); as m) {
+    <div class="profile">
+      <header class="profile__head">
+        <img [src]="avatar()" [alt]="fullName()" class="profile__avatar" />
+        <div>
+          <h2>{{ fullName() }}</h2>
+          @if (grade()) {
+            <p class="profile__grade">{{ grade() }}</p>
+          }
+          <div class="profile__badges">
+            <span class="profile__badge">{{ association() }}</span>
+            @if (roleInLab()) {
+              <span class="profile__badge profile__badge--accent">{{ roleInLab() }}</span>
+            }
+            @if (m.labAcronym) {
+              <span class="profile__badge">{{ m.labAcronym }}</span>
+            }
+          </div>
+        </div>
+      </header>
+
+      <dl class="profile__facts">
+        @if (m.speciality) {
+          <div><dt>Spécialité</dt><dd>{{ m.speciality }}</dd></div>
+        }
+        @if (m.establishment) {
+          <div><dt>Établissement</dt><dd>{{ m.establishment }}</dd></div>
+        }
+      </dl>
+
+      @if (teams().length > 0) {
+        <section class="profile__section">
+          <h3>Équipes</h3>
+          <ul>
+            @for (team of teams(); track team.name) {
+              <li>{{ team.name }} @if (team.leader) { <span class="profile__tag">Responsable</span> }</li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (phdStudents().length > 0) {
+        <section class="profile__section">
+          <h3>Doctorants encadrés</h3>
+          <ul>
+            @for (student of phdStudents(); track student) {
+              <li>{{ student }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (m.labAcronym) {
+        <a class="profile__link" [routerLink]="['/production', m.labAcronym]" (click)="visible.set(false)">
+          Voir les publications du laboratoire <i class="pi pi-arrow-right"></i>
+        </a>
+      }
+    </div>
+  }
+</p-drawer>

@@ -9,7 +9,7 @@
       [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Structures de recherche</div>
-      <h2><a [routerLink]="['/laboratoires', labs()[0]?.name || 'LaRESI']">Nos laboratoires <span>→</span></a></h2>
+      <h2><a [routerLink]="['/laboratoires', labs()[0]?.name ?? '']">Nos laboratoires <span>→</span></a></h2>
       <p>Deux structures complémentaires pour porter la recherche académique, technologique et partenariale.</p>
     </div>
 
@@ -83,9 +83,9 @@
       [appViewportAnimateDuration]="700"
     >
       <div class="section-label">Thématiques prioritaires</div>
-      <h2><a [routerLink]="['/laboratoires', researchAxes()[0]?.labAcronym || 'LaRESI']" fragment="axes">Principaux domaines de recherche <span>→</span></a></h2>
+      <h2><a [routerLink]="['/laboratoires', researchAxes()[0]?.labAcronym ?? '']" fragment="axes">Principaux domaines de recherche <span>→</span></a></h2>
       <p>Des priorités scientifiques structurées autour de thématiques transversales et à fort impact.</p>
-      <app-section-link [to]="'/laboratoires/' + (researchAxes()[0]?.labAcronym || 'LaRESI')" fragment="axes" label="Voir plus" />
+      <app-section-link [to]="'/laboratoires/' + (researchAxes()[0]?.labAcronym ?? '')" fragment="axes" label="Voir plus" />
     </div>
     <div
       class="axes-grid"

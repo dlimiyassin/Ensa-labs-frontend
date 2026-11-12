@@ -120,7 +120,7 @@ export class Presentation implements AfterViewInit, OnDestroy {
 
   protected readonly researchAxes = computed<readonly ResearchAxisModel[]>(() => {
     const flattened = this.labsData()
-      .flatMap((lab) => (lab.axesRecherche ?? []).map((axis) => ({ axis, labAcronym: lab.acronym ?? 'LaRESI' })))
+      .flatMap((lab) => (lab.axesRecherche ?? []).map((axis) => ({ axis, labAcronym: lab.acronym ?? '' })))
       .filter(({ axis }) => !!axis.title)
       .slice(0, 4);
 

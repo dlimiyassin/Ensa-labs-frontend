@@ -1,5 +1,8 @@
-<article class="member-card">
-  <img [src]="avatar()" [alt]="name()" class="member-card__avatar" />
+<article class="member-card" [class.is-interactive]="interactive()"
+         [attr.role]="interactive() ? 'button' : null" [attr.tabindex]="interactive() ? 0 : null"
+         [attr.aria-label]="interactive() ? 'Voir le profil de ' + name() : null"
+         (click)="onActivate()" (keydown.enter)="onActivate()" (keydown.space)="$event.preventDefault(); onActivate()">
+  <img [src]="avatar()" [alt]="name()" class="member-card__avatar" loading="lazy" />
   <div class="member-card__body">
     <div class="member-card__header">
       <h4>{{ name() }}</h4>

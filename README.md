@@ -1,59 +1,65 @@
-# EnsaLabs
+# ENSA Labs — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+Angular 21 application of the ENSA Béni Mellal research platform:
 
-## Development server
+- **Public website**: home, lab pages (direction, members with profile drawer, teams, axes and
+  themes, accreditation), scientific production, partnerships, equipment and competences.
+- **Management dashboard** (`/private`): labs, teams, members, publications, theses,
+  collaborations, resources, research themes, users and the personal account, with menus and
+  actions filtered by role.
 
-To start a local development server, run:
+The Spring Boot API lives in the `backend` repository and must be running.
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Run
 
 ```bash
-ng generate component component-name
+npm install
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Open `http://localhost:4200`. The dashboard login page is `http://localhost:4200/private-backdoor-7`
+(see the backend README for the seeded accounts).
+
+## Configuration
+
+The API address comes from the Angular environment files:
+
+- `src/environments/environment.development.ts` — used by `ng serve` (`http://localhost:8080`)
+- `src/environments/environment.ts` — used by `ng build`; set `apiBaseUrl` to the deployed backend
+
+The backend must allow the frontend origin (`CORS_ALLOWED_ORIGINS`).
+
+## Authentication
+
+- Tokens are stored in `localStorage`; `AuthService` checks their expiry and loads the account
+  (`/api/account/me`) with its roles and lab / team scope.
+- `authInterceptor` adds the token **only** to write requests and private reads
+  (`/api/account`, `/api/users`, `/api/roles`), refreshes an expired token, and retries once after a 401.
+- `authGuard` protects `/private`; `roleGuard` reads `data.roles` on each dashboard route.
+  The backend remains the source of truth for permissions.
+
+## Structure
+
+```
+src/app/
+  core/            auth (service, interceptor, guards), API models, services
+  features/public/ public website pages
+  features/private/
+    layout/        dashboard shell and role-based navigation
+    shared/        list-page base class, page header, image upload, labels, lab scope
+    <entity>/      one page per managed resource
+  shared/          reusable public components (cards, catalog, profile drawer...)
+```
+
+Dashboard styles are global in `src/assets/styles/private/dashboard.css` (PrimeNG overlays and the
+component style budget make component CSS impractical there).
+
+## Build and test
 
 ```bash
-ng generate --help
+npm run build
 ```
-
-## Building
-
-To build the project run:
 
 ```bash
-ng build
+npx ng test --watch=false
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

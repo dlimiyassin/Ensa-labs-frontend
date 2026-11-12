@@ -1,4 +1,5 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, combineLatest, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
@@ -12,6 +13,8 @@ import { TabsComponent, TabItem } from '../../../../shared/components/public/tab
 import { FadeContainerComponent } from '../../../../shared/components/public/fade-container/fade-container';
 import { EnhancedMemberCardComponent } from '../../../../shared/components/public/enhanced-member-card/enhanced-member-card';
 import { SpinnerComponent } from '../../../../shared/components/public/spinner/spinner';
+import { MemberProfileDrawerComponent } from '../../../../shared/components/public/member-profile-drawer/member-profile-drawer';
+import { FilesService } from '../../../../core/services/files.service';
 
 type LabTab = 'direction' | 'members' | 'equipes' | 'axes';
 
@@ -20,6 +23,9 @@ interface MemberCardModel {
   grade: string;
   speciality: string;
   role: string;
+  avatar: string;
+  /** Source member, used to open the profile drawer. */
+  member: MemberDTO | null;
 }
 
 interface TeamModel {
@@ -39,7 +45,9 @@ interface TeamModel {
     TabsComponent,
     FadeContainerComponent,
     EnhancedMemberCardComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    MemberProfileDrawerComponent,
+    DatePipe
   ],
   templateUrl: './lab-presentation.html',
   styleUrl: './lab-presentation.css'
@@ -49,11 +57,14 @@ export class LabPresentation {
 
   private readonly route = inject(ActivatedRoute);
   private readonly labsService = inject(LabsService);
+  private readonly files = inject(FilesService);
 
   protected readonly loading = signal(true);
   protected readonly error = signal('');
   protected readonly activeTab = signal<LabTab>('direction');
   protected readonly selectedTeamName = signal('');
+  protected readonly profileMember = signal<MemberDTO | null>(null);
+  protected readonly profileVisible = signal(false);
 
   protected readonly tabs: readonly TabItem[] = [
     { id: 'direction', label: 'Direction' },
@@ -73,8 +84,8 @@ export class LabPresentation {
         this.loading.set(true);
         this.error.set('');
       }),
-      map(([routeCode, labs]) => this.findLabByRouteCode(routeCode, labs) ?? this.findLabByRouteCode('LaRESI', labs) ?? null),
-      switchMap((lab) => this.labsService.findByAcronym(lab?.acronym ?? 'LaRESI').pipe(
+      map(([routeCode, labs]) => this.findLabByRouteCode(routeCode, labs)),
+      switchMap((lab) => !lab?.acronym ? of<LabDTO | null>(null) : this.labsService.findByAcronym(lab.acronym).pipe(
         catchError(() => {
           this.error.set('Impossible de charger les informations du laboratoire.');
           return of<LabDTO | null>(null);
@@ -88,7 +99,7 @@ export class LabPresentation {
     { initialValue: null }
   );
 
-  protected readonly selectedLabCode = computed(() => this.labIdentifier(this.lab()) || 'LaRESI');
+  protected readonly selectedLabCode = computed(() => this.labIdentifier(this.lab()));
   protected readonly heroTitle = computed(() => this.lab()?.titleFr || this.lab()?.acronym || this.selectedLabCode());
   protected readonly heroImage = computed(() => this.resolveLabImage(this.lab()?.acronym));
 
@@ -127,25 +138,35 @@ export class LabPresentation {
   protected readonly hasThemes = computed(() => this.thematiques().length > 0 || this.groupedThemesFromTeams().length > 0);
 
   protected readonly committee = computed(() => {
-    const grouped = new Map<string, Set<string>>();
+    const grouped = new Map<string, { roles: Set<string>; seat: ComiteGestionMembreDTO }>();
 
-    for (const member of this.lab()?.comiteGestion ?? []) {
-      const card = this.toCommitteeCard(member);
+    for (const seat of this.lab()?.comiteGestion ?? []) {
+      const card = this.toCommitteeCard(seat);
       if (!card.name) continue;
 
       if (!grouped.has(card.name)) {
-        grouped.set(card.name, new Set<string>());
+        grouped.set(card.name, { roles: new Set<string>(), seat });
       }
 
       if (card.role) {
-        grouped.get(card.name)?.add(card.role);
+        grouped.get(card.name)?.roles.add(card.role);
       }
     }
 
-    return Array.from(grouped.entries()).map(([name, roles]) => ({
+    return Array.from(grouped.entries()).map(([name, { roles, seat }]) => ({
       name,
-      roles: Array.from(roles).join(', ')
+      roles: Array.from(roles).join(', '),
+      avatar: this.avatarOf(seat.image),
+      member: this.findLabMember(seat.memberId)
     }));
+  });
+
+  /** Accreditation period of the lab, e.g. "2023 – 2027". */
+  protected readonly accreditation = computed(() => {
+    const start = this.lab()?.accreditationStart;
+    const end = this.lab()?.accreditationEnd;
+    if (!start && !end) return null;
+    return { start: start ?? null, end: end ?? null, active: !end || new Date(end) >= new Date() };
   });
 
   protected readonly direction = computed(() => {
@@ -160,6 +181,12 @@ export class LabPresentation {
     const entity = this.lab();
     return Boolean(entity?.titleFr || entity?.acronym || entity?.university || entity?.program);
   });
+
+  protected openProfile(member: MemberDTO | null): void {
+    if (!member) return;
+    this.profileMember.set(member);
+    this.profileVisible.set(true);
+  }
 
   protected selectTab(tabId: string): void {
     this.activeTab.set(tabId as LabTab);
@@ -209,12 +236,15 @@ export class LabPresentation {
       .filter((member) => !!member.name);
   }
 
-  protected toMemberCard(member: MemberDTO | undefined, role = ''): MemberCardModel {
+  protected toMemberCard(member: MemberDTO | null | undefined, role = ''): MemberCardModel {
+    const full = this.findLabMember(member?.id) ?? member ?? null;
     return {
-      name: `${member?.firstName ?? ''} ${member?.lastName ?? ''}`.trim(),
-      grade: (member?.grade ?? '').trim(),
-      speciality: (member?.speciality ?? '').trim(),
-      role
+      name: `${full?.firstName ?? ''} ${full?.lastName ?? ''}`.trim(),
+      grade: (full?.grade ?? '').trim(),
+      speciality: (full?.speciality ?? '').trim(),
+      role,
+      avatar: this.avatarOf(full?.image),
+      member: full
     };
   }
 
@@ -225,13 +255,16 @@ export class LabPresentation {
     };
   }
 
-  protected toDirectionCard(member: MemberDTO | undefined, role: string): MemberCardModel {
-    return {
-      name: `${member?.firstName ?? ''} ${member?.lastName ?? ''}`.trim(),
-      grade: (member?.grade ?? '').trim(),
-      speciality: (member?.speciality ?? '').trim(),
-      role
-    };
+  protected toDirectionCard(member: MemberDTO | null | undefined, role: string): MemberCardModel {
+    return this.toMemberCard(member, role);
+  }
+
+  private avatarOf(image: string | null | undefined): string {
+    return this.files.imageUrl(image) ?? this.memberAvatar;
+  }
+
+  private findLabMember(id: string | null | undefined): MemberDTO | null {
+    return id ? (this.lab()?.members ?? []).find((member) => member.id === id) ?? null : null;
   }
 
   private resolveLabImage(acronym?: string): string {
@@ -274,7 +307,7 @@ export class LabPresentation {
   }
 
   private readThemesFromLab(entity: LabDTO | null): string[] {
-    const raw = entity?.domainesRecherche ?? [];
+    const raw = entity?.thematiquesRecherche ?? [];
     return raw
       .map((item) => (item.name ?? '').trim())
       .filter(Boolean);

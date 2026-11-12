@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AnimateDirective } from '../shared/animations/animate.directive';
 import { LayoutViewportService } from './service/layout-viewport.service';
+import { LabDirectoryService } from '../core/services/lab-directory.service';
 
 @Component({
   selector: 'app-navbar',
@@ -30,7 +31,7 @@ import { LayoutViewportService } from './service/layout-viewport.service';
       </a>
 
       <div class="nav-menu" [class.open]="isMobileOpen">
-        @for (item of navItems; track item.title) {
+        @for (item of navItems(); track item.title) {
           <div class="nav-item">
             <div
               class="nav-link"
@@ -89,12 +90,17 @@ export class AppNavbar {
 
   private readonly router = inject(Router);
   private readonly layoutViewport = inject(LayoutViewportService);
+  private readonly labDirectory = inject(LabDirectoryService);
 
   protected readonly isHeroMergedRoute = this.layoutViewport.isHeroMergedRoute;
   protected readonly isNavbarTransparent = this.layoutViewport.isNavbarTransparent;
   protected readonly isNavbarSolid = this.layoutViewport.isNavbarSolid;
 
   isItemActive(item: NavItem): boolean {
+    if (item.activePrefix && this.router.url.startsWith(item.activePrefix)) {
+      return true;
+    }
+
     const routes = item.sections.flatMap((section) => [
       ...(section.links ?? []),
       ...(section.subLinks ?? [])
@@ -116,36 +122,31 @@ export class AppNavbar {
     this.isMobileOpen = !this.isMobileOpen;
   }
 
-  navItems: NavItem[] = [
+  /** Lab entries come from the backend, so a new lab appears without code changes. */
+  protected readonly navItems = computed<NavItem[]>(() => [
     {
       title: 'LABORATOIRES',
-      sections: [
-        {
-          label: 'LRSTA',
-          subLabel: 'Technologies Avancées',
-          subLinks: [
-            { label: 'LRSTA', route: '/laboratoires/LRSTA' }
-          ]
-        },
-        {
-          label: 'LaRESI',
-          subLabel: 'Ingénierie et Innovation',
-          subLinks: [
-            { label: 'LaRESI', route: '/laboratoires/LaRESI' }
-          ]
-        }
-      ]
+      activePrefix: '/laboratoires',
+      sections: this.labDirectory.labs().map((lab) => ({
+        label: lab.acronym,
+        subLabel: lab.title,
+        subLinks: [{ label: lab.acronym, route: `/laboratoires/${lab.acronym}` }]
+      }))
     },
+    ...this.staticNavItems
+  ]);
 
+  private readonly staticNavItems: NavItem[] = [
     {
       title: 'PRODUCTION',
+      activePrefix: '/production',
       sections: [
         {
           label: 'Scientifique',
           links: [
-            { label: 'Publications', route: '/production/LaRESI' },
-            { label: 'Communications', route: '/production/LaRESI', fragment: 'communications' },
-            { label: 'Thèses', route: '/production/LaRESI', fragment: 'theses' }
+            { label: 'Publications', route: '/production/publications' },
+            { label: 'Communications', route: '/production/communications' },
+            { label: 'Thèses', route: '/production/theses' }
           ]
         }
       ]
@@ -182,6 +183,8 @@ export class AppNavbar {
 
 interface NavItem {
   title: string;
+  /** Highlights the entry for every URL starting with this prefix. */
+  activePrefix?: string;
   route?: string;
   sections: NavSection[];
 }

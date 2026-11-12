@@ -1,24 +1,44 @@
 <section class="signin-page">
-  <form class="signin-card" [formGroup]="signinForm" (ngSubmit)="submit()">
-    <h1>Admin Sign In</h1>
-    <p>Use your account credentials to access the private dashboard.</p>
+  <form class="signin-card" [formGroup]="signinForm" (ngSubmit)="submit()" novalidate>
+    <a routerLink="/" class="signin-card__logo" aria-label="Retour au site">
+      <img src="images/logo.png" alt="ENSA Labs" />
+    </a>
+
+    <div>
+      <h1>Espace de gestion</h1>
+      <p>Connectez-vous pour gérer les laboratoires, équipes et productions scientifiques.</p>
+    </div>
 
     <label>
-      Username
+      Nom d'utilisateur
       <input type="text" formControlName="username" autocomplete="username" />
+      @if (signinForm.controls.username.touched && signinForm.controls.username.invalid) {
+        <small class="field-error">Le nom d'utilisateur est obligatoire.</small>
+      }
     </label>
 
     <label>
-      Password
-      <input type="password" formControlName="password" autocomplete="current-password" />
+      Mot de passe
+      <span class="password-field">
+        <input [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="current-password" />
+        <button type="button" class="password-toggle" (click)="togglePassword()"
+                [attr.aria-label]="showPassword() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+          <i class="pi" [class.pi-eye]="!showPassword()" [class.pi-eye-slash]="showPassword()"></i>
+        </button>
+      </span>
+      @if (signinForm.controls.password.touched && signinForm.controls.password.invalid) {
+        <small class="field-error">Le mot de passe est obligatoire (4 caractères minimum).</small>
+      }
     </label>
 
     @if (errorMessage()) {
-      <p class="error">{{ errorMessage() }}</p>
+      <p class="error" role="alert">{{ errorMessage() }}</p>
     }
 
-    <button type="submit" [disabled]="isSubmitting()">
-      {{ isSubmitting() ? 'Signing in...' : 'Sign in' }}
+    <button type="submit" class="signin-submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Connexion...' : 'Se connecter' }}
     </button>
+
+    <a routerLink="/" class="signin-back"><i class="pi pi-arrow-left"></i> Retour au site public</a>
   </form>
 </section>

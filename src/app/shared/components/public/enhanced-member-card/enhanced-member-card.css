@@ -84,3 +84,12 @@
   font-size: 0.82rem;
   line-height: 1.4;
 }
+
+.member-card.is-interactive {
+  cursor: pointer;
+}
+
+.member-card.is-interactive:focus-visible {
+  outline: 2px solid var(--blue-color);
+  outline-offset: 2px;
+}

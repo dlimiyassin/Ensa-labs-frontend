@@ -27,6 +27,20 @@
               <span>. Le programme {{ lab()?.program }} structure ses activités de recherche et de transfert.</span>
             }
           </p>
+          @if (accreditation(); as acc) {
+            <p class="lab-accreditation" [class.is-expired]="!acc.active">
+              <i class="pi pi-verified"></i>
+              <span>Accréditation :
+                {{ acc.start ? (acc.start | date: 'MMMM yyyy') : '…' }} – {{ acc.end ? (acc.end | date: 'MMMM yyyy') : '…' }}</span>
+              @if (!acc.active) { <span class="lab-accreditation__state">(expirée)</span> }
+            </p>
+          }
+          @if (lab()?.email || lab()?.phone) {
+            <p class="lab-contact">
+              @if (lab()?.email) { <a [href]="'mailto:' + lab()?.email"><i class="pi pi-envelope"></i> {{ lab()?.email }}</a> }
+              @if (lab()?.phone) { <span><i class="pi pi-phone"></i> {{ lab()?.phone }}</span> }
+            </p>
+          }
         </section>
       }
 
@@ -43,7 +57,9 @@
                   [grade]="director.grade"
                   [speciality]="director.speciality"
                   [role]="director.role"
-                  [avatar]="memberAvatar"
+                  [avatar]="director.avatar"
+                  [interactive]="!!director.member"
+                  (open)="openProfile(director.member)"
                 />
               }
             </div>
@@ -55,7 +71,9 @@
                   <app-enhanced-member-card
                     [name]="member.name"
                     [role]="member.roles"
-                    [avatar]="memberAvatar"
+                    [avatar]="member.avatar"
+                  [interactive]="!!member.member"
+                  (open)="openProfile(member.member)"
                   />
                 }
               </div>
@@ -76,7 +94,9 @@
                     [name]="member.name"
                     [grade]="member.grade"
                     [speciality]="member.speciality"
-                    [avatar]="memberAvatar"
+                    [avatar]="member.avatar"
+                  [interactive]="!!member.member"
+                  (open)="openProfile(member.member)"
                   />
                 }
               </div>
@@ -90,7 +110,9 @@
                     [name]="member.name"
                     [grade]="member.grade"
                     [speciality]="member.speciality"
-                    [avatar]="memberAvatar"
+                    [avatar]="member.avatar"
+                  [interactive]="!!member.member"
+                  (open)="openProfile(member.member)"
                   />
                 }
               </div>
@@ -129,7 +151,9 @@
                           [grade]="team.responsable.grade"
                           [speciality]="team.responsable.speciality"
                           [role]="team.responsable.role"
-                          [avatar]="memberAvatar"
+                          [avatar]="team.responsable.avatar"
+                  [interactive]="!!team.responsable.member"
+                  (open)="openProfile(team.responsable.member)"
                         />
                       </div>
                     }
@@ -142,7 +166,9 @@
                             [grade]="member.grade"
                             [speciality]="member.speciality"
                             [role]="member.role"
-                            [avatar]="memberAvatar"
+                            [avatar]="member.avatar"
+                  [interactive]="!!member.member"
+                  (open)="openProfile(member.member)"
                           />
                         }
                       </div>
@@ -207,4 +233,7 @@
       }
     }
   </div>
+
+  <app-member-profile-drawer [member]="profileMember()" [equipes]="lab()?.equipes ?? []"
+                             [visible]="profileVisible()" (visibleChange)="profileVisible.set($event)" />
 </section>

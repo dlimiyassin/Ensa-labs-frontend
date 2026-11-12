@@ -8,6 +8,7 @@ import { EmptyStateComponent } from '../../../../shared/components/public/empty-
 import { SpinnerComponent } from '../../../../shared/components/public/spinner/spinner';
 import { CollaborationsService } from '../../../../core/services/collaborations.service';
 import { CollaborationDTO } from '../../../../core/models/api.models';
+import { FilesService } from '../../../../core/services/files.service';
 
 interface CollaborationSection {
   title: string;
@@ -22,10 +23,10 @@ interface CollaborationSection {
 })
 export class PartenariatsIndustriels {
   private readonly collaborationsService = inject(CollaborationsService);
+  private readonly files = inject(FilesService);
 
   protected readonly loading = signal(true);
   protected readonly error = signal('');
-  protected readonly cardImage = '/images/colabs/building.png';
   protected readonly selectedLabBySection = signal<Record<string, string>>({});
 
   private readonly collaborations = toSignal(this.collaborationsService.findAllIndustrial().pipe(
@@ -79,6 +80,11 @@ export class PartenariatsIndustriels {
 
     const selected = this.selectedLab(section.title) ?? labs[0];
     return section.items.filter((item) => String(item.labAcronym ?? '').trim() === selected);
+  }
+
+  /** Uploaded partner logo, or one of the generic industrial illustrations. */
+  protected cardImage(collaboration: CollaborationDTO, index: number): string {
+    return this.files.imageUrl(collaboration.logo) ?? `images/colabs/industrial/${(index % 3) + 1}.png`;
   }
 
   protected trackByCollaboration(index: number, collaboration: CollaborationDTO): string {

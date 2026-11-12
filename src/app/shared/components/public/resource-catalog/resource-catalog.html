@@ -1,0 +1,43 @@
+<div class="catalog-toolbar">
+  <nav class="catalog-filters" aria-label="Filtrer par laboratoire">
+    <button type="button" class="catalog-filter" [class.is-active]="!selectedLab()" (click)="selectedLab.set(null)">Tous</button>
+    @for (lab of labs(); track lab) {
+      <button type="button" class="catalog-filter" [class.is-active]="selectedLab() === lab" (click)="selectedLab.set(lab)">{{ lab }}</button>
+    }
+  </nav>
+  <label class="catalog-search">
+    <i class="pi pi-search" aria-hidden="true"></i>
+    <input type="search" placeholder="Rechercher..." [value]="search()" (input)="onSearch($event)" aria-label="Rechercher" />
+  </label>
+</div>
+
+<p class="catalog-count">{{ total() }} {{ itemNoun() }}</p>
+
+@if (visibleGroups().length === 0) {
+  <p class="catalog-empty">Aucun résultat pour ces critères.</p>
+} @else {
+  <div class="catalog-grid">
+    @for (group of visibleGroups(); track group.key) {
+      <section class="catalog-card">
+        <header class="catalog-card__head">
+          <span class="catalog-card__icon"><i [class]="group.icon"></i></span>
+          <div>
+            <h3>{{ group.title }}</h3>
+            <p>{{ group.description }}</p>
+          </div>
+          <span class="catalog-card__count">{{ group.items.length }}</span>
+        </header>
+        <ul class="catalog-card__list">
+          @for (item of group.items; track $index) {
+            <li>
+              <span>{{ item.label }}</span>
+              @if (item.lab && !selectedLab()) {
+                <span class="catalog-card__lab">{{ item.lab }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </div>
+}

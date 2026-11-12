@@ -21,12 +21,8 @@ export const PUBLIC_ROUTES: Routes = [
     ]
   },
 
-  // Production (entrypoint publications)
-  {
-    path: 'production/publications',
-    redirectTo: 'production/LaRESI',
-    pathMatch: 'full'
-  },
+  // Production: /production/publications|communications|theses open that tab of the first lab
+  { path: 'production', redirectTo: 'production/publications', pathMatch: 'full' },
 
   // Production (global)
   {

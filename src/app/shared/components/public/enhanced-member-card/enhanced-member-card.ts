@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-enhanced-member-card',
@@ -12,9 +12,19 @@ export class EnhancedMemberCardComponent {
   readonly speciality = input('');
   readonly role = input('');
   readonly avatar = input('images/members/member.png');
+  /** When true the card is a button that emits {@link open} (e.g. to show the profile). */
+  readonly interactive = input(false);
 
-protected hasLeadershipRole(): boolean {
-  const normalizedRole = this.role().trim().toLowerCase();
-  return normalizedRole === 'directeur' || normalizedRole === 'directeur adjoint' || normalizedRole === 'responsable';
-}
+  readonly open = output<void>();
+
+  protected hasLeadershipRole(): boolean {
+    const normalizedRole = this.role().trim().toLowerCase();
+    return normalizedRole === 'directeur' || normalizedRole === 'directeur adjoint' || normalizedRole === 'responsable';
+  }
+
+  protected onActivate(): void {
+    if (this.interactive()) {
+      this.open.emit();
+    }
+  }
 }

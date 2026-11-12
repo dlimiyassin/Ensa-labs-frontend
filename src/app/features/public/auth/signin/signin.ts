@@ -1,12 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-signin',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './signin.html',
   styleUrl: './signin.css'
 })
@@ -14,9 +15,11 @@ export class Signin {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal<string | null>(null);
+  readonly showPassword = signal(false);
 
   readonly signinForm = this.formBuilder.nonNullable.group({
     username: ['', [Validators.required]],
@@ -37,11 +40,19 @@ export class Signin {
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
         next: () => {
-          void this.router.navigate(['/private']);
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+          void this.router.navigateByUrl(returnUrl?.startsWith('/private') ? returnUrl : '/private');
         },
-        error: () => {
-          this.errorMessage.set('Unable to sign in. Please check your credentials and try again.');
+        error: (error: unknown) => {
+          const status = error instanceof HttpErrorResponse ? error.status : -1;
+          this.errorMessage.set(status === 0
+            ? 'Serveur injoignable. Vérifiez que le backend est démarré.'
+            : 'Identifiants incorrects ou compte désactivé.');
         }
       });
+  }
+
+  togglePassword(): void {
+    this.showPassword.update((value) => !value);
   }
 }

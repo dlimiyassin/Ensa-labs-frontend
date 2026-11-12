@@ -13,22 +13,9 @@
     } @else if (error()) {
       <p class="internal-page__lead">{{ error() }}</p>
     } @else if (!hasData()) {
-      <app-empty-state message="Aucune compétence n'a été remontée par le backend." />
+      <app-empty-state message="Aucune compétence n'est encore référencée." />
     } @else {
-      <div class="resources-grid">
-        @if (byType().SCIENTIFIC.length > 0) {
-          <app-list-block title="compétences scientifiques et méthodologiques." [items]="byType().SCIENTIFIC" />
-        }
-        @if (byType().TECHNOLOGICAL.length > 0) {
-          <app-list-block title="savoir-faire technologique-" [items]="byType().TECHNOLOGICAL" />
-        }
-        @if (byType().SECTORIAL.length > 0) {
-          <app-list-block title="compétences sectorielles" [items]="byType().SECTORIAL" />
-        }
-        @if (byType().INNOVATION.length > 0) {
-          <app-list-block title="Capacité d’innovation et de transfert" [items]="byType().INNOVATION" />
-        }
-      </div>
+      <app-resource-catalog [groups]="groups()" itemNoun="compétences" />
     }
   </div>
 </section>

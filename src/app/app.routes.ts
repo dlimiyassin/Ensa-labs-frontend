@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
 import { LayoutPage } from './layout/layout-page';
 import { Signin } from './features/public/auth/signin/signin';
-import { authGuard } from './core/auth/auth.guard';
+import { authGuard, guestGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
 
   // HIDDEN LOGIN
   {
     path: 'private-backdoor-7',
-    component: Signin
+    component: Signin,
+    canActivate: [guestGuard],
+    title: 'Connexion | ENSA Labs'
   },
 
   // PUBLIC WEBSITE

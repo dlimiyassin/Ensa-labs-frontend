@@ -31,7 +31,7 @@
       <div class="partner-grid">
         @for (collaboration of visibleCollaborations(); track trackByCollaboration($index, collaboration)) {
           <article class="partner-card">
-            <img class="partner-card__image" [src]="cardImage" [alt]="collaboration.organization || 'Organisation partenaire'" />
+            <img class="partner-card__image" [src]="cardImage(collaboration)" loading="lazy" [alt]="collaboration.organization || 'Organisation partenaire'" />
             <div class="partner-card__head">
               <h4>{{ collaboration.organization || 'Organisation non précisée' }}</h4>
               <p class="partner-card__establishment">{{ collaboration.establishment || 'Établissement non précisé' }}</p>

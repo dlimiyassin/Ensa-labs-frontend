@@ -106,3 +106,28 @@
   border-left-color: var(--blue-color);
   background: color-mix(in srgb, var(--orange-color) 4%, #fff);
 }
+
+.lab-accreditation,
+.lab-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin: 0.75rem 0 0;
+  color: var(--text-color);
+  font-size: 0.92rem;
+}
+
+.lab-accreditation i {
+  color: var(--blue-color);
+}
+
+.lab-accreditation.is-expired i,
+.lab-accreditation__state {
+  color: #b45309;
+}
+
+.lab-contact a {
+  color: var(--blue-color);
+  text-decoration: none;
+}
