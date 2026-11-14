@@ -1,14 +1,37 @@
-- accreditatin dates
-- prof profile as drawer
-- refcator desgin of ressources/competences-equipements
-- fix colaboration images
-
-- remove token injection when not needed
+- change the images in the website first page by real pictures of the lab
+- in labs dropdown correct "Laboratoire de Recherche en Sciences de l'Ingénieur et Innovation (LaRSII)"
+- remove that animation of the dropdown menus keept it simple and fade in quickly
+- when switch amoung "Publications, Communications, Thèses" no need to go up after clickng publication
 
 
-LaRESI:
-Publications :
+
+
+
+
+
+
 [
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    "lab": { "name": "LaRESI" },
+    "title": "A review on the 3E performance of solar energy systems"
+  },
   {
     "title": "Building-integrated passive and renewable solar technologies: A review from 3E perspectives",
     "type": "ARTICLE",
