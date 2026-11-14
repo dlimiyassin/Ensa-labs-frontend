@@ -4,7 +4,15 @@
 - when switch amoung "Publications, Communications, Thèses" no need to go up after clickng publication
 
 
-
+Status on each record: a publication or communication a Chercheur creates is saved as « En attente ».
+Validation: the team leader or lab director sees a list of pending items and approves or rejects them, with a comment.
+Public site: only validated items appear there.
+Directors and team leaders: what they create is validated directly.
+Editing after validation: if a researcher edits a validated item, it goes back to « En attente ».
+Helpers worth adding:
+a duplicate warning based on the DOI or the same title and year;
+a required DOI or link for journal articles;
+keeping track of who validated each item.
 
 
 
