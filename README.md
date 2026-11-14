@@ -35,8 +35,20 @@ The backend must allow the frontend origin (`CORS_ALLOWED_ORIGINS`).
   (`/api/account/me`) with its roles and lab / team scope.
 - `authInterceptor` adds the token **only** to write requests and private reads
   (`/api/account`, `/api/users`, `/api/roles`), refreshes an expired token, and retries once after a 401.
-- `authGuard` protects `/private`; `roleGuard` reads `data.roles` on each dashboard route.
-  The backend remains the source of truth for permissions.
+- `authGuard` protects `/private` and every child route (a visitor goes to the login page with a
+  `returnUrl`); `roleGuard` reads `data.roles` on each dashboard route.
+- `guestGuard` protects the login page and the whole public website: a signed-in user who types a
+  public URL is sent back to the dashboard. The sidebar action « Se déconnecter et visiter le site »
+  (`AuthService.logoutAndVisitPublicSite`) is the only way from the dashboard to the public site.
+- The backend remains the source of truth for permissions.
+
+## Dashboard layout
+
+Every routed dashboard page follows the same template, defined once in `dashboard.css`
+(`.admin-content > router-outlet + *`): a vertical stack of `<app-admin-page-header>` (title,
+description, tools) followed by `.admin-panel` blocks. Spacing comes from the `--admin-*` variables
+on `.admin-shell` (gutter, page gap, block gap, panel padding), which shrink on tablet and mobile.
+Pages never add their own outer margins.
 
 ## Structure
 

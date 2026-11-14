@@ -11,6 +11,8 @@ const REFRESH_TOKEN_KEY = 'refresh_token';
 const EXPIRY_MARGIN_MS = 15_000;
 
 export const LOGIN_ROUTE = '/private-backdoor-7';
+export const PRIVATE_HOME = '/private';
+export const PUBLIC_HOME = '/';
 
 /** Marks requests the auth interceptor must leave untouched (login, refresh). */
 export const SKIP_AUTH = new HttpContextToken<boolean>(() => false);
@@ -58,13 +60,16 @@ export class AuthService {
 
   /** Clears the session; navigates to the login page unless told otherwise. */
   logout(redirect = true): void {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
-    this.currentUserState.set(null);
-    this.refreshInFlight$ = null;
+    this.clearSession();
     if (redirect) {
       void this.router.navigateByUrl(LOGIN_ROUTE);
     }
+  }
+
+  /** The only way from the dashboard to the public website: ends the session, then opens the site. */
+  logoutAndVisitPublicSite(): void {
+    this.clearSession();
+    void this.router.navigateByUrl(PUBLIC_HOME);
   }
 
   getAccessToken(): string | null {
@@ -134,6 +139,13 @@ export class AuthService {
         return of(false);
       })
     );
+  }
+
+  private clearSession(): void {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    this.currentUserState.set(null);
+    this.refreshInFlight$ = null;
   }
 
   private persistTokens(response: JWTAuthResponse): void {

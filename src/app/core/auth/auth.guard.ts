@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { AppRole } from '../models/api.models';
-import { AuthService, LOGIN_ROUTE } from './auth.service';
+import { AuthService, LOGIN_ROUTE, PRIVATE_HOME } from './auth.service';
 
 /** Requires a valid (or refreshable) session and loads the current user. */
 export const authGuard: CanActivateFn = (_route, state) => {
@@ -26,13 +26,17 @@ export const roleGuard: CanActivateFn = (route) => {
   if (roles.length === 0 || authService.hasAnyRole(roles)) {
     return true;
   }
-  return router.createUrlTree(['/private']);
+  return router.createUrlTree([PRIVATE_HOME]);
 };
 
-/** Sends an already signed-in user straight to the dashboard instead of the login form. */
+/**
+ * Guest-only routes (login form and the whole public website): a signed-in user is sent
+ * back to the dashboard and must use "Se déconnecter et visiter le site" to leave it.
+ * A stale session (expired refresh token, unknown account) is cleared and the visitor stays.
+ */
 export const guestGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.ensureSession().pipe(map((ok) => (ok ? router.createUrlTree(['/private']) : true)));
+  return authService.ensureSession().pipe(map((ok) => (ok ? router.createUrlTree([PRIVATE_HOME]) : true)));
 };

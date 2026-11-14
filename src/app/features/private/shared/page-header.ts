@@ -13,7 +13,7 @@ import { AdminScopeService } from './admin-scope.service';
   imports: [FormsModule, ButtonModule, IconFieldModule, InputIconModule, InputTextModule, SelectModule],
   template: `
     <header class="admin-page-header">
-      <div>
+      <div class="admin-page-header__text">
         <h1>{{ title() }}</h1>
         @if (subtitle()) {
           <p>{{ subtitle() }}</p>

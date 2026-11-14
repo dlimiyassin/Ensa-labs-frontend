@@ -12,21 +12,21 @@ import { authInterceptor } from './core/auth/auth.interceptor';
 
 registerLocaleData(localeFr);
 
-/** Aura with the platform's teal (--blue-color #0080A2) as primary color. */
+/** Aura with the platform's navy (--blue-color #10386B) as primary color; 500 is the brand color. */
 const EnsaPreset = definePreset(Aura, {
   semantic: {
     primary: {
-      50: '{cyan.50}',
-      100: '{cyan.100}',
-      200: '{cyan.200}',
-      300: '{cyan.300}',
-      400: '{cyan.400}',
-      500: '{cyan.600}',
-      600: '{cyan.700}',
-      700: '{cyan.800}',
-      800: '{cyan.900}',
-      900: '{cyan.950}',
-      950: '{cyan.950}'
+      50: '#edf2f8',
+      100: '#d3dfee',
+      200: '#a8bfdc',
+      300: '#7698c4',
+      400: '#4570a6',
+      500: '#10386b',
+      600: '#0e315e',
+      700: '#0b294f',
+      800: '#09213f',
+      900: '#061830',
+      950: '#040f1f'
     }
   }
 });

@@ -8,6 +8,13 @@
   --admin-border: #e2e8f0;
   --admin-muted: #64748b;
   --admin-surface: #ffffff;
+
+  /* Spacing scale shared by every dashboard page */
+  --admin-gutter: 2rem;          /* content padding around pages */
+  --admin-page-gap: 1.75rem;     /* between the page header and each block below it */
+  --admin-block-gap: 1.25rem;    /* between panels / cards inside a block */
+  --admin-panel-padding: 1.5rem; /* inside a panel */
+  --admin-content-max: 1440px;
   min-height: 100vh;
   display: flex;
   background: #f1f5f9;
@@ -97,9 +104,13 @@
   padding: 0.6rem 0.75rem;
   border-radius: 0.6rem;
   border: 1px dashed var(--admin-border);
+  background: none;
   color: var(--admin-muted);
+  font: inherit;
   font-size: 0.85rem;
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .admin-sidebar__public:hover {
@@ -128,7 +139,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.7rem 1.5rem;
+  padding: 0.7rem var(--admin-gutter);
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--admin-border);
@@ -189,10 +200,24 @@
 }
 
 .admin-content {
-  padding: 1.5rem;
-  display: grid;
-  gap: 1.25rem;
-  align-content: start;
+  width: 100%;
+  max-width: var(--admin-content-max);
+  padding: var(--admin-gutter);
+}
+
+/*
+ * Page template. Every routed dashboard page (the element placed right after
+ * <router-outlet>) is a vertical stack:
+ *   <app-admin-page-header>         title, description, tools
+ *   <section class="admin-panel">   table / form / cards ...
+ * Pages only declare their blocks and never set their own outer spacing.
+ */
+.admin-content > router-outlet + *,
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--admin-page-gap);
+  min-width: 0;
 }
 
 .admin-content p {
@@ -206,19 +231,29 @@
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1rem 1.5rem;
+}
+
+.admin-page-header__text {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  max-width: 48rem;
 }
 
 .admin-page-header h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  line-height: 1.25;
+  color: #0f172a;
 }
 
 .admin-page-header p {
-  margin: 0.25rem 0 0;
+  margin: 0;
   color: var(--admin-muted);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .admin-page-header__tools {
@@ -234,16 +269,21 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.admin-subheader p {
+  margin: 0;
 }
 
 /* ---------- Panels, stats ---------- */
 
 .admin-panel {
+  min-width: 0;
   background: var(--admin-surface);
   border: 1px solid var(--admin-border);
   border-radius: 0.9rem;
-  padding: 1.25rem;
+  padding: var(--admin-panel-padding);
 }
 
 .admin-panel--flush {
@@ -252,21 +292,22 @@
 }
 
 .admin-panel h2 {
-  margin: 0 0 1rem;
-  font-size: 1.05rem;
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .admin-grid-2 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--admin-block-gap);
   align-items: start;
 }
 
 .admin-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
+  gap: var(--admin-block-gap);
 }
 
 .admin-stat {
@@ -305,7 +346,7 @@ a.admin-stat:hover {
 
 .admin-shortcuts {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   gap: 0.6rem;
 }
 
@@ -335,6 +376,20 @@ a.admin-stat:hover {
 }
 
 /* ---------- Tables ---------- */
+
+/* Wide tables scroll inside their panel instead of widening the page. */
+.admin-content .p-datatable-table-container {
+  overflow-x: auto;
+}
+
+.admin-content .p-datatable-table {
+  min-width: 640px;
+}
+
+.admin-content .p-paginator {
+  flex-wrap: wrap;
+  row-gap: 0.4rem;
+}
 
 .admin-panel--flush .p-datatable-header-cell:first-child,
 .admin-panel--flush .p-datatable-tbody > tr > td:first-child {
@@ -558,6 +613,18 @@ a.admin-stat:hover {
 
 /* ---------- Responsive ---------- */
 
+/* Dialogs and confirmations never exceed the screen. */
+.p-dialog {
+  max-width: calc(100vw - 2rem);
+}
+
+@media (max-width: 1200px) {
+  .admin-shell {
+    --admin-gutter: 1.5rem;
+    --admin-page-gap: 1.5rem;
+  }
+}
+
 @media (max-width: 960px) {
   .admin-sidebar {
     transform: translateX(-100%);
@@ -588,12 +655,16 @@ a.admin-stat:hover {
     display: none;
   }
 
-  .admin-content {
-    padding: 1rem;
-  }
 }
 
 @media (max-width: 640px) {
+  .admin-shell {
+    --admin-gutter: 1rem;
+    --admin-page-gap: 1.25rem;
+    --admin-block-gap: 1rem;
+    --admin-panel-padding: 1rem;
+  }
+
   .admin-form__grid,
   .admin-row {
     grid-template-columns: 1fr;
@@ -601,5 +672,40 @@ a.admin-stat:hover {
 
   .admin-topbar__scope {
     display: none;
+  }
+
+  .admin-topbar__user {
+    margin-left: auto;
+  }
+
+  .admin-page-header h1 {
+    font-size: 1.35rem;
+  }
+
+  /* Tools stack under the title and use the full width. */
+  .admin-page-header__tools {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .admin-page-header__tools > *,
+  .admin-page-header__tools .p-iconfield,
+  .admin-page-header__tools input,
+  .admin-page-header__tools .p-select,
+  .admin-page-header__tools .p-button,
+  .admin-subheader > p-button,
+  .admin-subheader > p-button .p-button {
+    width: 100%;
+  }
+
+  .image-upload {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-panel--flush .p-datatable-header-cell:first-child,
+  .admin-panel--flush .p-datatable-tbody > tr > td:first-child {
+    padding-left: 1rem;
   }
 }

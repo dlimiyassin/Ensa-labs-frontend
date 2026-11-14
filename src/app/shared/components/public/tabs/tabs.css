@@ -16,5 +16,5 @@ button {
 button.is-active {
   border-color: var(--blue-color);
   color: var(--blue-color);
-  background: rgba(0, 128, 162, .06);
+  background: color-mix(in srgb, var(--blue-color) 6%, #fff);
 }

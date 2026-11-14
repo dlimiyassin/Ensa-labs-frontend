@@ -23,7 +23,7 @@ import { ADMIN_NAV_SECTIONS } from './admin-nav';
 
     <div class="admin-shell" [class.is-menu-open]="menuOpen()">
       <aside class="admin-sidebar">
-        <a routerLink="/" class="admin-sidebar__brand" pTooltip="Voir le site public" tooltipPosition="right">
+        <a routerLink="/private" class="admin-sidebar__brand" aria-label="Tableau de bord">
           <img src="images/logo.png" alt="ENSA Labs" />
         </a>
         <nav class="admin-sidebar__nav" aria-label="Navigation du tableau de bord">
@@ -38,7 +38,9 @@ import { ADMIN_NAV_SECTIONS } from './admin-nav';
             }
           }
         </nav>
-        <a routerLink="/" class="admin-sidebar__public"><i class="pi pi-external-link"></i> Site public</a>
+        <button type="button" class="admin-sidebar__public" (click)="visitPublicSite()">
+          <i class="pi pi-external-link"></i> Se déconnecter et visiter le site
+        </button>
       </aside>
 
       <div class="admin-backdrop" (click)="menuOpen.set(false)"></div>
@@ -81,6 +83,7 @@ export class AdminLayout implements OnInit {
   private readonly scope = inject(AdminScopeService);
   private readonly files = inject(FilesService);
   private readonly router = inject(Router);
+  private readonly confirmation = inject(ConfirmationService);
 
   protected readonly menuOpen = signal(false);
 
@@ -110,5 +113,18 @@ export class AdminLayout implements OnInit {
 
   protected logout(): void {
     this.auth.logout();
+  }
+
+  /** The public website is for visitors only: leaving the dashboard ends the session. */
+  protected visitPublicSite(): void {
+    this.confirmation.confirm({
+      header: 'Visiter le site public',
+      message: 'Vous allez être déconnecté du tableau de bord. Continuer ?',
+      icon: 'pi pi-sign-out',
+      acceptLabel: 'Se déconnecter',
+      rejectLabel: 'Annuler',
+      rejectButtonProps: { severity: 'secondary', outlined: true },
+      accept: () => this.auth.logoutAndVisitPublicSite()
+    });
   }
 }

@@ -13,19 +13,23 @@ export const routes: Routes = [
     title: 'Connexion | ENSA Labs'
   },
 
-  // PUBLIC WEBSITE
+  // PUBLIC WEBSITE (visitors only: a signed-in user stays in the dashboard)
   {
     path: '',
     component: LayoutPage,
+    title: 'ENSA Labs',
+    canActivate: [guestGuard],
+    canActivateChild: [guestGuard],
     loadChildren: () =>
       import('./features/public/public.routes')
         .then(m => m.PUBLIC_ROUTES)
   },
 
-  // PRIVATE DASHBOARD
+  // PRIVATE DASHBOARD (signed-in users only; children re-check the session on every navigation)
   {
     path: 'private',
     canActivate: [authGuard],
+    canActivateChild: [authGuard],
     loadChildren: () =>
       import('./features/private/private.routes')
         .then(m => m.PRIVATE_ROUTES)
